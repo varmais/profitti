@@ -50,10 +50,9 @@ class Song extends Component {
 
     constructor(props) {
         super(props);
-        var item = this.props.items.filter(item => item.id === this.props.id)[0];
-        var index = this.props.items.findIndex(it => it.id === item.id);
+        var song = this.props.songs.filter(item => item.id === this.props.id)[0];
+        var index = this.props.songs.findIndex(it => it.id === song.id);
         this.state = {
-            items: this.props.items,
             index: index
         };
     }
@@ -67,7 +66,7 @@ class Song extends Component {
                 index={this.state.index}
                 showsPagination={false}>
 
-                {this.state.items.map(item => {
+                {this.props.songs.map(item => {
                     return (
                         <ScrollView style={styles.background} key={item.id}>
                             <View style={styles.container}>

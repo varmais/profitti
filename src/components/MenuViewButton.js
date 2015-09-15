@@ -36,9 +36,7 @@ class MenuViewButton extends Component {
         super(props)
     }
 
-    navigate(option) {
-        var item = this.props.menuItems.filter(item => item.id === option)[0];
-
+    _navigate(item) {
         if (item.id === 'CategoryList') {
             this.props.navigator.push({
                 title: item.title,
@@ -60,7 +58,7 @@ class MenuViewButton extends Component {
         return (
             <TouchableHighlight
                 style={styles.menuItem}
-                //onPress={this.navigate.bind(this, item.id)}
+                onPress={this._navigate.bind(this, this.props.item)}
                 underlayColor='#73941f'
                 key={this.props.item.id}>
                 <Text style={styles.menuText}>{this.props.item.title}</Text>

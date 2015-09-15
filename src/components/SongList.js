@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var LyricsPage = require('./Song');
+var Song = require('./Song');
 
 var {
     StyleSheet,
@@ -64,17 +64,16 @@ class SongList extends Component {
             rowHasChanged: (r1, r2) => r1.guid !== r2.guid
         });
         this.state = {
-            dataSource: dataSource.cloneWithRows(this.props.items),
-            lyrics: this.props.items
+            dataSource: dataSource.cloneWithRows(this.props.songs)
         };
     }
 
     rowPressed(id, title, lyrics) {
         this.props.navigator.push({
             title: '',
-            component: LyricsPage,
+            component: Song,
             passProps: {
-                items: this.props.items,
+                songs: this.props.songs,
                 id: id
             }
         });

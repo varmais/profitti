@@ -78,7 +78,7 @@ class Dashboard extends Component {
     }
 
     _onChange() {
-        var songs = SongService._getSongs();
+        var songs = SongService.getSongs();
         this.setState({songs});
     }
 
@@ -99,11 +99,14 @@ class Dashboard extends Component {
 
         this.state.menuItems.forEach((item) => {
             if (item.id === 'SearchView') {
-                views.push(<SearchViewButton item={item} />);
+                views.push(<SearchViewButton
+                                navigator={this.props.navigator}
+                                songs={this.state.songs}
+                                item={item} />);
             } else {
                 views.push(<MenuViewButton
+                                navigator={this.props.navigator}
                                 item={item}
-                                menuItems={this.state.menuItems}
                                 categories={this.state.categories}
                                 songs={this.state.songs} />);
             }

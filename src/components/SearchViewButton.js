@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react-native');
+var SongList = require('./SongList');
+
 var {
     Component,
     View,
@@ -45,13 +47,13 @@ class SearchViewButton extends Component {
             return;
         }
 
-        songs = this.state.songs.filter(item => item.title.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
+        songs = this.props.songs.filter(item => item.title.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
 
         this.props.navigator.push({
             title: 'Haku: ' + this.state.searchString,
-            component: LyricsListPage,
+            component: SongList,
             passProps: {
-                items: songs
+                songs: songs
             }
         });
     }
@@ -63,9 +65,9 @@ class SearchViewButton extends Component {
                 placeholder='Hae lauluja'
                 placeholderTextColor='#ffffff'
                 autoCorrect={false}
-                //onChange={this.updateSearchString.bind(this)}
+                onChange={this.updateSearchString.bind(this)}
                 returnKeyType='search'
-                //onSubmitEditing={this.searchLyrics.bind(this)}
+                onSubmitEditing={this.searchLyrics.bind(this)}
                 key={this.props.item.id}/>
         );
     }

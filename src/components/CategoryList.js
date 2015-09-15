@@ -1,8 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var LyricsListPage = require('./SongList');
-var lyrics = require('./../data/songs').lyrics;
+var SongList = require('./SongList');
 
 var {
     StyleSheet,
@@ -65,18 +64,17 @@ class CategoryList extends Component {
             rowHasChanged: (r1, r2) => r1.guid !== r2.guid
         });
         this.state = {
-            dataSource: dataSource.cloneWithRows(this.props.items),
-            lyrics: lyrics
+            dataSource: dataSource.cloneWithRows(this.props.categories)
         };
     }
 
     rowPressed(category, title) {
-        var lyrics = this.state.lyrics.filter(item => item.category === category);
+        var songs = this.props.songs.filter(song => song.category === category);
         this.props.navigator.push({
             title: title,
-            component: LyricsListPage,
+            component: SongList,
             passProps: {
-                items: lyrics
+                songs: songs
             }
         });
     }
