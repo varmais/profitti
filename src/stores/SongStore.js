@@ -2,13 +2,14 @@
 
 var SONGS_GET = require('../constants/AppConstants').SONGS_GET;
 var BaseStore = require('./BaseStore');
+var Songs = require('../data/songs').songs;
 
 class SongStore extends BaseStore {
 
     constructor() {
         super();
         this.subscribe(() => this._registerToAction.bind(this));
-        this._songs = null;
+        this._songs = Songs;
     }
 
     _registerToAction(action) {

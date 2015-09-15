@@ -2,13 +2,14 @@
 
 var CATEGORIES_GET = require('../constants/AppConstants').CATEGORIES_GET;
 var BaseStore = require('./BaseStore');
+var Categories = require('../data/songs').categories;
 
 class CategoryStore extends BaseStore {
 
     constructor() {
         super();
         this.subscribe(() => this._registerToAction.bind(this));
-        this._categories = null;
+        this._categories = Categories;
     }
 
     _registerToAction(action) {

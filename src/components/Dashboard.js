@@ -1,9 +1,15 @@
 'use strict';
 
 var React = require('react-native');
-var MenuItems = require('../data/menu');
+
 var SearchViewButton = require('./SearchViewButton');
 var MenuViewButton = require('./MenuViewButton');
+
+var SongStore = require('../stores/SongStore');
+var MenuItemStore = require('../stores/MenuItemStore');
+var CategoryStore = require('../stores/CategoryStore');
+
+var SongService = require('../services/SongService');
 
 var {
     Component,
@@ -38,56 +44,68 @@ var styles = StyleSheet.create({
     subtitle: {
         fontSize: 15,
         color: '#ffffff'
-    },
-    menuText: {
-        fontSize: 18,
-        color: 'white',
-        alignSelf: 'center',
-        fontWeight: 'bold'
-    },
-    menuItem: {
-        height: 36,
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#9EB741',
-        borderColor: '#B7C83B',
-        borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 25,
-        alignSelf: 'stretch',
-        justifyContent: 'center'
-    },
-    searchInput: {
-        height: 36,
-        padding: 4,
-        fontSize: 18,
-        borderWidth: 1,
-        borderColor: '#9EB741',
-        borderRadius: 8,
-        marginBottom: 25,
-        color: '#ffffff'
     }
 });
 
 class Dashboard extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            songs: this._getSongs(),
+            categories: this._getCategories(),
+            menuItems: this._getMenuItems(),
+            searchString: ''
+        };
+    }
+
+    componentDidMount() {
+        var categories = this._getCategories();
+        var menuItems = this._getMenuItems();
+        var songs = this._getSongs();
+
+        this.setState({
+            categories,
+            menuItems,
+            songs
+        });
+
+        SongStore.addChangeListener(this._onChange.bind(this));
+    }
+
+    componentWillUnmount() {
+        SongStore.removeChangeListener(this._onChange.bind(this));
+    }
+
+    _onChange() {
+        var songs = SongService._getSongs();
+        this.setState({songs});
+    }
+
+    _getSongs() {
+        return SongStore.getSongs();
+    }
+
+    _getCategories() {
+        return CategoryStore.getCategories();
+    }
+
+    _getMenuItems() {
+        return MenuItemStore.getMenuItems();
     }
 
     render() {
         var views = [];
 
-        MenuItems.forEach((item) => {
+        this.state.menuItems.forEach((item) => {
             if (item.id === 'SearchView') {
                 views.push(<SearchViewButton item={item} />);
             } else {
                 views.push(<MenuViewButton
                                 item={item}
-                                //menuItems={this.state.menuItems}
-                                //categories={this.state.categories}
-                                //songs={this.state.songs}
-                    />);
+                                menuItems={this.state.menuItems}
+                                categories={this.state.categories}
+                                songs={this.state.songs} />);
             }
         });
 

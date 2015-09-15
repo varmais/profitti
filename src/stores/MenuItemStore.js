@@ -2,13 +2,14 @@
 
 var MENUITEMS_GET = require('../constants/AppConstants').MENUITEMS_GET;
 var BaseStore = require('./BaseStore');
+var MenuItems = require('../data/menu');
 
-class MenuStore extends BaseStore {
+class MenuItemStore extends BaseStore {
 
     constructor() {
         super();
         this.subscribe(() => this._registerToAction.bind(this));
-        this._menuItems = null;
+        this._menuItems = MenuItems;
     }
 
     _registerToAction(action) {
@@ -28,4 +29,4 @@ class MenuStore extends BaseStore {
     }
 }
 
-module.exports = new MenuStore();
+module.exports = new MenuItemStore();
