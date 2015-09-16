@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Dashboard = require('./src/components/Dashboard');
+var NavigationBarRouteMapper = require('./src/components/NavigationBarRouteMapper');
 var {
     AppRegistry,
     StyleSheet
@@ -10,6 +11,9 @@ var {
 var styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    navBar: {
+        backgroundColor: 'black'
     }
 });
 
@@ -22,16 +26,21 @@ class Profitti extends React.Component {
     render() {
         return (
             <React.Navigator
-                ref={this._setNavigatorRef}
                 style={styles.container}
                 initialRoute={{
                     title: 'Profitti',
                     component: Dashboard
                 }}
                 renderScene={this.renderScene}
+                navigationBar={
+                    <React.Navigator.NavigationBar
+                        routeMapper={NavigationBarRouteMapper}
+                        style={styles.navBar}
+                    />
+                }
                 />
         );
     }
-};
+}
 
 AppRegistry.registerComponent('Profitti', () => Profitti);

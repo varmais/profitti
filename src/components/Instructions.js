@@ -13,6 +13,7 @@ var {
 var styles = StyleSheet.create({
     background: {
         backgroundColor: '#000000',
+        paddingTop: 50,
         paddingLeft: 20,
         paddingRight: 20,
         position: 'absolute',
@@ -23,7 +24,7 @@ var styles = StyleSheet.create({
     },
     container: {
         paddingTop: 20,
-        marginBottom: 15,
+        marginBottom: 15
     },
     title: {
         fontSize: 16,

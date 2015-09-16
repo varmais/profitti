@@ -22,7 +22,7 @@ var {
 var styles = StyleSheet.create({
     background: {
         backgroundColor: '#000000',
-        paddingTop: 20,
+        paddingTop: 50,
         paddingLeft: 30,
         paddingRight: 30,
         paddingBottom: 30,
@@ -97,18 +97,20 @@ class Dashboard extends Component {
     render() {
         var views = [];
 
-        this.state.menuItems.forEach((item) => {
+        this.state.menuItems.forEach((item, index) => {
             if (item.id === 'SearchView') {
                 views.push(<SearchViewButton
                                 navigator={this.props.navigator}
                                 songs={this.state.songs}
-                                item={item} />);
+                                item={item}
+                                key={index} />);
             } else {
                 views.push(<MenuViewButton
                                 navigator={this.props.navigator}
                                 item={item}
                                 categories={this.state.categories}
-                                songs={this.state.songs} />);
+                                songs={this.state.songs}
+                                key={index}  />);
             }
         });
 

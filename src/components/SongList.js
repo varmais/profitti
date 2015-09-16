@@ -15,7 +15,7 @@ var {
 var styles = StyleSheet.create({
     background: {
         backgroundColor: '#000000',
-        paddingTop: 20,
+        paddingTop: 50,
         paddingLeft: 30,
         paddingRight: 30,
         paddingBottom: 30,
