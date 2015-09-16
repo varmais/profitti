@@ -1,2 +1,11 @@
-# profitti
-Tradenomiopiskelijaliitto TROL ry:n laulukirja Profitti digitaalisessa muodossa. React Native sovellus.
+# Laulukirja Profitti
+
+Tradenomiopiskelijaliitto TROL ry:n laulukirja Profitti digitaalisessa muodossa. 
+
+Sovellus on toteutettu käyttäen React Nativea.
+
+#### Known issues:
+
+[ ] NavigationBar tyylikkäämmäksi
+[ ] Swiper ei toimi Androidilla
+[ ] Testit?

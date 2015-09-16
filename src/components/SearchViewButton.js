@@ -62,7 +62,7 @@ class SearchViewButton extends Component {
         return (
             <TextInput
                 style={styles.searchInput}
-                placeholder='Hae lauluja'
+                placeholder='Hae lauluja..'
                 placeholderTextColor='#ffffff'
                 autoCorrect={false}
                 onChange={this.updateSearchString.bind(this)}
