@@ -6,6 +6,7 @@ Sovellus on toteutettu käyttäen React Nativea.
 
 #### Known issues:
 
+[ ] Testit?   
 [ ] NavigationBar tyylikkäämmäksi   
 [ ] Swiper ei toimi Androidilla   
-[ ] Testit?   
+[ ] Paketoi tyylit moduliin
