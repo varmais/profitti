@@ -13,17 +13,25 @@ var styles = StyleSheet.create({
     }
 });
 
-var Profitti = React.createClass({
-    render: function() {
+class Profitti extends React.Component {
+
+    renderScene(route, nav) {
+        return <route.component navigator={nav} {...route.passProps} />
+    }
+
+    render() {
         return (
-            <React.NavigatorIOS
+            <React.Navigator
+                ref={this._setNavigatorRef}
                 style={styles.container}
                 initialRoute={{
                     title: 'Profitti',
                     component: Dashboard
-                }} />
+                }}
+                renderScene={this.renderScene}
+                />
         );
     }
-});
+};
 
 AppRegistry.registerComponent('Profitti', () => Profitti);
