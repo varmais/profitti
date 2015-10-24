@@ -84,11 +84,11 @@ class Song extends Component {
       );
     } else {
       return (
-        <View style={styles.background} key={this.state.id}>
+        <View style={styles.background} key={this.state.song.id}>
           <View style={styles.container}>
-            <Text style={styles.title}>{this.state.title}</Text>
+            <Text style={styles.title}>{this.state.song.title}</Text>
             <View style={styles.separator}/>
-            <Text style={styles.text}>{this.state.lyrics}</Text>
+            <Text style={styles.text}>{this.state.song.lyrics}</Text>
           </View>
         </View>
       );
