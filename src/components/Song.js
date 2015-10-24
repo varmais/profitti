@@ -4,83 +4,96 @@ var React = require('react-native');
 var Swiper = require('react-native-swiper');
 
 var {
-    StyleSheet,
-    Component,
-    View,
-    Text,
-    ScrollView,
-    PixelRatio
-    } = React;
+  StyleSheet,
+  Component,
+  View,
+  Text,
+  ScrollView,
+  PixelRatio
+  } = React;
 
 var Dimensions = require('Dimensions');
 
 var styles = StyleSheet.create({
-    background: {
-        backgroundColor: '#000000',
-        paddingTop: 50,
-        paddingLeft: 20,
-        paddingRight: 20,
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
-    },
-    container: {
-        paddingTop: 20,
-        marginBottom: 20,
-    },
-    title: {
-        fontSize: 20,
-        color: '#ffffff',
-        marginBottom: 5
-    },
-    text: {
-        fontSize: 16,
-        color: '#ffffff',
-        marginBottom: 20
-    },
-    separator: {
-        height: 1 / PixelRatio.get(),
-        backgroundColor: '#ffffff',
-        marginBottom: 15
-    }
+  background: {
+    backgroundColor: '#000000',
+    paddingTop: 50,
+    paddingLeft: 20,
+    paddingRight: 20,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
+  container: {
+    paddingTop: 20,
+    marginBottom: 20
+  },
+  title: {
+    fontSize: 20,
+    color: '#ffffff',
+    marginBottom: 5
+  },
+  text: {
+    fontSize: 16,
+    color: '#ffffff',
+    marginBottom: 20
+  },
+  separator: {
+    height: 1 / PixelRatio.get(),
+    backgroundColor: '#ffffff',
+    marginBottom: 15
+  }
 });
 
 class Song extends Component {
 
-    constructor(props) {
-        super(props);
-        var song = this.props.songs.filter(item => item.id === this.props.id)[0];
-        var index = this.props.songs.findIndex(it => it.id === song.id);
-        this.state = {
-            index: index
-        };
-    }
+  constructor(props) {
+    super(props);
+    var song = this.props.songs.filter(item => item.id === this.props.id)[0];
+    var index = this.props.songs.findIndex(it => it.id === song.id);
+    this.state = {
+      index: index,
+      song: song
+    };
+  }
 
-    render() {
-        return (
-            <Swiper
-                style={styles.wrapper}
-                horizontal={true}
-                loop={false}
-                index={this.state.index}
-                showsPagination={false}>
+  render() {
+    if (this.props.device === 'ios') {
+      return (
+        <Swiper
+          style={styles.wrapper}
+          horizontal={true}
+          loop={false}
+          index={this.state.index}
+          showsPagination={false}>
 
-                {this.props.songs.map(item => {
-                    return (
-                        <ScrollView style={styles.background} key={item.id}>
-                            <View style={styles.container}>
-                                <Text style={styles.title}>{item.title}</Text>
-                                <View style={styles.separator} />
-                                <Text style={styles.text}>{item.lyrics}</Text>
-                            </View>
-                        </ScrollView>
-                    );
-                })}
-            </Swiper>
-        );
+          {this.props.songs.map(item => {
+            return (
+              <ScrollView style={styles.background} key={item.id}>
+                <View style={styles.container}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <View style={styles.separator}/>
+                  <Text style={styles.text}>{item.lyrics}</Text>
+                </View>
+              </ScrollView>
+            );
+          })}
+        </Swiper>
+      );
+    } else {
+      return (
+        <View style={styles.background} key={this.state.id}>
+          <View style={styles.container}>
+            <Text style={styles.title}>{this.state.title}</Text>
+            <View style={styles.separator}/>
+            <Text style={styles.text}>{this.state.lyrics}</Text>
+          </View>
+        </View>
+      );
     }
+  }
 }
 
 module.exports = Song;
