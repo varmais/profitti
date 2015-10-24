@@ -72,7 +72,8 @@ class CategoryList extends Component {
       title: title,
       component: SongList,
       passProps: {
-        songs: songs
+        songs: songs,
+        device: this.props.device
       }
     });
   }

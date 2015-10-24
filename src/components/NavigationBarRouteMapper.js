@@ -12,8 +12,7 @@ var {
 var styles = StyleSheet.create({
   navBarText: {
     fontSize: 20,
-    color: '#9EB741',
-    marginTop: 10
+    color: '#9EB741'
   },
   navBarLeftButton: {
     paddingLeft: 10

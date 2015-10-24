@@ -97,7 +97,7 @@ class Dashboard extends Component {
 
   render() {
     var views = [];
-
+    console.log(this.props.device);
     this.state.menuItems.forEach((item, index) => {
       if (item.id === 'SearchView') {
         views.push(<SearchViewButton
@@ -105,7 +105,7 @@ class Dashboard extends Component {
           songs={this.state.songs}
           item={item}
           key={index}
-          device={this.props.device}/>);
+          device={this.props.device} />);
       } else {
         views.push(<MenuViewButton
           navigator={this.props.navigator}
@@ -113,7 +113,7 @@ class Dashboard extends Component {
           categories={this.state.categories}
           songs={this.state.songs}
           key={index}
-          device={this.props.device}/>);
+          device={this.props.device} />);
       }
     });
 

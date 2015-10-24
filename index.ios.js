@@ -5,7 +5,8 @@ var Dashboard = require('./src/components/Dashboard');
 var NavigationBarRouteMapper = require('./src/components/NavigationBarRouteMapper');
 var {
   AppRegistry,
-  StyleSheet
+  StyleSheet,
+  PixelRatio
   } = React;
 
 var styles = StyleSheet.create({
@@ -13,14 +14,18 @@ var styles = StyleSheet.create({
     flex: 1
   },
   navBar: {
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    height: 60,
+    borderBottomWidth: 1 / PixelRatio.get(),
+    borderBottomColor: 'white',
+    paddingBottom: 20
   }
 });
 
 class Profitti extends React.Component {
 
   renderScene(route, nav) {
-    return <route.component navigator={nav} {...route.passProps} />
+    return <route.component navigator={nav} {...route.passProps} device='ios' />
   }
 
   render() {
@@ -29,8 +34,7 @@ class Profitti extends React.Component {
         style={styles.container}
         initialRoute={{
                     title: 'Profitti',
-                    component: Dashboard,
-                    device: 'ios'
+                    component: Dashboard
                 }}
         renderScene={this.renderScene}
         navigationBar={
