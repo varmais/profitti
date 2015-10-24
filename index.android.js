@@ -5,7 +5,8 @@ var Dashboard = require('./src/components/Dashboard');
 var NavigationBarRouteMapper = require('./src/components/NavigationBarRouteMapper');
 var {
   AppRegistry,
-  StyleSheet
+  StyleSheet,
+  PixelRatio
   } = React;
 
 var styles = StyleSheet.create({
@@ -13,7 +14,10 @@ var styles = StyleSheet.create({
     flex: 1
   },
   navBar: {
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    height: 60,
+    borderBottomWidth: 1 / PixelRatio.get(),
+    borderBottomColor: 'white'
   }
 });
 

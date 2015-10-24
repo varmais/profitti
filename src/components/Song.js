@@ -17,7 +17,7 @@ var Dimensions = require('Dimensions');
 var styles = StyleSheet.create({
   background: {
     backgroundColor: '#000000',
-    paddingTop: 50,
+    paddingTop: 60,
     paddingLeft: 20,
     paddingRight: 20,
     position: 'absolute',
@@ -28,7 +28,7 @@ var styles = StyleSheet.create({
   },
   container: {
     paddingTop: 20,
-    marginBottom: 20
+    marginBottom: 60
   },
   title: {
     fontSize: 20,
@@ -84,13 +84,13 @@ class Song extends Component {
       );
     } else {
       return (
-        <View style={styles.background} key={this.state.song.id}>
+        <ScrollView style={styles.background}>
           <View style={styles.container}>
             <Text style={styles.title}>{this.state.song.title}</Text>
             <View style={styles.separator}/>
             <Text style={styles.text}>{this.state.song.lyrics}</Text>
           </View>
-        </View>
+        </ScrollView>
       );
     }
   }

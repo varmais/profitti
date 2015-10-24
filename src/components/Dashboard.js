@@ -16,13 +16,14 @@ var {
   View,
   Text,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  PixelRatio
   } = React;
 
 var styles = StyleSheet.create({
   background: {
     backgroundColor: '#000000',
-    paddingTop: 50,
+    paddingTop: 70,
     paddingLeft: 30,
     paddingRight: 30,
     paddingBottom: 30,
@@ -33,7 +34,7 @@ var styles = StyleSheet.create({
     right: 0
   },
   container: {
-    marginBottom: 40,
+    marginBottom: 60,
     alignItems: 'center'
   },
   title: {

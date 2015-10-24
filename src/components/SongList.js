@@ -15,10 +15,9 @@ var {
 var styles = StyleSheet.create({
   background: {
     backgroundColor: '#000000',
-    paddingTop: 50,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 30,
+    paddingTop: 70,
+    paddingLeft: 20,
+    paddingRight: 20,
     position: 'absolute',
     top: 0,
     bottom: 0,
@@ -26,8 +25,7 @@ var styles = StyleSheet.create({
     right: 0
   },
   container: {
-    marginBottom: 40,
-    alignItems: 'center'
+    marginBottom: 5
   },
   title: {
     fontSize: 30,
@@ -94,10 +92,12 @@ class SongList extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow.bind(this)}
-        style={styles.background}/>
+      <View style={styles.background}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow.bind(this)}
+          style={styles.container}/>
+      </View>
     );
   }
 }
