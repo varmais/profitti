@@ -5,11 +5,9 @@ var React = require('react-native');
 var SearchViewButton = require('./SearchViewButton');
 var MenuViewButton = require('./MenuViewButton');
 
-var SongStore = require('../stores/SongStore');
-var MenuItemStore = require('../stores/MenuItemStore');
-var CategoryStore = require('../stores/CategoryStore');
-
-var SongService = require('../services/SongService');
+var Categories = require('../data/songs').categories;
+var Songs = require('../data/songs').songs;
+var MenuItems = require('../data/menu');
 
 var {
   Component,
@@ -53,51 +51,16 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      songs: this._getSongs(),
-      categories: this._getCategories(),
-      menuItems: this._getMenuItems(),
+      songs: Songs,
+      categories: Categories,
+      menuItems: MenuItems,
       searchString: ''
     };
   }
 
-  componentDidMount() {
-    var categories = this._getCategories();
-    var menuItems = this._getMenuItems();
-    var songs = this._getSongs();
-
-    this.setState({
-      categories,
-      menuItems,
-      songs
-    });
-
-    SongStore.addChangeListener(this._onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    SongStore.removeChangeListener(this._onChange.bind(this));
-  }
-
-  _onChange() {
-    var songs = SongService.getSongs();
-    this.setState({songs});
-  }
-
-  _getSongs() {
-    return SongStore.getSongs();
-  }
-
-  _getCategories() {
-    return CategoryStore.getCategories();
-  }
-
-  _getMenuItems() {
-    return MenuItemStore.getMenuItems();
-  }
-
   render() {
     var views = [];
-    console.log(this.props.device);
+
     this.state.menuItems.forEach((item, index) => {
       if (item.id === 'SearchView') {
         views.push(<SearchViewButton
@@ -111,7 +74,6 @@ class Dashboard extends Component {
           navigator={this.props.navigator}
           item={item}
           categories={this.state.categories}
-          songs={this.state.songs}
           key={index}
           device={this.props.device} />);
       }

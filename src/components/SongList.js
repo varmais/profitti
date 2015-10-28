@@ -67,11 +67,16 @@ class SongList extends Component {
   }
 
   rowPressed(id, title, lyrics) {
+    var songs = this.props.songs;
+    if (this.props.device !== 'ios') {
+      songs = songs.filter(song => song.id === id);
+    }
+
     this.props.navigator.push({
       title: '',
       component: Song,
       passProps: {
-        songs: this.props.songs,
+        songs: songs,
         id: id,
         device: this.props.device
       }

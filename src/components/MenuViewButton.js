@@ -43,7 +43,6 @@ class MenuViewButton extends Component {
         component: item.component,
         passProps: {
           categories: this.props.categories,
-          songs: this.props.songs,
           device: this.props.device
         }
       });

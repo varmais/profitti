@@ -51,48 +51,34 @@ class Song extends Component {
 
   constructor(props) {
     super(props);
-    var song = this.props.songs.filter(item => item.id === this.props.id)[0];
-    var index = this.props.songs.findIndex(it => it.id === song.id);
+    var index = this.props.songs.findIndex(it => it.id === this.props.id);
     this.state = {
-      index: index,
-      song: song
+      index: index
     };
   }
 
   render() {
-    if (this.props.device === 'ios') {
-      return (
-        <Swiper
-          style={styles.wrapper}
-          horizontal={true}
-          loop={false}
-          index={this.state.index}
-          showsPagination={false}>
+    return (
+      <Swiper
+        style={styles.wrapper}
+        horizontal={true}
+        loop={false}
+        index={this.state.index}
+        showsPagination={false}>
 
-          {this.props.songs.map(item => {
-            return (
-              <ScrollView style={styles.background} key={item.id}>
-                <View style={styles.container}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <View style={styles.separator}/>
-                  <Text style={styles.text}>{item.lyrics}</Text>
-                </View>
-              </ScrollView>
-            );
-          })}
-        </Swiper>
-      );
-    } else {
-      return (
-        <ScrollView style={styles.background}>
-          <View style={styles.container}>
-            <Text style={styles.title}>{this.state.song.title}</Text>
-            <View style={styles.separator}/>
-            <Text style={styles.text}>{this.state.song.lyrics}</Text>
-          </View>
-        </ScrollView>
-      );
-    }
+        {this.props.songs.map(item => {
+          return (
+            <ScrollView style={styles.background} key={item.id}>
+              <View style={styles.container}>
+                <Text style={styles.title}>{item.title}</Text>
+                <View style={styles.separator}/>
+                <Text style={styles.text}>{item.lyrics}</Text>
+              </View>
+            </ScrollView>
+          );
+        })}
+      </Swiper>
+    );
   }
 }
 

@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var SongList = require('./SongList');
+var Songs = require('../data/songs').songs;
 
 var {
   StyleSheet,
@@ -67,7 +68,7 @@ class CategoryList extends Component {
   }
 
   rowPressed(category, title) {
-    var songs = this.props.songs.filter(song => song.category === category);
+    var songs = Songs.filter(song => song.category === category);
     this.props.navigator.push({
       title: title,
       component: SongList,
