@@ -6,7 +6,8 @@ var NavigationBarRouteMapper = require('./src/components/NavigationBarRouteMappe
 var {
   AppRegistry,
   StyleSheet,
-  PixelRatio
+  PixelRatio,
+  BackAndroid
   } = React;
 
 var styles = StyleSheet.create({
@@ -21,9 +22,19 @@ var styles = StyleSheet.create({
   }
 });
 
+var _navigator;
+
+BackAndroid.addEventListener('hardwareBackPress', function () {
+  if (_navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+  }
+  return true;
+});
+
 class Profitti extends React.Component {
 
   renderScene(route, nav) {
+    _navigator = nav;
     return <route.component navigator={nav} {...route.passProps} />
   }
 
