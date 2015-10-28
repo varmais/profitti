@@ -1380,7 +1380,8 @@ var NavigationBarRouteMapper=require('Profitti/src/components/NavigationBarRoute
 AppRegistry=
 
 
-React.AppRegistry;var StyleSheet=React.StyleSheet;var PixelRatio=React.PixelRatio;
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var PixelRatio=React.PixelRatio;var BackAndroid=React.BackAndroid;
 
 var styles=StyleSheet.create({
 container:{
@@ -1390,13 +1391,25 @@ navBar:{
 backgroundColor:'black',
 height:60,
 borderBottomWidth:1 / PixelRatio.get(),
-borderBottomColor:'white'}});var 
+borderBottomColor:'white'}});
+
+
+
+var _navigator;
+
+BackAndroid.addEventListener('hardwareBackPress',function(){
+if(_navigator.getCurrentRoutes().length > 1){
+_navigator.pop();
+return true;}else 
+{
+BackAndroid.exitApp();}});var 
 
 
 
 Profitti=(function(_React$Component){_inherits(Profitti,_React$Component);function Profitti(){_classCallCheck(this,Profitti);_get(Object.getPrototypeOf(Profitti.prototype),'constructor',this).apply(this,arguments);}_createClass(Profitti,[{key:'renderScene',value:
 
 function renderScene(route,nav){
+_navigator = nav;
 return React.createElement(route.component,_extends({navigator:nav},route.passProps));}},{key:'render',value:
 
 
@@ -52216,18 +52229,16 @@ Object.keys(componentOrElement));}
 
 module.exports = findDOMNode;
 });
-__d('Profitti/src/components/Dashboard.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SearchViewButton.js","Profitti/src/components/MenuViewButton.js","Profitti/src/stores/SongStore.js","Profitti/src/stores/MenuItemStore.js","Profitti/src/stores/CategoryStore.js","Profitti/src/services/SongService.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/Dashboard.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SearchViewButton.js","Profitti/src/components/MenuViewButton.js","Profitti/src/data/songs.js","Profitti/src/data/songs.js","Profitti/src/data/menu.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 var React=require('react-native/Libraries/react-native/react-native.js');
 
 var SearchViewButton=require('Profitti/src/components/SearchViewButton.js');
 var MenuViewButton=require('Profitti/src/components/MenuViewButton.js');
 
-var SongStore=require('Profitti/src/stores/SongStore.js');
-var MenuItemStore=require('Profitti/src/stores/MenuItemStore.js');
-var CategoryStore=require('Profitti/src/stores/CategoryStore.js');
-
-var SongService=require('Profitti/src/services/SongService.js');var 
+var Categories=require('Profitti/src/data/songs.js').categories;
+var Songs=require('Profitti/src/data/songs.js').songs;
+var MenuItems=require('Profitti/src/data/menu.js');var 
 
 
 Component=
@@ -52271,46 +52282,11 @@ Dashboard=(function(_Component){_inherits(Dashboard,_Component);
 function Dashboard(props){_classCallCheck(this,Dashboard);
 _get(Object.getPrototypeOf(Dashboard.prototype),'constructor',this).call(this,props);
 this.state = {
-songs:this._getSongs(),
-categories:this._getCategories(),
-menuItems:this._getMenuItems(),
-searchString:''};}_createClass(Dashboard,[{key:'componentDidMount',value:
+songs:Songs,
+categories:Categories,
+menuItems:MenuItems,
+searchString:''};}_createClass(Dashboard,[{key:'render',value:
 
-
-
-function componentDidMount(){
-var categories=this._getCategories();
-var menuItems=this._getMenuItems();
-var songs=this._getSongs();
-
-this.setState({
-categories:categories,
-menuItems:menuItems,
-songs:songs});
-
-
-SongStore.addChangeListener(this._onChange.bind(this));}},{key:'componentWillUnmount',value:
-
-
-function componentWillUnmount(){
-SongStore.removeChangeListener(this._onChange.bind(this));}},{key:'_onChange',value:
-
-
-function _onChange(){
-var songs=SongService.getSongs();
-this.setState({songs:songs});}},{key:'_getSongs',value:
-
-
-function _getSongs(){
-return SongStore.getSongs();}},{key:'_getCategories',value:
-
-
-function _getCategories(){
-return CategoryStore.getCategories();}},{key:'_getMenuItems',value:
-
-
-function _getMenuItems(){
-return MenuItemStore.getMenuItems();}},{key:'render',value:
 
 
 function render(){var _this=this;
@@ -52329,7 +52305,6 @@ views.push(React.createElement(MenuViewButton,{
 navigator:_this.props.navigator,
 item:item,
 categories:_this.state.categories,
-songs:_this.state.songs,
 key:index,
 device:_this.props.device}));}});
 
@@ -52498,11 +52473,16 @@ dataSource:dataSource.cloneWithRows(this.props.songs)};}_createClass(SongList,[{
 
 
 function rowPressed(id,title,lyrics){
+var songs=this.props.songs;
+if(this.props.device !== 'ios'){
+songs = songs.filter(function(song){return song.id === id;});}
+
+
 this.props.navigator.push({
 title:'',
 component:Song,
 passProps:{
-songs:this.props.songs,
+songs:songs,
 id:id,
 device:this.props.device}});}},{key:'renderRow',value:
 
@@ -52588,16 +52568,13 @@ Song=(function(_Component){_inherits(Song,_Component);
 
 function Song(props){var _this=this;_classCallCheck(this,Song);
 _get(Object.getPrototypeOf(Song.prototype),'constructor',this).call(this,props);
-var song=this.props.songs.filter(function(item){return item.id === _this.props.id;})[0];
-var index=this.props.songs.findIndex(function(it){return it.id === song.id;});
+var index=this.props.songs.findIndex(function(it){return it.id === _this.props.id;});
 this.state = {
-index:index,
-song:song};}_createClass(Song,[{key:'render',value:
+index:index};}_createClass(Song,[{key:'render',value:
 
 
 
 function render(){
-if(this.props.device === 'ios'){
 return (
 React.createElement(Swiper,{
 style:styles.wrapper,
@@ -52612,20 +52589,9 @@ React.createElement(ScrollView,{style:styles.background,key:item.id},
 React.createElement(View,{style:styles.container},
 React.createElement(Text,{style:styles.title},item.title),
 React.createElement(View,{style:styles.separator}),
-React.createElement(Text,{style:styles.text},item.lyrics))));})));}else 
+React.createElement(Text,{style:styles.text},item.lyrics))));})));}}]);return Song;})(Component);
 
 
-
-
-
-
-{
-return (
-React.createElement(ScrollView,{style:styles.background},
-React.createElement(View,{style:styles.container},
-React.createElement(Text,{style:styles.title},this.state.song.title),
-React.createElement(View,{style:styles.separator}),
-React.createElement(Text,{style:styles.text},this.state.song.lyrics))));}}}]);return Song;})(Component);
 
 
 
@@ -53181,7 +53147,7 @@ title:item.title,
 component:item.component,
 passProps:{
 categories:this.props.categories,
-songs:this.props.songs}});}else 
+device:this.props.device}});}else 
 
 
 {
@@ -53206,679 +53172,6 @@ React.createElement(Text,{style:styles.menuText},this.props.item.title)));}}]);r
 
 
 module.exports = MenuViewButton;
-});
-__d('Profitti/src/stores/SongStore.js',["Profitti/src/constants/AppConstants.js","Profitti/src/stores/BaseStore.js","Profitti/src/data/songs.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
-
-var SONGS_GET=require('Profitti/src/constants/AppConstants.js').SONGS_GET;
-var BaseStore=require('Profitti/src/stores/BaseStore.js');
-var Songs=require('Profitti/src/data/songs.js').songs;var 
-
-SongStore=(function(_BaseStore){_inherits(SongStore,_BaseStore);
-
-function SongStore(){var _this=this;_classCallCheck(this,SongStore);
-_get(Object.getPrototypeOf(SongStore.prototype),'constructor',this).call(this);
-this.subscribe(function(){return _this._registerToAction.bind(_this);});
-this._songs = Songs;}_createClass(SongStore,[{key:'_registerToAction',value:
-
-
-function _registerToAction(action){
-switch(action.actionType){
-case SONGS_GET:
-this._songs = action.songs;
-this.emitChange();
-break;
-
-default:
-break;}}},{key:'getSongs',value:
-
-
-
-function getSongs(){
-return this._songs;}}]);return SongStore;})(BaseStore);
-
-
-
-module.exports = new SongStore();
-});
-__d('Profitti/src/constants/AppConstants.js',[],function(global, require, module, exports) {  'use strict';
-
-module.exports = {
-SONGS_GET:'SONGS_GET',
-CATEGORIES_GET:'CATEGORIES_GET',
-MENUITEMS_GET:'MENUITEMS_GET'};
-});
-__d('Profitti/src/stores/BaseStore.js',["events/events.js","Profitti/src/dispatchers/AppDispatcher.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
-
-var EventEmitter=require('events/events.js').EventEmitter;
-var AppDispatcher=require('Profitti/src/dispatchers/AppDispatcher.js');var 
-
-BaseStore=(function(_EventEmitter){_inherits(BaseStore,_EventEmitter);
-function BaseStore(){_classCallCheck(this,BaseStore);
-_get(Object.getPrototypeOf(BaseStore.prototype),'constructor',this).call(this);}_createClass(BaseStore,[{key:'subscribe',value:
-
-
-function subscribe(actionSubscribe){
-this._dispatchToken = AppDispatcher.register(actionSubscribe());}},{key:'getDispatchToken',value:
-
-
-function getDispatchToken(){
-return this._dispatchToken;}},{key:'emitChange',value:
-
-
-function emitChange(){
-this.emit('CHANGE');}},{key:'addChangeListener',value:
-
-
-function addChangeListener(cb){
-this.on('CHANGE',cb);}},{key:'removeChangeListener',value:
-
-
-function removeChangeListener(cb){
-this.removeListener('CHANGE',cb);}}]);return BaseStore;})(EventEmitter);
-
-
-
-module.exports = BaseStore;
-});
-__d('events/events.js',[],function(global, require, module, exports) {  function 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EventEmitter(){
-this._events = this._events || {};
-this._maxListeners = this._maxListeners || undefined;}
-
-module.exports = EventEmitter;
-
-
-EventEmitter.EventEmitter = EventEmitter;
-
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-
-
-
-EventEmitter.defaultMaxListeners = 10;
-
-
-
-EventEmitter.prototype.setMaxListeners = function(n){
-if(!isNumber(n) || n < 0 || isNaN(n))
-throw TypeError('n must be a positive number');
-this._maxListeners = n;
-return this;};
-
-
-EventEmitter.prototype.emit = function(type){
-var er,handler,len,args,i,listeners;
-
-if(!this._events)
-this._events = {};
-
-
-if(type === 'error'){
-if(!this._events.error || 
-isObject(this._events.error) && !this._events.error.length){
-er = arguments[1];
-if(er instanceof Error){
-throw er;}
-
-throw TypeError('Uncaught, unspecified "error" event.');}}
-
-
-
-handler = this._events[type];
-
-if(isUndefined(handler))
-return false;
-
-if(isFunction(handler)){
-switch(arguments.length){
-
-case 1:
-handler.call(this);
-break;
-case 2:
-handler.call(this,arguments[1]);
-break;
-case 3:
-handler.call(this,arguments[1],arguments[2]);
-break;
-
-default:
-len = arguments.length;
-args = new Array(len - 1);
-for(i = 1;i < len;i++) 
-args[i - 1] = arguments[i];
-handler.apply(this,args);}}else 
-
-if(isObject(handler)){
-len = arguments.length;
-args = new Array(len - 1);
-for(i = 1;i < len;i++) 
-args[i - 1] = arguments[i];
-
-listeners = handler.slice();
-len = listeners.length;
-for(i = 0;i < len;i++) 
-listeners[i].apply(this,args);}
-
-
-return true;};
-
-
-EventEmitter.prototype.addListener = function(type,listener){
-var m;
-
-if(!isFunction(listener))
-throw TypeError('listener must be a function');
-
-if(!this._events)
-this._events = {};
-
-
-
-if(this._events.newListener)
-this.emit('newListener',type,
-isFunction(listener.listener)?
-listener.listener:listener);
-
-if(!this._events[type])
-
-this._events[type] = listener;else 
-if(isObject(this._events[type]))
-
-this._events[type].push(listener);else 
-
-
-this._events[type] = [this._events[type],listener];
-
-
-if(isObject(this._events[type]) && !this._events[type].warned){
-var m;
-if(!isUndefined(this._maxListeners)){
-m = this._maxListeners;}else 
-{
-m = EventEmitter.defaultMaxListeners;}
-
-
-if(m && m > 0 && this._events[type].length > m){
-this._events[type].warned = true;
-console.error('(node) warning: possible EventEmitter memory ' + 
-'leak detected. %d listeners added. ' + 
-'Use emitter.setMaxListeners() to increase limit.',
-this._events[type].length);
-if(typeof console.trace === 'function'){
-
-console.trace();}}}
-
-
-
-
-return this;};
-
-
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-EventEmitter.prototype.once = function(type,listener){
-if(!isFunction(listener))
-throw TypeError('listener must be a function');
-
-var fired=false;
-
-function g(){
-this.removeListener(type,g);
-
-if(!fired){
-fired = true;
-listener.apply(this,arguments);}}
-
-
-
-g.listener = listener;
-this.on(type,g);
-
-return this;};
-
-
-
-EventEmitter.prototype.removeListener = function(type,listener){
-var list,position,length,i;
-
-if(!isFunction(listener))
-throw TypeError('listener must be a function');
-
-if(!this._events || !this._events[type])
-return this;
-
-list = this._events[type];
-length = list.length;
-position = -1;
-
-if(list === listener || 
-isFunction(list.listener) && list.listener === listener){
-delete this._events[type];
-if(this._events.removeListener)
-this.emit('removeListener',type,listener);}else 
-
-if(isObject(list)){
-for(i = length;i-- > 0;) {
-if(list[i] === listener || 
-list[i].listener && list[i].listener === listener){
-position = i;
-break;}}
-
-
-
-if(position < 0)
-return this;
-
-if(list.length === 1){
-list.length = 0;
-delete this._events[type];}else 
-{
-list.splice(position,1);}
-
-
-if(this._events.removeListener)
-this.emit('removeListener',type,listener);}
-
-
-return this;};
-
-
-EventEmitter.prototype.removeAllListeners = function(type){
-var key,listeners;
-
-if(!this._events)
-return this;
-
-
-if(!this._events.removeListener){
-if(arguments.length === 0)
-this._events = {};else 
-if(this._events[type])
-delete this._events[type];
-return this;}
-
-
-
-if(arguments.length === 0){
-for(key in this._events) {
-if(key === 'removeListener')continue;
-this.removeAllListeners(key);}
-
-this.removeAllListeners('removeListener');
-this._events = {};
-return this;}
-
-
-listeners = this._events[type];
-
-if(isFunction(listeners)){
-this.removeListener(type,listeners);}else 
-{
-
-while(listeners.length) 
-this.removeListener(type,listeners[listeners.length - 1]);}
-
-delete this._events[type];
-
-return this;};
-
-
-EventEmitter.prototype.listeners = function(type){
-var ret;
-if(!this._events || !this._events[type])
-ret = [];else 
-if(isFunction(this._events[type]))
-ret = [this._events[type]];else 
-
-ret = this._events[type].slice();
-return ret;};
-
-
-EventEmitter.listenerCount = function(emitter,type){
-var ret;
-if(!emitter._events || !emitter._events[type])
-ret = 0;else 
-if(isFunction(emitter._events[type]))
-ret = 1;else 
-
-ret = emitter._events[type].length;
-return ret;};
-
-
-function isFunction(arg){
-return typeof arg === 'function';}
-
-
-function isNumber(arg){
-return typeof arg === 'number';}
-
-
-function isObject(arg){
-return typeof arg === 'object' && arg !== null;}
-
-
-function isUndefined(arg){
-return arg === void 0;}
-});
-__d('Profitti/src/dispatchers/AppDispatcher.js',["flux/index.js"],function(global, require, module, exports) {  'use strict';
-
-var Dispatcher=require('flux/index.js').Dispatcher;
-
-module.exports = new Dispatcher();
-});
-__d('flux/index.js',["Dispatcher"],function(global, require, module, exports) {  module.
-
-
-
-
-
-
-
-
-exports.Dispatcher = require('Dispatcher');
-});
-__d('Dispatcher',["invariant"],function(global, require, module, exports) {  'use strict';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-exports.__esModule = true;
-
-function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}
-
-var invariant=require('invariant');
-
-var _prefix='ID_';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var Dispatcher=(function(){
-function Dispatcher(){
-_classCallCheck(this,Dispatcher);
-
-this._callbacks = {};
-this._isDispatching = false;
-this._isHandled = {};
-this._isPending = {};
-this._lastID = 1;}
-
-
-
-
-
-
-
-Dispatcher.prototype.register = function register(callback){
-var id=_prefix + this._lastID++;
-this._callbacks[id] = callback;
-return id;};
-
-
-
-
-
-
-Dispatcher.prototype.unregister = function unregister(id){
-!this._callbacks[id]?process.env.NODE_ENV !== 'production'?invariant(false,'Dispatcher.unregister(...): `%s` does not map to a registered callback.',id):invariant(false):undefined;
-delete this._callbacks[id];};
-
-
-
-
-
-
-
-
-Dispatcher.prototype.waitFor = function waitFor(ids){
-!this._isDispatching?process.env.NODE_ENV !== 'production'?invariant(false,'Dispatcher.waitFor(...): Must be invoked while dispatching.'):invariant(false):undefined;
-for(var ii=0;ii < ids.length;ii++) {
-var id=ids[ii];
-if(this._isPending[id]){
-!this._isHandled[id]?process.env.NODE_ENV !== 'production'?invariant(false,'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.',id):invariant(false):undefined;
-continue;}
-
-!this._callbacks[id]?process.env.NODE_ENV !== 'production'?invariant(false,'Dispatcher.waitFor(...): `%s` does not map to a registered callback.',id):invariant(false):undefined;
-this._invokeCallback(id);}};
-
-
-
-
-
-
-
-Dispatcher.prototype.dispatch = function dispatch(payload){
-!!this._isDispatching?process.env.NODE_ENV !== 'production'?invariant(false,'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.'):invariant(false):undefined;
-this._startDispatching(payload);
-try{
-for(var id in this._callbacks) {
-if(this._isPending[id]){
-continue;}
-
-this._invokeCallback(id);}}finally 
-
-{
-this._stopDispatching();}};
-
-
-
-
-
-
-
-Dispatcher.prototype.isDispatching = function isDispatching(){
-return this._isDispatching;};
-
-
-
-
-
-
-
-
-
-Dispatcher.prototype._invokeCallback = function _invokeCallback(id){
-this._isPending[id] = true;
-this._callbacks[id](this._pendingPayload);
-this._isHandled[id] = true;};
-
-
-
-
-
-
-
-
-Dispatcher.prototype._startDispatching = function _startDispatching(payload){
-for(var id in this._callbacks) {
-this._isPending[id] = false;
-this._isHandled[id] = false;}
-
-this._pendingPayload = payload;
-this._isDispatching = true;};
-
-
-
-
-
-
-
-
-Dispatcher.prototype._stopDispatching = function _stopDispatching(){
-delete this._pendingPayload;
-this._isDispatching = false;};
-
-
-return Dispatcher;})();
-
-
-module.exports = Dispatcher;
-});
-__d('invariant',[],function(global, require, module, exports) {  "use strict";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var invariant=function(condition,format,a,b,c,d,e,f){
-if(process.env.NODE_ENV !== 'production'){
-if(format === undefined){
-throw new Error('invariant requires an error message argument');}}
-
-
-
-if(!condition){
-var error;
-if(format === undefined){
-error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');}else 
-{
-var args=[a,b,c,d,e,f];
-var argIndex=0;
-error = new Error('Invariant Violation: ' + format.replace(/%s/g,function(){
-return args[argIndex++];}));}
-
-
-
-error.framesToPop = 1;
-throw error;}};
-
-
-
-module.exports = invariant;
 });
 __d('Profitti/src/data/songs.js',[],function(global, require, module, exports) {  module.exports = {
 "categories":[
@@ -54497,39 +53790,6 @@ __d('Profitti/src/data/songs.js',[],function(global, require, module, exports) {
 "lyrics":"Perseessä peukalo,\ntoinen kerta tänään jo.\nPuulta maistuu jo tää,\ntieheni käyn\n\nPerseessä peukalo,\ntoinen kerta tänään jo.\nAinainen naiminen vituttaa,\ntieheni käyn.\n\nPystyssä pippeli,\ntoinen kerta tänään jo.\nAinainen lötkötys vituttaa,\nPystyhyn käy!\n\nPerseessä melooni,\ntoinen kerta tänään jo.\nAinainen paine vituttaa,\npaskalle käy!",
 "category":"tuhmat"}]};
 });
-__d('Profitti/src/stores/MenuItemStore.js',["Profitti/src/constants/AppConstants.js","Profitti/src/stores/BaseStore.js","Profitti/src/data/menu.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
-
-var MENUITEMS_GET=require('Profitti/src/constants/AppConstants.js').MENUITEMS_GET;
-var BaseStore=require('Profitti/src/stores/BaseStore.js');
-var MenuItems=require('Profitti/src/data/menu.js');var 
-
-MenuItemStore=(function(_BaseStore){_inherits(MenuItemStore,_BaseStore);
-
-function MenuItemStore(){var _this=this;_classCallCheck(this,MenuItemStore);
-_get(Object.getPrototypeOf(MenuItemStore.prototype),'constructor',this).call(this);
-this.subscribe(function(){return _this._registerToAction.bind(_this);});
-this._menuItems = MenuItems;}_createClass(MenuItemStore,[{key:'_registerToAction',value:
-
-
-function _registerToAction(action){
-switch(action.actionType){
-case MENUITEMS_GET:
-this._menuItems = action.menuItems;
-this.emitChange();
-break;
-
-default:
-break;}}},{key:'getMenuItems',value:
-
-
-
-function getMenuItems(){
-return this._menuItems;}}]);return MenuItemStore;})(BaseStore);
-
-
-
-module.exports = new MenuItemStore();
-});
 __d('Profitti/src/data/menu.js',["Profitti/src/components/CategoryList.js","Profitti/src/components/Instructions.js","Profitti/src/components/About.js","Profitti/src/components/TrolInfo.js"],function(global, require, module, exports) {  var CategoryList=require('Profitti/src/components/CategoryList.js');
 var Instructions=require('Profitti/src/components/Instructions.js');
 var About=require('Profitti/src/components/About.js');
@@ -54559,10 +53819,11 @@ id:'TrolInfo',
 title:'TROL ry',
 component:TrolInfo}];
 });
-__d('Profitti/src/components/CategoryList.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SongList.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/CategoryList.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SongList.js","Profitti/src/data/songs.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 var React=require('react-native/Libraries/react-native/react-native.js');
-var SongList=require('Profitti/src/components/SongList.js');var 
+var SongList=require('Profitti/src/components/SongList.js');
+var Songs=require('Profitti/src/data/songs.js').songs;var 
 
 
 StyleSheet=
@@ -54628,12 +53889,13 @@ dataSource:dataSource.cloneWithRows(this.props.categories)};}_createClass(Catego
 
 
 function rowPressed(category,title){
-var songs=this.props.songs.filter(function(song){return song.category === category;});
+var songs=Songs.filter(function(song){return song.category === category;});
 this.props.navigator.push({
 title:title,
 component:SongList,
 passProps:{
-songs:songs}});}},{key:'renderRow',value:
+songs:songs,
+device:this.props.device}});}},{key:'renderRow',value:
 
 
 
@@ -54882,7 +54144,16 @@ React.createElement(View,{style:styles.container},
 React.createElement(Text,{style:styles.title},'Puheenjohtajan terveiset'),
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Arvon tradenomikollega,'),
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'onnittelen sinua, sillä edessäsi on maailman ensimmäinen tradenomiopiskelijaliiton laulukirja. En tiedä tuoksuuko edessä oleva kappaleesi tuoreelle painomusteelle vai sitseillä läikkyneelle snapsille, mutta tärkeintä ovat tulevat laulukerrat ja hyvät hetket, joita tämän kirjan ääressä tulet viettämään.'),
+
+
+
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Opiskelijalaulujen perinteet ovat olleet keskuudessamme jo pitkään, mutta vasta vuonna 2014 aloimme koota laulukirjaa niin tutuista kuin hieman tuoreemmistakin veisuista. Kokoamistyöstä tahdon erityisesti kiittää Tradenomiopiskelijaliiton vuoden 2014 liittohallitusta, joka teki Elias Lönnrotin kaltaista työtä kulkiessaan ja kerätessään lauluja kansien väliin. Suuri kiitos menee myös niille tradenomiopiskelijoille, jotka esittivät kappaleita tai ovat yksinkertaisesti olleet mukana laulamassa niitä. Lauluperinteemme ja kirjamme voima syntyy sen ahkerasta käytöstä, joten laulakaa!'),
+
+
+
+
+
+
 React.createElement(Text,{style:styles.text},'Anssi Ketopaikka'),
 React.createElement(Text,{style:styles.text},'puheenjohtaja'),
 React.createElement(Text,{style:styles.text},'Tradenomiopiskelijaliitto TROL ry')),
@@ -54894,8 +54165,18 @@ React.createElement(View,{style:styles.container},
 React.createElement(Text,{style:styles.title},'Laulukirjatyöryhmän terveiset'),
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Ave, tradenomi!'),
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Käsissäsi on pala historiaa: Tradenomiopiskelijaliitto TROL ry:n ensimmäinen laulukirja, Profitti. Profitti on tärkeä palanen tradenomi-identiteetin ja -perinteen ainaisessa kehityksessä. Sen kansien sisään on koottu tradenomiopiskelijoiden lauluja sekä paikallisyhdistysten perinteitä ympäri Suomen, ja kiitos tästä kuuluu kaikille työhön osallistuneille.'),
+
+
+
+
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Profitin myötä tradenomiopiskelijoiden kulttuuri saa yhden fyysisen muodon. Nyt voimme puhua meidän lauluista, meidän laulukirjasta ja meidän opiskelijakulttuurista. Tämän historiallisen teoksen myötä osa meidän yhteistä kulttuuriamme on ajan hampaan ja muistia pimentävien iltojen tavoittamattomissa. Samalla myös sinun vastuusi, hyvä lukija, tämän kulttuuriperinnön vaalimiseen ja levittämiseen on suurempi kuin koskaan.'),
+
+
+
+
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Kaikki ne hienot hetket, joissa tämä kirja on mukana, on osa tuota tradenomiopiskelijoiden kulttuuriperintöä. Me laulukirjatyöryhmän jäsenet luotammekin sinuun, että otat Profitista ja opiskeluajastasi kaiken irti!'),
+
+
 React.createElement(Text,{style:styles.text},'“To you from failing hands we throw the torch,'),
 React.createElement(Text,{style:[styles.text,styles.marginBottom]},'be yours to hold it high.” - In Flanders Fields'),
 React.createElement(Text,{style:styles.text},'Laulukirjatyöryhmä'),
@@ -54951,11 +54232,22 @@ return (
 React.createElement(ScrollView,{style:styles.background},
 React.createElement(View,{style:styles.container},
 React.createElement(Text,{style:styles.text},'Tradenomiopiskelijaliitto TROL ry on valtakunnallinen tradenomiopiskelijoiden edunvalvontajärjestö, jonka jäseneksi voivat liittyä kaikki tradenomi- ja BBA- opiskelijat. TROL on Tradenomiliitto TRAL ry:n itsenäinen jäsenliitto.'),
+
+
 React.createElement(Text,{style:styles.text},'Toimintamme keskittyy tradenomiopiskelijoiden ammatilliseen edunvalvontaan ja tutkintoidentiteetin vahvistamiseen. Olemme aidosti kiinnostuneita tutkintomme kehittämisestä, sen tunnettuuden kasvattamisesta sekä opiskelijoiden työelämätietouden lisäämisestä.'),
+
+
 React.createElement(Text,{style:styles.text},'Edunvalvonnassa keskeisiä painopistealueita ovat opiskeluajan koulutuspoliittiset kysymykset, urasuunnittelu sekä opiskelun ja työelämän yhteensovittaminen. '),
+
 React.createElement(Text,{style:styles.text},'Autamme jäseniämme esimerkiksi työharjoitteluun ja kesätöihin liittyvissä kysymyksissä. Lisäeväitä opiskelijan arkeen tuomme myös yhteisillä tapahtumilla, koulutuksilla, bileillä ja matkoilla!'),
+
+
 React.createElement(Text,{style:styles.text},'Toiminnasta vastaa vuosittain liittokokouksessa valittava hallitus, joka koostuu eri jäsenyhdistysten edustajista. Lisäksi toimintaa koordinoi liiton toiminnanjohtaja. Liitto toimii liittokokouksessa yhdessä päätetyn toimintasuunnitelman mukaisesti. TROL on perustettu vuonna 2002 ja jäseniä on yli 13 000.'),
+
+
+
 React.createElement(Text,{style:styles.text},'TROL vaikuttaa Tradenomiliitto TRAL ry:n toimintaan; edustajamme osallistuvat TRAL:n hallituksen, valtuuston sekä toimikuntien toimintaan.'),
+
 React.createElement(Text,{style:styles.text},'TROL on myös osa akavalaista korkeakouluopiskelijoiden yhteisöä; Akavan opiskelijoiden valtuuskunta edustaa yli 102 000 korkeakouluopiskelijaa ammattikorkeakoulu- ja yliopistosektorilla. TROL:n edustajat osallistuvat aktiivisesti Akavan opiskelijoiden toimintaan. '))));}}]);return TrolInfoPage;})(Component);
 
 
@@ -54963,64 +54255,9 @@ React.createElement(Text,{style:styles.text},'TROL on myös osa akavalaista kork
 
 
 
+
+
 module.exports = TrolInfoPage;
-});
-__d('Profitti/src/stores/CategoryStore.js',["Profitti/src/constants/AppConstants.js","Profitti/src/stores/BaseStore.js","Profitti/src/data/songs.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
-
-var CATEGORIES_GET=require('Profitti/src/constants/AppConstants.js').CATEGORIES_GET;
-var BaseStore=require('Profitti/src/stores/BaseStore.js');
-var Categories=require('Profitti/src/data/songs.js').categories;var 
-
-CategoryStore=(function(_BaseStore){_inherits(CategoryStore,_BaseStore);
-
-function CategoryStore(){var _this=this;_classCallCheck(this,CategoryStore);
-_get(Object.getPrototypeOf(CategoryStore.prototype),'constructor',this).call(this);
-this.subscribe(function(){return _this._registerToAction.bind(_this);});
-this._categories = Categories;}_createClass(CategoryStore,[{key:'_registerToAction',value:
-
-
-function _registerToAction(action){
-switch(action.actionType){
-case CATEGORIES_GET:
-this._categories = action.categories;
-this.emitChange();
-break;
-
-default:
-break;}}},{key:'getCategories',value:
-
-
-
-function getCategories(){
-return this._categories;}}]);return CategoryStore;})(BaseStore);
-
-
-
-module.exports = new CategoryStore();
-});
-__d('Profitti/src/services/SongService.js',["Profitti/src/actions/SongActions.js","Profitti/src/data/songs.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}
-
-var SongActions=require('Profitti/src/actions/SongActions.js');
-var SongData=require('Profitti/src/data/songs.js');var 
-
-SongService=(function(){function SongService(){_classCallCheck(this,SongService);}_createClass(SongService,[{key:'getSongs',value:
-function getSongs(){
-SongActions.gotSongs(SongData.songs);}}]);return SongService;})();
-
-
-
-module.exports = new SongService();
-});
-__d('Profitti/src/actions/SongActions.js',["Profitti/src/dispatchers/AppDispatcher.js","Profitti/src/constants/AppConstants.js"],function(global, require, module, exports) {  'use strict';
-
-var AppDispatcher=require('Profitti/src/dispatchers/AppDispatcher.js');
-var AppConstants=require('Profitti/src/constants/AppConstants.js');
-
-module.exports = {
-gotSongs:function(songs){
-AppDispatcher.dispatch({
-actionType:AppConstants.SONGS_GET,
-songs:songs});}};
 });
 __d('Profitti/src/components/NavigationBarRouteMapper.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';
 
@@ -55036,8 +54273,7 @@ React.PixelRatio;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=Re
 var styles=StyleSheet.create({
 navBarText:{
 fontSize:20,
-color:'#9EB741',
-marginTop:10},
+color:'#9EB741'},
 
 navBarLeftButton:{
 paddingLeft:10},

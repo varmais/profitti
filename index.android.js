@@ -27,8 +27,10 @@ var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', function () {
   if (_navigator.getCurrentRoutes().length > 1) {
     _navigator.pop();
+    return true;
+  } else {
+    BackAndroid.exitApp();
   }
-  return true;
 });
 
 class Profitti extends React.Component {
