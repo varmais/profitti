@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var styles = require('../modules/styles');
-var DATA_KEY = 'profitti_songs_data';
+var DataService = require('../modules/DataService');
 var {
   StyleSheet,
   Component,
@@ -17,13 +17,7 @@ var {
 class AboutPage extends Component {
 
   updateSongs() {
-    var url = 'http://proffi.herokuapp.com/';
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        AsyncStorage.setItem(DATA_KEY, JSON.stringify(data));
-      })
-      .catch(err => console.log(err));
+    DataService.updateData();
   }
 
   render() {

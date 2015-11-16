@@ -1,16 +1,13 @@
 'use strict';
 
 var React = require('react-native');
-
 var SearchViewButton = require('./SearchViewButton');
 var MenuViewButton = require('./MenuViewButton');
-
 var Categories = require('../data/songs').categories;
 var Songs = require('../data/songs').songs;
 var MenuItems = require('../data/menu');
 var styles = require('../modules/styles');
-var DATA_KEY = 'profitti_songs_data';
-
+var DataService = require('../modules/DataService');
 var {
   Component,
   View,
@@ -36,27 +33,20 @@ class Dashboard extends Component {
   }
 
   getSongs() {
-    var url = 'http://proffi.herokuapp.com/';
-    AsyncStorage.getItem(DATA_KEY).then(songData => {
-      if (songData) {
-        this.setState(JSON.parse(songData));
-      } else {
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            this.setState(data);
-            AsyncStorage.setItem(DATA_KEY, JSON.stringify(data));
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    });
+    if (this.props.device !== 'ios') {
+      this.setState({
+        songs: Songs,
+        categories: Categories
+      });
+    } else {
+      DataService.getData().then(data => {
+        this.setState(data);
+      });
+    }
   }
 
   render() {
     var views = [];
-
     this.state.menuItems.forEach((item, index) => {
       if (item.id === 'SearchView') {
         views.push(<SearchViewButton
