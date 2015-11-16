@@ -1,52 +1,31 @@
 'use strict';
 
 var React = require('react-native');
-
+var styles = require('../modules/styles');
+var DATA_KEY = 'profitti_songs_data';
 var {
   StyleSheet,
   Component,
   View,
   Text,
   ScrollView,
-  PixelRatio
+  PixelRatio,
+  AsyncStorage,
+  TouchableOpacity
   } = React;
 
-var styles = StyleSheet.create({
-  background: {
-    backgroundColor: '#000000',
-    paddingTop: 60,
-    paddingLeft: 20,
-    paddingRight: 20,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  container: {
-    paddingTop: 20,
-    marginBottom: 80
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 20
-  },
-  text: {
-    fontSize: 16,
-    color: '#ffffff'
-  },
-  marginBottom: {
-    marginBottom: 20
-  },
-  separator: {
-    height: 1 / PixelRatio.get(),
-    backgroundColor: '#ffffff'
-  }
-});
-
 class AboutPage extends Component {
+
+  updateSongs() {
+    var url = 'http://proffi.herokuapp.com/';
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        AsyncStorage.setItem(DATA_KEY, JSON.stringify(data));
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <ScrollView style={styles.background}>
@@ -69,7 +48,7 @@ class AboutPage extends Component {
           <Text style={styles.text}>Tradenomiopiskelijaliitto TROL ry</Text>
         </View>
 
-        <View style={styles.separator}/>
+        <View style={styles.textSeparator}/>
 
         <View style={styles.container}>
           <Text style={styles.title}>Laulukirjatyöryhmän terveiset</Text>
@@ -93,6 +72,14 @@ class AboutPage extends Component {
           <Text style={styles.text}>Osmo Ahonen</Text>
           <Text style={styles.text}>Hannes Leppäkangas</Text>
           <Text style={styles.text}>Teemu Tiilikainen</Text>
+        </View>
+
+        <View style={styles.textSeparator}/>
+
+        <View style={styles.container}>
+          <TouchableOpacity onPress={this.updateSongs}>
+            <Text style={[styles.text, styles.marginBottom]}>Päivitä sanat</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );

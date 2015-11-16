@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var styles = require('../modules/styles');
 var {
   PixelRatio,
   StyleSheet,
@@ -8,19 +9,6 @@ var {
   View,
   TouchableOpacity,
   } = React;
-
-var styles = StyleSheet.create({
-  navBarText: {
-    fontSize: 20,
-    color: '#9EB741'
-  },
-  navBarLeftButton: {
-    paddingLeft: 10
-  },
-  arrow: {
-    fontSize: 24
-  }
-});
 
 module.exports = {
   LeftButton: function (route, navigator, index, navState) {

@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var SongList = require('./SongList');
-
+var styles = require('../modules/styles');
 var {
   Component,
   View,
@@ -12,19 +12,6 @@ var {
   TextInput,
   StyleSheet
   } = React;
-
-var styles = StyleSheet.create({
-  searchInput: {
-    height: 36,
-    padding: 4,
-    fontSize: 18,
-    borderWidth: 1,
-    borderColor: '#9EB741',
-    borderRadius: 8,
-    marginBottom: 25,
-    color: '#ffffff'
-  }
-});
 
 class SearchViewButton extends Component {
 

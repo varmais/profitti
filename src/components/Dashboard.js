@@ -8,6 +8,8 @@ var MenuViewButton = require('./MenuViewButton');
 var Categories = require('../data/songs').categories;
 var Songs = require('../data/songs').songs;
 var MenuItems = require('../data/menu');
+var styles = require('../modules/styles');
+var DATA_KEY = 'profitti_songs_data';
 
 var {
   Component,
@@ -15,47 +17,41 @@ var {
   Text,
   ScrollView,
   StyleSheet,
-  PixelRatio
+  PixelRatio,
+  AsyncStorage
   } = React;
-
-var styles = StyleSheet.create({
-  background: {
-    backgroundColor: '#000000',
-    paddingTop: 70,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 30,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  container: {
-    marginBottom: 60,
-    alignItems: 'center'
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#ffffff'
-  },
-  subtitle: {
-    fontSize: 15,
-    color: '#ffffff'
-  }
-});
 
 class Dashboard extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      songs: Songs,
-      categories: Categories,
+      songs: [],
+      categories: [],
       menuItems: MenuItems,
       searchString: ''
     };
+
+    this.getSongs();
+  }
+
+  getSongs() {
+    var url = 'http://proffi.herokuapp.com/';
+    AsyncStorage.getItem(DATA_KEY).then(songData => {
+      if (songData) {
+        this.setState(JSON.parse(songData));
+      } else {
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            this.setState(data);
+            AsyncStorage.setItem(DATA_KEY, JSON.stringify(data));
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
   }
 
   render() {
@@ -81,9 +77,9 @@ class Dashboard extends Component {
 
     return (
       <ScrollView style={styles.background} bounces={false}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Laulukirja Profitti</Text>
-          <Text style={styles.subtitle}>Tradenomiopiskelijaliitto TROL ry</Text>
+        <View style={[styles.container, styles.alignCenter]}>
+          <Text style={styles.mainTitle}>Laulukirja Profitti</Text>
+          <Text style={[styles.subtitle, styles.smallMarginBottom]}>Tradenomiopiskelijaliitto TROL ry</Text>
         </View>
         <View style={styles.container}>
           {views.map((view) => view)}

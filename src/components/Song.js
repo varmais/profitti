@@ -2,7 +2,8 @@
 
 var React = require('react-native');
 var Swiper = require('react-native-swiper');
-
+var Dimensions = require('Dimensions');
+var styles = require('../modules/styles');
 var {
   StyleSheet,
   Component,
@@ -11,41 +12,6 @@ var {
   ScrollView,
   PixelRatio
   } = React;
-
-var Dimensions = require('Dimensions');
-
-var styles = StyleSheet.create({
-  background: {
-    backgroundColor: '#000000',
-    paddingTop: 60,
-    paddingLeft: 20,
-    paddingRight: 20,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  container: {
-    paddingTop: 20,
-    marginBottom: 60
-  },
-  title: {
-    fontSize: 20,
-    color: '#ffffff',
-    marginBottom: 5
-  },
-  text: {
-    fontSize: 16,
-    color: '#ffffff',
-    marginBottom: 20
-  },
-  separator: {
-    height: 1 / PixelRatio.get(),
-    backgroundColor: '#ffffff',
-    marginBottom: 15
-  }
-});
 
 class Song extends Component {
 
@@ -70,9 +36,9 @@ class Song extends Component {
           return (
             <ScrollView style={styles.background} key={item.id}>
               <View style={styles.container}>
-                <Text style={styles.title}>{item.title}</Text>
+                <Text style={[styles.title, styles.smallMarginBottom]}>{item.title}</Text>
                 <View style={styles.separator}/>
-                <Text style={styles.text}>{item.lyrics}</Text>
+                <Text style={[styles.text, styles.marginBottom]}>{item.lyrics}</Text>
               </View>
             </ScrollView>
           );

@@ -3,7 +3,7 @@
 var React = require('react-native');
 var SongList = require('./SongList');
 var Songs = require('../data/songs').songs;
-
+var styles = require('../modules/styles');
 var {
   StyleSheet,
   Component,
@@ -12,48 +12,6 @@ var {
   ListView,
   TouchableHighlight
   } = React;
-
-var styles = StyleSheet.create({
-  background: {
-    backgroundColor: '#000000',
-    paddingTop: 70,
-    paddingLeft: 20,
-    paddingRight: 20,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  container: {
-    marginBottom: 5
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#ffffff'
-  },
-  subtitle: {
-    fontSize: 15,
-    color: '#ffffff'
-  },
-  listText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center',
-    fontWeight: 'bold'
-  },
-  listItem: {
-    height: 32,
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#000000',
-    borderWidth: 0,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'flex-start'
-  }
-});
 
 class CategoryList extends Component {
 
@@ -97,7 +55,7 @@ class CategoryList extends Component {
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow.bind(this)}
-          style={styles.container}/>
+          style={styles.smallMarginBottom}/>
       </View>
     );
   }
