@@ -52229,17 +52229,16 @@ Object.keys(componentOrElement));}
 
 module.exports = findDOMNode;
 });
-__d('Profitti/src/components/Dashboard.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SearchViewButton.js","Profitti/src/components/MenuViewButton.js","Profitti/src/data/songs.js","Profitti/src/data/songs.js","Profitti/src/data/menu.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/Dashboard.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SearchViewButton.js","Profitti/src/components/MenuViewButton.js","Profitti/src/data/songs.js","Profitti/src/data/songs.js","Profitti/src/data/menu.js","Profitti/src/modules/styles.js","Profitti/src/modules/DataService.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 var React=require('react-native/Libraries/react-native/react-native.js');
-
 var SearchViewButton=require('Profitti/src/components/SearchViewButton.js');
 var MenuViewButton=require('Profitti/src/components/MenuViewButton.js');
-
 var Categories=require('Profitti/src/data/songs.js').categories;
 var Songs=require('Profitti/src/data/songs.js').songs;
-var MenuItems=require('Profitti/src/data/menu.js');var 
-
+var MenuItems=require('Profitti/src/data/menu.js');
+var styles=require('Profitti/src/modules/styles.js');
+var DataService=require('Profitti/src/modules/DataService.js');var 
 
 Component=
 
@@ -52247,74 +52246,83 @@ Component=
 
 
 
-React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var StyleSheet=React.StyleSheet;var PixelRatio=React.PixelRatio;
 
-var styles=StyleSheet.create({
-background:{
-backgroundColor:'#000000',
-paddingTop:70,
-paddingLeft:30,
-paddingRight:30,
-paddingBottom:30,
-position:'absolute',
-top:0,
-bottom:0,
-left:0,
-right:0},
-
-container:{
-marginBottom:60,
-alignItems:'center'},
-
-title:{
-fontSize:30,
-fontWeight:'bold',
-color:'#ffffff'},
-
-subtitle:{
-fontSize:15,
-color:'#ffffff'}});var 
-
-
+React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var StyleSheet=React.StyleSheet;var PixelRatio=React.PixelRatio;var AsyncStorage=React.AsyncStorage;var 
 
 Dashboard=(function(_Component){_inherits(Dashboard,_Component);
 
 function Dashboard(props){_classCallCheck(this,Dashboard);
 _get(Object.getPrototypeOf(Dashboard.prototype),'constructor',this).call(this,props);
+if(this.props.device !== 'ios'){
 this.state = {
 songs:Songs,
 categories:Categories,
 menuItems:MenuItems,
-searchString:''};}_createClass(Dashboard,[{key:'render',value:
+searchString:''};}else 
+
+{
+this.state = {
+songs:[],
+categories:[],
+menuItems:MenuItems,
+searchString:''};
+
+
+this.getSongs();}}_createClass(Dashboard,[{key:'getSongs',value:
 
 
 
-function render(){var _this=this;
+function getSongs(){var _this=this;
+if(this.props.device === 'ios'){
+DataService.getData().then(function(data){
+if(data){
+_this.setState(data);}else 
+{
+DataService.fetchData().then(function(data){
+_this.setState(data);
+DataService.saveData(data);});}});}else 
+
+
+
+{
+this.setState({
+songs:Songs,
+categories:Categories});}}},{key:'componentDidUpdate',value:
+
+
+
+
+function componentDidUpdate(){
+if(this.props.device === 'ios' && !this.state.songs.length){
+this.getSongs();}}},{key:'render',value:
+
+
+
+function render(){var _this2=this;
 var views=[];
-
 this.state.menuItems.forEach(function(item,index){
 if(item.id === 'SearchView'){
 views.push(React.createElement(SearchViewButton,{
-navigator:_this.props.navigator,
-songs:_this.state.songs,
+navigator:_this2.props.navigator,
+songs:_this2.state.songs,
 item:item,
 key:index,
-device:_this.props.device}));}else 
+device:_this2.props.device}));}else 
 {
 views.push(React.createElement(MenuViewButton,{
-navigator:_this.props.navigator,
+navigator:_this2.props.navigator,
 item:item,
-categories:_this.state.categories,
+categories:_this2.state.categories,
 key:index,
-device:_this.props.device}));}});
+device:_this2.props.device}));}});
 
 
 
 return (
 React.createElement(ScrollView,{style:styles.background,bounces:false},
-React.createElement(View,{style:styles.container},
-React.createElement(Text,{style:styles.title},'Laulukirja Profitti'),
-React.createElement(Text,{style:styles.subtitle},'Tradenomiopiskelijaliitto TROL ry')),
+React.createElement(View,{style:[styles.container,styles.alignCenter]},
+React.createElement(Text,{style:styles.mainTitle},'Laulukirja Profitti'),
+React.createElement(Text,{style:[styles.subtitle,styles.smallMarginBottom]},'Tradenomiopiskelijaliitto TROL ry')),
 
 React.createElement(View,{style:styles.container},
 views.map(function(view){return view;}))));}}]);return Dashboard;})(Component);
@@ -52326,11 +52334,11 @@ views.map(function(view){return view;}))));}}]);return Dashboard;})(Component);
 
 module.exports = Dashboard;
 });
-__d('Profitti/src/components/SearchViewButton.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SongList.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/SearchViewButton.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SongList.js","Profitti/src/modules/styles.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 var React=require('react-native/Libraries/react-native/react-native.js');
-var SongList=require('Profitti/src/components/SongList.js');var 
-
+var SongList=require('Profitti/src/components/SongList.js');
+var styles=require('Profitti/src/modules/styles.js');var 
 
 Component=
 
@@ -52339,20 +52347,7 @@ Component=
 
 
 
-React.Component;var View=React.View;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var ScrollView=React.ScrollView;var TextInput=React.TextInput;var StyleSheet=React.StyleSheet;
-
-var styles=StyleSheet.create({
-searchInput:{
-height:36,
-padding:4,
-fontSize:18,
-borderWidth:1,
-borderColor:'#9EB741',
-borderRadius:8,
-marginBottom:25,
-color:'#ffffff'}});var 
-
-
+React.Component;var View=React.View;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var ScrollView=React.ScrollView;var TextInput=React.TextInput;var StyleSheet=React.StyleSheet;var 
 
 SearchViewButton=(function(_Component){_inherits(SearchViewButton,_Component);
 
@@ -52404,11 +52399,11 @@ key:this.props.item.id}));}}]);return SearchViewButton;})(Component);
 
 module.exports = SearchViewButton;
 });
-__d('Profitti/src/components/SongList.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/Song.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/SongList.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/Song.js","Profitti/src/modules/styles.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 var React=require('react-native/Libraries/react-native/react-native.js');
-var Song=require('Profitti/src/components/Song.js');var 
-
+var Song=require('Profitti/src/components/Song.js');
+var styles=require('Profitti/src/modules/styles.js');var 
 
 StyleSheet=
 
@@ -52416,49 +52411,7 @@ StyleSheet=
 
 
 
-React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ListView=React.ListView;var TouchableHighlight=React.TouchableHighlight;
-
-var styles=StyleSheet.create({
-background:{
-backgroundColor:'#000000',
-paddingTop:70,
-paddingLeft:20,
-paddingRight:20,
-position:'absolute',
-top:0,
-bottom:0,
-left:0,
-right:0},
-
-container:{
-marginBottom:5},
-
-title:{
-fontSize:30,
-fontWeight:'bold',
-color:'#ffffff'},
-
-subtitle:{
-fontSize:15,
-color:'#ffffff'},
-
-listText:{
-fontSize:18,
-color:'white',
-alignSelf:'center',
-fontWeight:'bold'},
-
-listItem:{
-height:32,
-flex:1,
-flexDirection:'row',
-backgroundColor:'#000000',
-borderWidth:0,
-marginBottom:10,
-alignSelf:'stretch',
-justifyContent:'flex-start'}});var 
-
-
+React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ListView=React.ListView;var TouchableHighlight=React.TouchableHighlight;var 
 
 SongList=(function(_Component){_inherits(SongList,_Component);
 
@@ -52507,7 +52460,7 @@ React.createElement(View,{style:styles.background},
 React.createElement(ListView,{
 dataSource:this.state.dataSource,
 renderRow:this.renderRow.bind(this),
-style:styles.container})));}}]);return SongList;})(Component);
+style:styles.smallMarginBottom})));}}]);return SongList;})(Component);
 
 
 
@@ -52515,11 +52468,12 @@ style:styles.container})));}}]);return SongList;})(Component);
 
 module.exports = SongList;
 });
-__d('Profitti/src/components/Song.js',["react-native/Libraries/react-native/react-native.js","react-native-swiper/dist/index.js","Dimensions"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/Song.js',["react-native/Libraries/react-native/react-native.js","react-native-swiper/dist/index.js","Dimensions","Profitti/src/modules/styles.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 var React=require('react-native/Libraries/react-native/react-native.js');
-var Swiper=require('react-native-swiper/dist/index.js');var 
-
+var Swiper=require('react-native-swiper/dist/index.js');
+var Dimensions=require('Dimensions');
+var styles=require('Profitti/src/modules/styles.js');var 
 
 StyleSheet=
 
@@ -52527,42 +52481,7 @@ StyleSheet=
 
 
 
-React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var PixelRatio=React.PixelRatio;
-
-var Dimensions=require('Dimensions');
-
-var styles=StyleSheet.create({
-background:{
-backgroundColor:'#000000',
-paddingTop:60,
-paddingLeft:20,
-paddingRight:20,
-position:'absolute',
-top:0,
-bottom:0,
-left:0,
-right:0},
-
-container:{
-paddingTop:20,
-marginBottom:60},
-
-title:{
-fontSize:20,
-color:'#ffffff',
-marginBottom:5},
-
-text:{
-fontSize:16,
-color:'#ffffff',
-marginBottom:20},
-
-separator:{
-height:1 / PixelRatio.get(),
-backgroundColor:'#ffffff',
-marginBottom:15}});var 
-
-
+React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var PixelRatio=React.PixelRatio;var 
 
 Song=(function(_Component){_inherits(Song,_Component);
 
@@ -52587,9 +52506,9 @@ this.props.songs.map(function(item){
 return (
 React.createElement(ScrollView,{style:styles.background,key:item.id},
 React.createElement(View,{style:styles.container},
-React.createElement(Text,{style:styles.title},item.title),
+React.createElement(Text,{style:[styles.title,styles.smallMarginBottom]},item.title),
 React.createElement(View,{style:styles.separator}),
-React.createElement(Text,{style:styles.text},item.lyrics))));})));}}]);return Song;})(Component);
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},item.lyrics))));})));}}]);return Song;})(Component);
 
 
 
@@ -53101,6 +53020,122 @@ this.props.showsButtons && this.renderButtons());}});
 
 
 module.exports = exports['default'];
+});
+__d('Profitti/src/modules/styles.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+
+StyleSheet=
+
+React.StyleSheet;var PixelRatio=React.PixelRatio;
+
+module.exports = StyleSheet.create({
+background:{
+backgroundColor:'#000000',
+paddingTop:70,
+paddingLeft:20,
+paddingRight:20,
+paddingBottom:30,
+position:'absolute',
+top:0,
+bottom:0,
+left:0,
+right:0},
+
+container:{
+paddingTop:20,
+marginBottom:60},
+
+title:{
+fontSize:20,
+fontWeight:'bold',
+color:'#ffffff',
+marginBottom:20},
+
+smallTitle:{
+fontSize:16,
+fontWeight:'bold',
+color:'#ffffff',
+marginBottom:20},
+
+text:{
+fontSize:16,
+color:'#ffffff'},
+
+
+smallMarginBottom:{
+marginBottom:5},
+
+marginBottom:{
+marginBottom:20},
+
+alignCenter:{
+alignItems:'center'},
+
+
+textSeparator:{
+height:1 / PixelRatio.get(),
+backgroundColor:'#ffffff'},
+
+
+mainTitle:{
+fontSize:30,
+fontWeight:'bold',
+color:'#ffffff'},
+
+subtitle:{
+fontSize:15,
+color:'#ffffff'},
+
+
+listText:{
+fontSize:18,
+color:'white',
+alignSelf:'center',
+fontWeight:'bold'},
+
+listItem:{
+height:32,
+flex:1,
+flexDirection:'row',
+backgroundColor:'#000000',
+borderWidth:0,
+marginBottom:10,
+alignSelf:'stretch',
+justifyContent:'flex-start'},
+
+
+lastContainer:{
+marginBottom:80},
+
+
+navBarText:{
+fontSize:20,
+color:'#9EB741'},
+
+navBarLeftButton:{
+paddingLeft:10},
+
+arrow:{
+fontSize:24},
+
+
+searchInput:{
+height:36,
+padding:4,
+fontSize:18,
+borderWidth:1,
+borderColor:'#9EB741',
+borderRadius:8,
+marginBottom:25,
+color:'#ffffff'},
+
+
+separator:{
+height:1 / PixelRatio.get(),
+backgroundColor:'#ffffff',
+marginBottom:15}});
 });
 __d('Profitti/src/components/MenuViewButton.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
@@ -53774,18 +53809,12 @@ __d('Profitti/src/data/songs.js',[],function(global, require, module, exports) {
 
 {
 "id":96,
-"title":"Jan Hoffman",
-"lyrics":":,: Jan Hoffman China sitseillä, ahaa, ahaa :,:\nJan Hoffman China sitseillä\nveti kossua suoraan pullosta, ahaa, ahaa, ahaa.\n\n:,: Jan Hoffman veti oikein vauhdilla, ahaa, ahaa :,:\nJan Hoffman veti oikein vauhdilla,\nsitä Atkinsin kossupulloa, ahaa, ahaa, ahaa\n\n:,: Jan Hoffman teki sitä seisaaltaan, ahaa, ahaa :,:\nJan Hoffman teki sitä seisaaltaan\neikä muut siitä olleet moksiskaan ahaa, ahaa, ahaa.\n\n:,: Ja nyt Jan Hoffmanista huomataan, ahaa, ahaa:,:\nJa nyt Jan Hoffmanista huomataan,\nettä kossupullon on vetänyt paljaaltaan, ahaa, ahaa, ahaa.\n\n:,: Jan Hoffman vessanpöntön vei, yök yök, yök yök :,:\nMutta yksi on ainoa murheenaan,\nettä laattaako taksimatkallaan yök yök, yök yök, yök yök.\n\n:,: Jan Hoffman -fanclub laajenee, jeejee, jeejee :,:\nJan Hoffman -fanclub laajenee,\nse laajenee ja laajenee, jeejee, jeejee, jeejee.",
-"category":"tuhmat"},
-
-{
-"id":97,
 "title":"Naidaan lampaita",
 "lyrics":":,: Naidaan lampaita, lampailla ei ole hampaita. :,:\n:,: Laita lammas rinteeseen, pistä sorkat saappaaseen,\ntyönnä sormi lampaan perseeseen. :,:\n\n:,: Naidaan lehmiä, lehmät eivät ehdi empiä. :,:\n:,: Laita kulli sieraimeen, niin sen kieli lipaisee,\nihanasti sinun kivekseen. :,:\n\n:,: Naidaan norsuja, norsut eivät käytä kortsuja. :,:\n:,: Ota pesti sirkukseen, liity ihmeperheeseen,\ntyönnä jalka norsun perseeseen. :,:\n\n:,: Naidaan poroja, porot ovat metsän horoja. :,:\n:,: Tartu kiinni sarvista, ota haju arvesta,\nvedä varvi koko tokasta. :,:\n\n:,: Naidaan majavaa, majavalta löytyy parrua. :,:\n:,: Ota kiinni hampaista, vedä parru padosta,\ntyönnä parru pikku majavaan. :,:\n\n:,: Naidaan lääkäärii, lääkäri tietää sinun tautisi. :,:\n:,: Ota pistos hauikseen, laita lääkäri kontilleen,\ntyönnä neula lääkärin perseeseen. :,:\n\n:,: Naidaan fukseja, fukseilla ei ole tauteja. :,:\n:,: Vie fuksi kotiisi, heitä sohvalle vattalleen,\ntyönnä kyrpä fuksin perseeseen. :,:\n\n:,: Naidaan mäyriä, mäyrien vehkeet ovat käyriä. :,:\n:,: Vedä mutka suoraksi, ota mäyrä huoraksi,\nsilloin saat sä kupan varmasti. :,:",
 "category":"tuhmat"},
 
 {
-"id":98,
+"id":97,
 "title":"Perseessä peukalo",
 "lyrics":"Perseessä peukalo,\ntoinen kerta tänään jo.\nPuulta maistuu jo tää,\ntieheni käyn\n\nPerseessä peukalo,\ntoinen kerta tänään jo.\nAinainen naiminen vituttaa,\ntieheni käyn.\n\nPystyssä pippeli,\ntoinen kerta tänään jo.\nAinainen lötkötys vituttaa,\nPystyhyn käy!\n\nPerseessä melooni,\ntoinen kerta tänään jo.\nAinainen paine vituttaa,\npaskalle käy!",
 "category":"tuhmat"}]};
@@ -53819,12 +53848,12 @@ id:'TrolInfo',
 title:'TROL ry',
 component:TrolInfo}];
 });
-__d('Profitti/src/components/CategoryList.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SongList.js","Profitti/src/data/songs.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/CategoryList.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/components/SongList.js","Profitti/src/data/songs.js","Profitti/src/modules/styles.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 var React=require('react-native/Libraries/react-native/react-native.js');
 var SongList=require('Profitti/src/components/SongList.js');
-var Songs=require('Profitti/src/data/songs.js').songs;var 
-
+var Songs=require('Profitti/src/data/songs.js').songs;
+var styles=require('Profitti/src/modules/styles.js');var 
 
 StyleSheet=
 
@@ -53832,49 +53861,7 @@ StyleSheet=
 
 
 
-React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ListView=React.ListView;var TouchableHighlight=React.TouchableHighlight;
-
-var styles=StyleSheet.create({
-background:{
-backgroundColor:'#000000',
-paddingTop:70,
-paddingLeft:20,
-paddingRight:20,
-position:'absolute',
-top:0,
-bottom:0,
-left:0,
-right:0},
-
-container:{
-marginBottom:5},
-
-title:{
-fontSize:30,
-fontWeight:'bold',
-color:'#ffffff'},
-
-subtitle:{
-fontSize:15,
-color:'#ffffff'},
-
-listText:{
-fontSize:18,
-color:'white',
-alignSelf:'center',
-fontWeight:'bold'},
-
-listItem:{
-height:32,
-flex:1,
-flexDirection:'row',
-backgroundColor:'#000000',
-borderWidth:0,
-marginBottom:10,
-alignSelf:'stretch',
-justifyContent:'flex-start'}});var 
-
-
+React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ListView=React.ListView;var TouchableHighlight=React.TouchableHighlight;var 
 
 CategoryList=(function(_Component){_inherits(CategoryList,_Component);
 
@@ -53918,7 +53905,7 @@ React.createElement(View,{style:styles.background},
 React.createElement(ListView,{
 dataSource:this.state.dataSource,
 renderRow:this.renderRow.bind(this),
-style:styles.container})));}}]);return CategoryList;})(Component);
+style:styles.smallMarginBottom})));}}]);return CategoryList;})(Component);
 
 
 
@@ -53926,159 +53913,127 @@ style:styles.container})));}}]);return CategoryList;})(Component);
 
 module.exports = CategoryList;
 });
-__d('Profitti/src/components/Instructions.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/Instructions.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/modules/styles.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-
+var React=require('react-native/Libraries/react-native/react-native.js');
+var styles=require('Profitti/src/modules/styles.js');var 
 
 StyleSheet=
 
 
 
 
-React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;
-
-var styles=StyleSheet.create({
-background:{
-backgroundColor:'#000000',
-paddingTop:60,
-paddingLeft:20,
-paddingRight:20,
-position:'absolute',
-top:0,
-bottom:0,
-left:0,
-right:0},
-
-container:{
-paddingTop:20,
-marginBottom:15},
-
-lastContainer:{
-marginBottom:80},
-
-title:{
-fontSize:16,
-fontWeight:'bold',
-color:'#ffffff',
-marginBottom:20},
-
-text:{
-fontSize:16,
-color:'#ffffff',
-marginBottom:5}});var 
-
-
+React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var 
 
 InstructionsPage=(function(_Component){_inherits(InstructionsPage,_Component);function InstructionsPage(){_classCallCheck(this,InstructionsPage);_get(Object.getPrototypeOf(InstructionsPage.prototype),'constructor',this).apply(this,arguments);}_createClass(InstructionsPage,[{key:'render',value:
 function render(){
 return (
 React.createElement(ScrollView,{style:styles.background},
-React.createElement(View,{style:styles.container},
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Saapuminen sitseille'),
-React.createElement(Text,{style:styles.text},'• Sitsit alkavat etukäteen ilmoitettuna aikana.'),
-React.createElement(Text,{style:styles.text},'• Sitseille on saavuttava ajoissa ilman akateemisia vapauksia, noin puoli tuntia ennen määräaikaa.'),
+React.createElement(Text,{style:[[styles.text,styles.smallMarginBottom],styles.smallMarginBottom]},'• Sitsit alkavat etukäteen ilmoitettuna aikana.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Sitseille on saavuttava ajoissa ilman akateemisia vapauksia, noin puoli tuntia ennen määräaikaa.'),
 
-React.createElement(Text,{style:styles.text},'• Myöhästyneet henkilöt pyytävät nöyrästi seremoniamestarilta lupaa paikalleen istumiseen ja heitä myöhemmin rangaistakoon asiaan kuuluvasti.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Myöhästyneet henkilöt pyytävät nöyrästi seremoniamestarilta lupaa paikalleen istumiseen ja heitä myöhemmin rangaistakoon asiaan kuuluvasti.'),
 
-React.createElement(Text,{style:styles.text},'• Laulun ja puheen aikana salissa ei liikuta.'),
-React.createElement(Text,{style:styles.text},'• Plaseerausta toteltakoon, ellei seremoniamestari toisin määrää.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Laulun ja puheen aikana salissa ei liikuta.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Plaseerausta toteltakoon, ellei seremoniamestari toisin määrää.')),
 
 
-React.createElement(View,{style:styles.container},
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Yleisesti'),
-React.createElement(Text,{style:styles.text},'• Illan korkea-arvoisin päättäjä on seremoniamestari. Hänen sanojaan kuultakoon ja noudatettakoon. Hänellä on ylin rangaistusvalta.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Illan korkea-arvoisin päättäjä on seremoniamestari. Hänen sanojaan kuultakoon ja noudatettakoon. Hänellä on ylin rangaistusvalta.'),
 
-React.createElement(Text,{style:styles.text},'• Isäntä/emäntä on keittiön ylin päällikkö. Hän huolehtii tarjoilusta ja allergioiden puhkeamattomuudesta yhdessä tarjoilijoiden kanssa.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Isäntä/emäntä on keittiön ylin päällikkö. Hän huolehtii tarjoilusta ja allergioiden puhkeamattomuudesta yhdessä tarjoilijoiden kanssa.'),
 
-React.createElement(Text,{style:styles.text},'• Seremoniamestarin ollessa kykenemätön toimimaan isäntä/emäntä hänen valtaansa käyttäköön.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Seremoniamestarin ollessa kykenemätön toimimaan isäntä/emäntä hänen valtaansa käyttäköön.'),
 
-React.createElement(Text,{style:styles.text},'• Seremoniamestari voi määrätä erityisiä pöytänatseja kielimään huonotapaisista vieraista. Pöytänatsilla on oikeus ehdottaa rangaistusta etiketti-rikkomusten mukaan.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Seremoniamestari voi määrätä erityisiä pöytänatseja kielimään huonotapaisista vieraista. Pöytänatsilla on oikeus ehdottaa rangaistusta etiketti-rikkomusten mukaan.'),
 
-React.createElement(Text,{style:styles.text},'• Edellä mainittujen ja muiden puhetta pitäessä kaikki vaietkoon rangaistuksen uhalla.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Edellä mainittujen ja muiden puhetta pitäessä kaikki vaietkoon rangaistuksen uhalla.'),
 
-React.createElement(Text,{style:styles.text},'• Kaikki kunnioittakoon ja olkoot kohteliaita toisilleen kurituksen uhalla.'),
-React.createElement(Text,{style:styles.text},'• Pöydästä ei tule poistua ilman painavaa syytä. Seremoniamestari voi myöntää luvan pöydästä poistumiseen pakottavan tarpeen niin vaatiessa, jolloin pöydästä poistutaan nöyrästi pöytäseurueelta anteeksi pyytäen.'),
-
-
-React.createElement(Text,{style:styles.text},'• Puheenvuoroa pyydettäessä käytetään asiaankuuluvia käytöstapoja.'),
-React.createElement(Text,{style:styles.text},'• Ohjelmanumeroita voi esittää vapaasti, mutta niihin on syytä pyytää lupa ennen tapahtuman alkua, ellei halua rangaistuksen uhalla uudelleen esiintyä.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Kaikki kunnioittakoon ja olkoot kohteliaita toisilleen kurituksen uhalla.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Pöydästä ei tule poistua ilman painavaa syytä. Seremoniamestari voi myöntää luvan pöydästä poistumiseen pakottavan tarpeen niin vaatiessa, jolloin pöydästä poistutaan nöyrästi pöytäseurueelta anteeksi pyytäen.'),
 
 
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Puheenvuoroa pyydettäessä käytetään asiaankuuluvia käytöstapoja.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Ohjelmanumeroita voi esittää vapaasti, mutta niihin on syytä pyytää lupa ennen tapahtuman alkua, ellei halua rangaistuksen uhalla uudelleen esiintyä.')),
 
-React.createElement(View,{style:styles.container},
+
+
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Ruokailusta'),
-React.createElement(Text,{style:styles.text},'• Jokainen syököön ruokansa lautaselta ja nauttikoon juomansa lasista, tölkistä tahi pullosta, ellei seremoniamestari toisin määrää.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Jokainen syököön ruokansa lautaselta ja nauttikoon juomansa lasista, tölkistä tahi pullosta, ellei seremoniamestari toisin määrää.'),
 
-React.createElement(Text,{style:styles.text},'• Ruoka on pureskeltava kunnolla, jottei se tukkisi lavuaaria.'),
-React.createElement(Text,{style:styles.text},'• Keskustelua älköön käytäkö pöydän alla muuten kuin pakottavan tarpeen johdosta.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Ruoka on pureskeltava kunnolla, jottei se tukkisi lavuaaria.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Keskustelua älköön käytäkö pöydän alla muuten kuin pakottavan tarpeen johdosta.')),
 
 
 
-React.createElement(View,{style:styles.container},
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Laulusta'),
-React.createElement(Text,{style:styles.text},'• Laulutoiveet ilmoitettakoon hyvissä ajoin seremoniamestarille.'),
-React.createElement(Text,{style:styles.text},'• Laulua ehdottava valmistautukoon aloittamaan laulun oikeassa sävelessä rangaistuksen uhalla. Hänen on ehdottomasti osallistuttava ja osattava ehdotettu laulu.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Laulutoiveet ilmoitettakoon hyvissä ajoin seremoniamestarille.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Laulua ehdottava valmistautukoon aloittamaan laulun oikeassa sävelessä rangaistuksen uhalla. Hänen on ehdottomasti osallistuttava ja osattava ehdotettu laulu.'),
 
-React.createElement(Text,{style:styles.text},'• Muut osallistukoon lauluun parhaan kykynsä mukaan.'),
-React.createElement(Text,{style:styles.text},'• ”Tempo” –huudahdus laulun tahtia nopeuttakoon hyvän maun rajoissa.'),
-React.createElement(Text,{style:styles.text},'• Ne, jotka ovat epävarmoja laulutaitonsa suhteen, pysytelkööt yhden tahdin edellä muita, jotta eivät laulun loppuessa jäisi muista jälkeen.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Muut osallistukoon lauluun parhaan kykynsä mukaan.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• ”Tempo” –huudahdus laulun tahtia nopeuttakoon hyvän maun rajoissa.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Ne, jotka ovat epävarmoja laulutaitonsa suhteen, pysytelkööt yhden tahdin edellä muita, jotta eivät laulun loppuessa jäisi muista jälkeen.'),
 
-React.createElement(Text,{style:styles.text},'• ”Mellansup” –huudahduksella juodaan yhden kerran omasta juomaastiasta. Mellansup voidaan huutaa esimerkiksi säkeistöjen välillä.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• ”Mellansup” –huudahduksella juodaan yhden kerran omasta juomaastiasta. Mellansup voidaan huutaa esimerkiksi säkeistöjen välillä.'),
 
-React.createElement(Text,{style:styles.text},'• Laulun alettua kukaan ei kurkkuaan kostuttakoon, paitsi laulun sitä vaatiessa, ja ruokaansa koskekoon.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Laulun alettua kukaan ei kurkkuaan kostuttakoon, paitsi laulun sitä vaatiessa, ja ruokaansa koskekoon.'),
 
-React.createElement(Text,{style:styles.text},'• Lauluja lauletaan runsaasti.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Lauluja lauletaan runsaasti.')),
 
 
-React.createElement(View,{style:styles.container},
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Maljoista'),
-React.createElement(Text,{style:styles.text},'• Skoolatessa herrat ensin kohottavat maljan pöytä-avecilleen, tämän jälkeen vierustoverilleen ja sitten avecilleen. Siis: oikea-vaseneteen. Neidit kohottavat maljan toisinpäin: vasen-oikea-eteen.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Skoolatessa herrat ensin kohottavat maljan pöytä-avecilleen, tämän jälkeen vierustoverilleen ja sitten avecilleen. Siis: oikea-vaseneteen. Neidit kohottavat maljan toisinpäin: vasen-oikea-eteen.'),
 
 
-React.createElement(Text,{style:styles.text},'• Jokainen on henkilökohtaisesti vastuussa juoma-astioiden nestetasapainosta. Tässä auttavat tarjoilijat, joita voidaan kutsua paikalle esimerkiksi lausumalla ”SNAPS!” selkeällä ja kuuluvalla äänellä.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Jokainen on henkilökohtaisesti vastuussa juoma-astioiden nestetasapainosta. Tässä auttavat tarjoilijat, joita voidaan kutsua paikalle esimerkiksi lausumalla ”SNAPS!” selkeällä ja kuuluvalla äänellä.'),
 
 
-React.createElement(Text,{style:styles.text},'• Yhteismaljaa ehdotettaessa pyydetään ensin puheenvuoro seremoniamestarilta.'),
-React.createElement(Text,{style:styles.text},'• Pöytäseurue voi kohottaa maljan keskenään, ei kuitenkaan muun ohjelman aikana.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Yhteismaljaa ehdotettaessa pyydetään ensin puheenvuoro seremoniamestarilta.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Pöytäseurue voi kohottaa maljan keskenään, ei kuitenkaan muun ohjelman aikana.'),
 
-React.createElement(Text,{style:styles.text},'• Maljan kohottamiseen vastattakoon aina samanlaisella lasilla.'),
-React.createElement(Text,{style:styles.text},'• Tyhjällä lasilla maljan kohottaminen on kiellettyä rangaistuksen uhalla.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Maljan kohottamiseen vastattakoon aina samanlaisella lasilla.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Tyhjällä lasilla maljan kohottaminen on kiellettyä rangaistuksen uhalla.')),
 
 
-React.createElement(View,{style:styles.container},
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Rangaistuksista'),
-React.createElement(Text,{style:styles.text},'• Ken sääntöjä rikkoo, siitä rangaistuksen joutukoon kärsimään.'),
-React.createElement(Text,{style:styles.text},'• Seremoniamestari valitsee rangaistuksia mielensä mukaan pöytänatsien ehdotuksesta tai isännän/emännän avustamana. Rangaistuksista ei voi valittaa.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Ken sääntöjä rikkoo, siitä rangaistuksen joutukoon kärsimään.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Seremoniamestari valitsee rangaistuksia mielensä mukaan pöytänatsien ehdotuksesta tai isännän/emännän avustamana. Rangaistuksista ei voi valittaa.'),
 
-React.createElement(Text,{style:styles.text},'• Rangaistusryypyt juotakoon aina tuolin päällä seisoen, jotta kaikki pahatapaisen kiusanhengen näkisivät.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Rangaistusryypyt juotakoon aina tuolin päällä seisoen, jotta kaikki pahatapaisen kiusanhengen näkisivät.')),
 
 
 
-React.createElement(View,{style:styles.container},
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Muuta'),
-React.createElement(Text,{style:styles.text},'• Jokainen olostaan nauttikoon ja hauskaa pitäköön.'),
-React.createElement(Text,{style:styles.text},'• Illan isäntää/emäntää ja tarjoilijoita kiitettäköön juhlien lopussa, esimerkiksi laululla.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Jokainen olostaan nauttikoon ja hauskaa pitäköön.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Illan isäntää/emäntää ja tarjoilijoita kiitettäköön juhlien lopussa, esimerkiksi laululla.')),
 
 
 
-React.createElement(View,{style:styles.container},
+React.createElement(View,{style:[styles.container,styles.marginBottom]},
 React.createElement(Text,{style:styles.title},'Vastuullisille'),
-React.createElement(Text,{style:styles.text},'• Pöydät laitettakoon valmiiksi hyvissä ajoin ennen sitsiväen saapumista. Plaseeraus tehdään pääasiassa tyttö-poika –periaatteella.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Pöydät laitettakoon valmiiksi hyvissä ajoin ennen sitsiväen saapumista. Plaseeraus tehdään pääasiassa tyttö-poika –periaatteella.'),
 
-React.createElement(Text,{style:styles.text},'• Aikataulu on suunniteltava joustavaksi, sillä erinäiset viivästykset ovat illan aikana odotettavissa.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Aikataulu on suunniteltava joustavaksi, sillä erinäiset viivästykset ovat illan aikana odotettavissa.'),
 
-React.createElement(Text,{style:styles.text},'• Säädökset on tehty seremoniamestarin tueksi ja hän voi niitä halutessaan soveltaa.')),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Säädökset on tehty seremoniamestarin tueksi ja hän voi niitä halutessaan soveltaa.')),
 
 
 
 React.createElement(View,{style:[styles.container,styles.lastContainer]},
 React.createElement(Text,{style:styles.title},'Seremoniamestarille'),
-React.createElement(Text,{style:styles.text},'• Rangaistuksia jaettakoon sääntöjen rikkomisesta, myöhästymisestä, häiritsevästä käyttäytymisestä ym. rikkomuksista.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Rangaistuksia jaettakoon sääntöjen rikkomisesta, myöhästymisestä, häiritsevästä käyttäytymisestä ym. rikkomuksista.'),
 
-React.createElement(Text,{style:styles.text},'• Hyväksi todettuja rangaistusmetodeja ovat mm. runonlausunta, yhteislaulu, näytelmä, alkoholiton juotava jne. sekä lievissä rikkomuksissa alkoholillinen snapsi.'),
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Hyväksi todettuja rangaistusmetodeja ovat mm. runonlausunta, yhteislaulu, näytelmä, alkoholiton juotava jne. sekä lievissä rikkomuksissa alkoholillinen snapsi.'),
 
-React.createElement(Text,{style:styles.text},'• Seremoniamestari päättäköön rangaistusten täytäntöönpanosta ja voi soveltaa harkintansa mukaan rangaistuksia hyvän maun rajoissa.'))));}}]);return InstructionsPage;})(Component);
+React.createElement(Text,{style:[styles.text,styles.smallMarginBottom]},'• Seremoniamestari päättäköön rangaistusten täytäntöönpanosta ja voi soveltaa harkintansa mukaan rangaistuksia hyvän maun rajoissa.'))));}}]);return InstructionsPage;})(Component);
 
 
 
@@ -54088,10 +54043,11 @@ React.createElement(Text,{style:styles.text},'• Seremoniamestari päättäkö�
 
 module.exports = InstructionsPage;
 });
-__d('Profitti/src/components/About.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/components/About.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/modules/styles.js","Profitti/src/modules/DataService.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-
+var React=require('react-native/Libraries/react-native/react-native.js');
+var styles=require('Profitti/src/modules/styles.js');
+var DataService=require('Profitti/src/modules/DataService.js');var 
 
 StyleSheet=
 
@@ -54099,44 +54055,16 @@ StyleSheet=
 
 
 
-React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var PixelRatio=React.PixelRatio;
-
-var styles=StyleSheet.create({
-background:{
-backgroundColor:'#000000',
-paddingTop:60,
-paddingLeft:20,
-paddingRight:20,
-position:'absolute',
-top:0,
-bottom:0,
-left:0,
-right:0},
-
-container:{
-paddingTop:20,
-marginBottom:80},
-
-title:{
-fontSize:20,
-fontWeight:'bold',
-color:'#ffffff',
-marginBottom:20},
-
-text:{
-fontSize:16,
-color:'#ffffff'},
-
-marginBottom:{
-marginBottom:20},
-
-separator:{
-height:1 / PixelRatio.get(),
-backgroundColor:'#ffffff'}});var 
 
 
+React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var PixelRatio=React.PixelRatio;var AsyncStorage=React.AsyncStorage;var TouchableOpacity=React.TouchableOpacity;var 
 
-AboutPage=(function(_Component){_inherits(AboutPage,_Component);function AboutPage(){_classCallCheck(this,AboutPage);_get(Object.getPrototypeOf(AboutPage.prototype),'constructor',this).apply(this,arguments);}_createClass(AboutPage,[{key:'render',value:
+AboutPage=(function(_Component){_inherits(AboutPage,_Component);function AboutPage(){_classCallCheck(this,AboutPage);_get(Object.getPrototypeOf(AboutPage.prototype),'constructor',this).apply(this,arguments);}_createClass(AboutPage,[{key:'updateSongs',value:
+
+function updateSongs(){
+DataService.updateData();}},{key:'render',value:
+
+
 function render(){
 return (
 React.createElement(ScrollView,{style:styles.background},
@@ -54159,7 +54087,7 @@ React.createElement(Text,{style:styles.text},'puheenjohtaja'),
 React.createElement(Text,{style:styles.text},'Tradenomiopiskelijaliitto TROL ry')),
 
 
-React.createElement(View,{style:styles.separator}),
+React.createElement(View,{style:styles.textSeparator}),
 
 React.createElement(View,{style:styles.container},
 React.createElement(Text,{style:styles.title},'Laulukirjatyöryhmän terveiset'),
@@ -54182,7 +54110,15 @@ React.createElement(Text,{style:[styles.text,styles.marginBottom]},'be yours to 
 React.createElement(Text,{style:styles.text},'Laulukirjatyöryhmä'),
 React.createElement(Text,{style:styles.text},'Osmo Ahonen'),
 React.createElement(Text,{style:styles.text},'Hannes Leppäkangas'),
-React.createElement(Text,{style:styles.text},'Teemu Tiilikainen'))));}}]);return AboutPage;})(Component);
+React.createElement(Text,{style:styles.text},'Teemu Tiilikainen')),
+
+
+React.createElement(View,{style:styles.textSeparator}),
+
+React.createElement(View,{style:styles.container},
+React.createElement(TouchableOpacity,{onPress:this.updateSongs},
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Päivitä sanat')))));}}]);return AboutPage;})(Component);
+
 
 
 
@@ -54191,64 +54127,69 @@ React.createElement(Text,{style:styles.text},'Teemu Tiilikainen'))));}}]);return
 
 module.exports = AboutPage;
 });
-__d('Profitti/src/components/TrolInfo.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('Profitti/src/modules/DataService.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';
+var React=require('react-native/Libraries/react-native/react-native.js');
+var AsyncStorage=React.AsyncStorage;
+var url='http://proffi.herokuapp.com/';
+var DATA_KEY='profitti_songs_data';
 
-var React=require('react-native/Libraries/react-native/react-native.js');var 
+module.exports = {
+getData:function(){
+return AsyncStorage.getItem(DATA_KEY).then(function(songData){
+if(songData){
+return JSON.parse(songData);}});},
 
+
+
+
+saveData:function(data){
+AsyncStorage.setItem(DATA_KEY,JSON.stringify(data));},
+
+
+fetchData:function(){
+return fetch(url).
+then(function(response){return response.json();});},
+
+
+updateData:function(){var _this=this;
+AsyncStorage.removeItem(DATA_KEY).then(function(){
+_this.getData();});}};
+});
+__d('Profitti/src/components/TrolInfo.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/modules/styles.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(object,property,receiver){if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {return get(parent,property,receiver);}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+
+var React=require('react-native/Libraries/react-native/react-native.js');
+var styles=require('Profitti/src/modules/styles.js');var 
 
 StyleSheet=
 
 
 
 
-React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;
-
-var styles=StyleSheet.create({
-background:{
-backgroundColor:'#000000',
-paddingTop:60,
-paddingLeft:20,
-paddingRight:20,
-position:'absolute',
-top:0,
-bottom:0,
-left:0,
-right:0},
-
-container:{
-paddingTop:20,
-marginBottom:60},
-
-text:{
-fontSize:16,
-color:'#ffffff',
-marginBottom:20}});var 
-
-
+React.StyleSheet;var Component=React.Component;var View=React.View;var Text=React.Text;var ScrollView=React.ScrollView;var 
 
 TrolInfoPage=(function(_Component){_inherits(TrolInfoPage,_Component);function TrolInfoPage(){_classCallCheck(this,TrolInfoPage);_get(Object.getPrototypeOf(TrolInfoPage.prototype),'constructor',this).apply(this,arguments);}_createClass(TrolInfoPage,[{key:'render',value:
 function render(){
 return (
 React.createElement(ScrollView,{style:styles.background},
 React.createElement(View,{style:styles.container},
-React.createElement(Text,{style:styles.text},'Tradenomiopiskelijaliitto TROL ry on valtakunnallinen tradenomiopiskelijoiden edunvalvontajärjestö, jonka jäseneksi voivat liittyä kaikki tradenomi- ja BBA- opiskelijat. TROL on Tradenomiliitto TRAL ry:n itsenäinen jäsenliitto.'),
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Tradenomiopiskelijaliitto TROL ry on valtakunnallinen tradenomiopiskelijoiden edunvalvontajärjestö, jonka jäseneksi voivat liittyä kaikki tradenomi- ja BBA- opiskelijat. TROL on Tradenomiliitto TRAL ry:n itsenäinen jäsenliitto.'),
 
 
-React.createElement(Text,{style:styles.text},'Toimintamme keskittyy tradenomiopiskelijoiden ammatilliseen edunvalvontaan ja tutkintoidentiteetin vahvistamiseen. Olemme aidosti kiinnostuneita tutkintomme kehittämisestä, sen tunnettuuden kasvattamisesta sekä opiskelijoiden työelämätietouden lisäämisestä.'),
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Toimintamme keskittyy tradenomiopiskelijoiden ammatilliseen edunvalvontaan ja tutkintoidentiteetin vahvistamiseen. Olemme aidosti kiinnostuneita tutkintomme kehittämisestä, sen tunnettuuden kasvattamisesta sekä opiskelijoiden työelämätietouden lisäämisestä.'),
 
 
-React.createElement(Text,{style:styles.text},'Edunvalvonnassa keskeisiä painopistealueita ovat opiskeluajan koulutuspoliittiset kysymykset, urasuunnittelu sekä opiskelun ja työelämän yhteensovittaminen. '),
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Edunvalvonnassa keskeisiä painopistealueita ovat opiskeluajan koulutuspoliittiset kysymykset, urasuunnittelu sekä opiskelun ja työelämän yhteensovittaminen. '),
 
-React.createElement(Text,{style:styles.text},'Autamme jäseniämme esimerkiksi työharjoitteluun ja kesätöihin liittyvissä kysymyksissä. Lisäeväitä opiskelijan arkeen tuomme myös yhteisillä tapahtumilla, koulutuksilla, bileillä ja matkoilla!'),
-
-
-React.createElement(Text,{style:styles.text},'Toiminnasta vastaa vuosittain liittokokouksessa valittava hallitus, joka koostuu eri jäsenyhdistysten edustajista. Lisäksi toimintaa koordinoi liiton toiminnanjohtaja. Liitto toimii liittokokouksessa yhdessä päätetyn toimintasuunnitelman mukaisesti. TROL on perustettu vuonna 2002 ja jäseniä on yli 13 000.'),
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Autamme jäseniämme esimerkiksi työharjoitteluun ja kesätöihin liittyvissä kysymyksissä. Lisäeväitä opiskelijan arkeen tuomme myös yhteisillä tapahtumilla, koulutuksilla, bileillä ja matkoilla!'),
 
 
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'Toiminnasta vastaa vuosittain liittokokouksessa valittava hallitus, joka koostuu eri jäsenyhdistysten edustajista. Lisäksi toimintaa koordinoi liiton toiminnanjohtaja. Liitto toimii liittokokouksessa yhdessä päätetyn toimintasuunnitelman mukaisesti. TROL on perustettu vuonna 2002 ja jäseniä on yli 13 000.'),
 
-React.createElement(Text,{style:styles.text},'TROL vaikuttaa Tradenomiliitto TRAL ry:n toimintaan; edustajamme osallistuvat TRAL:n hallituksen, valtuuston sekä toimikuntien toimintaan.'),
 
-React.createElement(Text,{style:styles.text},'TROL on myös osa akavalaista korkeakouluopiskelijoiden yhteisöä; Akavan opiskelijoiden valtuuskunta edustaa yli 102 000 korkeakouluopiskelijaa ammattikorkeakoulu- ja yliopistosektorilla. TROL:n edustajat osallistuvat aktiivisesti Akavan opiskelijoiden toimintaan. '))));}}]);return TrolInfoPage;})(Component);
+
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'TROL vaikuttaa Tradenomiliitto TRAL ry:n toimintaan; edustajamme osallistuvat TRAL:n hallituksen, valtuuston sekä toimikuntien toimintaan.'),
+
+React.createElement(Text,{style:[styles.text,styles.marginBottom]},'TROL on myös osa akavalaista korkeakouluopiskelijoiden yhteisöä; Akavan opiskelijoiden valtuuskunta edustaa yli 102 000 korkeakouluopiskelijaa ammattikorkeakoulu- ja yliopistosektorilla. TROL:n edustajat osallistuvat aktiivisesti Akavan opiskelijoiden toimintaan. '))));}}]);return TrolInfoPage;})(Component);
 
 
 
@@ -54259,9 +54200,10 @@ React.createElement(Text,{style:styles.text},'TROL on myös osa akavalaista kork
 
 module.exports = TrolInfoPage;
 });
-__d('Profitti/src/components/NavigationBarRouteMapper.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';
+__d('Profitti/src/components/NavigationBarRouteMapper.js',["react-native/Libraries/react-native/react-native.js","Profitti/src/modules/styles.js"],function(global, require, module, exports) {  'use strict';
 
-var React=require('react-native/Libraries/react-native/react-native.js');var 
+var React=require('react-native/Libraries/react-native/react-native.js');
+var styles=require('Profitti/src/modules/styles.js');var 
 
 PixelRatio=
 
@@ -54269,19 +54211,6 @@ PixelRatio=
 
 
 React.PixelRatio;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var TouchableOpacity=React.TouchableOpacity;
-
-var styles=StyleSheet.create({
-navBarText:{
-fontSize:20,
-color:'#9EB741'},
-
-navBarLeftButton:{
-paddingLeft:10},
-
-arrow:{
-fontSize:24}});
-
-
 
 module.exports = {
 LeftButton:function(route,navigator,index,navState){
