@@ -1,7 +1,6 @@
 # OSX
 #
 .DS_Store
-.idea
 
 # Xcode
 #
@@ -23,11 +22,14 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+# Android/IJ
+#
+.idea
+.gradle
+local.properties
+
 # node.js
 #
 node_modules/
 npm-debug.log
-
-android/.gradle/
-android/app/src/main/assets/
-keys/
+keys
