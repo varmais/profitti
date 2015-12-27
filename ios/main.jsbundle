@@ -53638,9 +53638,26 @@ songs:Songs,
 categories:Categories});}else 
 
 {
+console.log('Get data');
 DataService.getData().then(function(data){
-_this.setState(data);});}}},{key:'render',value:
+if(data){
+console.log('Data found:',data);
+_this.setState(data);}else 
+{
+DataService.fetchData().then(function(data){
+console.log('fetched data:',data);
+_this.setState(data);
+DataService.saveData(data);});}});}}},{key:'componentDidUpdate',value:
 
+
+
+
+
+
+function componentDidUpdate(){
+console.log('did update');
+if(this.props.device === 'ios' && !this.state.songs.length){
+this.getSongs();}}},{key:'render',value:
 
 
 
@@ -55489,19 +55506,18 @@ module.exports = {
 getData:function(){
 return AsyncStorage.getItem(DATA_KEY).then(function(songData){
 if(songData){
-return JSON.parse(songData);}else 
-{
-fetch(url).
-then(function(response){return response.json();}).
-then(function(data){
-AsyncStorage.setItem(DATA_KEY,JSON.stringify(data));
-return data;}).
-
-catch(function(err){
-console.log(err);});}});},
+return JSON.parse(songData);}});},
 
 
 
+
+saveData:function(data){
+AsyncStorage.setItem(DATA_KEY,JSON.stringify(data));},
+
+
+fetchData:function(){
+return fetch(url).
+then(function(response){return response.json();});},
 
 
 updateData:function(){var _this=this;
