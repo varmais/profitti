@@ -1,15 +1,14 @@
-'use strict';
-
-var React = require('react-native');
-var Dashboard = require('./src/components/Dashboard');
-var NavigationBarRouteMapper = require('./src/components/NavigationBarRouteMapper');
-var {
+import Dashboard from './src/components/Dashboard';
+import NavigationBarRouteMapper from './src/components/NavigationBarRouteMapper';
+import React, {
   AppRegistry,
   StyleSheet,
-  PixelRatio
-  } = React;
+  PixelRatio,
+  Component,
+  Navigator
+} from 'react-native';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1
   },
@@ -22,27 +21,26 @@ var styles = StyleSheet.create({
   }
 });
 
-class Profitti extends React.Component {
+class Profitti extends Component {
 
   renderScene(route, nav) {
-    return <route.component navigator={nav} {...route.passProps} device='ios' />
+    return <route.component navigator={nav} {...route.passProps} />
+  }
+
+  renderNavigationBar() {
+    return <Navigator.NavigationBar routeMapper={NavigationBarRouteMapper} style={styles.navBar}/>;
   }
 
   render() {
     return (
-      <React.Navigator
+      <Navigator
         style={styles.container}
         initialRoute={{
-                    title: 'Profitti',
-                    component: Dashboard
-                }}
+            title: 'Profitti',
+            component: Dashboard
+        }}
         renderScene={this.renderScene}
-        navigationBar={
-                    <React.Navigator.NavigationBar
-                        routeMapper={NavigationBarRouteMapper}
-                        style={styles.navBar}
-                    />
-                }
+        navigationBar={this.renderNavigationBar()}
         />
     );
   }
