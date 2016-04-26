@@ -1,14 +1,10 @@
-'use strict';
-
-var React = require('react-native');
-var SearchViewButton = require('./SearchViewButton');
-var MenuViewButton = require('./MenuViewButton');
-var Categories = require('../data/songs').categories;
-var Songs = require('../data/songs').songs;
-var MenuItems = require('../data/menu');
-var styles = require('../modules/styles');
-var DataService = require('../modules/DataService');
-var {
+import SearchViewButton from './SearchViewButton';
+import MenuViewButton from './MenuViewButton';
+import Data from '../data/songs';
+import MenuItems from '../data/menu';
+import styles from '../modules/styles';
+import DataService from '../modules/DataService';
+import React, {
   Component,
   View,
   Text,
@@ -16,10 +12,9 @@ var {
   StyleSheet,
   PixelRatio,
   AsyncStorage
-  } = React;
+} from 'react-native';
 
-class Dashboard extends Component {
-
+export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,21 +23,13 @@ class Dashboard extends Component {
       menuItems: MenuItems,
       searchString: ''
     };
-
-    this.getSongs();
   }
 
-  getSongs() {
-    if (this.props.device !== 'ios') {
-      this.setState({
-        songs: Songs,
-        categories: Categories
-      });
-    } else {
-      DataService.getData().then(data => {
-        this.setState(data);
-      });
-    }
+  componentDidMount () {
+    DataService.getData().then((data) => {
+      console.log('setting data', data);
+      this.setState(data);
+    });
   }
 
   render() {
@@ -53,15 +40,13 @@ class Dashboard extends Component {
           navigator={this.props.navigator}
           songs={this.state.songs}
           item={item}
-          key={index}
-          device={this.props.device} />);
+          key={index} />);
       } else {
         views.push(<MenuViewButton
           navigator={this.props.navigator}
           item={item}
           categories={this.state.categories}
-          key={index}
-          device={this.props.device} />);
+          key={index} />);
       }
     });
 
@@ -78,5 +63,3 @@ class Dashboard extends Component {
     );
   }
 }
-
-module.exports = Dashboard;

@@ -12,9 +12,18 @@ import React, {
 } from 'react-native';
 
 export default class AboutPage extends Component {
+  constructor() {
+    super();
+    this.updateSongs = this.updateSongs.bind(this);
+    this.state = {
+      updated: false
+    };
+  }
 
   updateSongs() {
-    DataService.updateData();
+    DataService.updateData().then(() => {
+      this.setState({updated: true});
+    });
   }
 
   render() {
@@ -71,8 +80,15 @@ export default class AboutPage extends Component {
           <TouchableOpacity onPress={this.updateSongs}>
             <Text style={[styles.text, styles.marginBottom]}>Päivitä sanat</Text>
           </TouchableOpacity>
+          {this.renderSuccessMessage()}
         </View>
       </ScrollView>
     );
+  }
+
+  renderSuccessMessage () {
+    if (this.state.updated) {
+      return <Text style={[styles.text, styles.marginBottom]}>Sanat päivitetty!</Text>;
+    }
   }
 }

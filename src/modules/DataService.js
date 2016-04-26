@@ -1,31 +1,34 @@
-'use strict';
-var React = require('react-native');
-var AsyncStorage = React.AsyncStorage;
+import React, {
+  AsyncStorage
+} from 'react-native';
 var url = 'http://proffi.herokuapp.com/';
 var DATA_KEY = 'profitti_songs_data';
 
-module.exports = {
-  getData() {
-    return AsyncStorage.getItem(DATA_KEY).then(songData => {
-      if (songData) {
-        return JSON.parse(songData);
-      } else {
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            AsyncStorage.setItem(DATA_KEY, JSON.stringify(data));
-            return data;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    });
+export default {
+  async getData() {
+    const data = await AsyncStorage.getItem(DATA_KEY);
+    if (data) {
+      console.log('Data available from AsyncStorage');
+      return JSON.parse(data);
+    }
+    console.log('Fetching new data..');
+
+    const dataResponse = await this.fetchData();
+    if (dataResponse) {
+      await AsyncStorage.setItem(DATA_KEY, JSON.stringify(dataResponse));
+      console.log('Got response, saving new data.');
+      return dataResponse;
+    }
+    return {};
   },
 
-  updateData() {
-    AsyncStorage.removeItem(DATA_KEY).then(() => {
-      this.getData();
-    });
+  async fetchData() {
+    return await fetch(url).then(response => response.json());
+  },
+
+  async updateData() {
+    console.log('Remove old data.');
+    await AsyncStorage.removeItem(DATA_KEY);
+    return this.getData();
   }
 };
