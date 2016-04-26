@@ -1,9 +1,6 @@
-'use strict';
-
-var React = require('react-native');
-var SongList = require('./SongList');
-var styles = require('../modules/styles');
-var {
+import SongList from './SongList';
+import styles from '../modules/styles';
+import React, {
   Component,
   View,
   Text,
@@ -11,14 +8,13 @@ var {
   ScrollView,
   TextInput,
   StyleSheet
-  } = React;
+} from 'react-native';
 
-class SearchViewButton extends Component {
+export default class SearchViewButton extends Component {
 
   constructor(props) {
     super(props);
   }
-
 
   updateSearchString(event) {
     this.setState({
@@ -60,6 +56,3 @@ class SearchViewButton extends Component {
     );
   }
 }
-
-module.exports = SearchViewButton;
-

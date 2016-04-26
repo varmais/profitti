@@ -1,19 +1,18 @@
-'use strict';
-
-var React = require('react-native');
-var SongList = require('./SongList');
-var Songs = require('../data/songs').songs;
-var styles = require('../modules/styles');
-var {
+import SongList from './SongList';
+import Data from '../data/songs';
+import styles from '../modules/styles';
+import React, {
   StyleSheet,
   Component,
   View,
   Text,
   ListView,
   TouchableHighlight
-  } = React;
+} from 'react-native';
 
-class CategoryList extends Component {
+const Songs = Data.songs;
+
+export default class CategoryList extends Component {
 
   constructor(props) {
     super(props);
@@ -60,5 +59,3 @@ class CategoryList extends Component {
     );
   }
 }
-
-module.exports = CategoryList;

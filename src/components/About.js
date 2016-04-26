@@ -1,9 +1,6 @@
-'use strict';
-
-var React = require('react-native');
-var styles = require('../modules/styles');
-var DataService = require('../modules/DataService');
-var {
+import styles from '../modules/styles';
+import DataService from '../modules/DataService';
+import React, {
   StyleSheet,
   Component,
   View,
@@ -12,9 +9,9 @@ var {
   PixelRatio,
   AsyncStorage,
   TouchableOpacity
-  } = React;
+} from 'react-native';
 
-class AboutPage extends Component {
+export default class AboutPage extends Component {
 
   updateSongs() {
     DataService.updateData();
@@ -79,5 +76,3 @@ class AboutPage extends Component {
     );
   }
 }
-
-module.exports = AboutPage;

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "categories": [
         {
             "id": "1",

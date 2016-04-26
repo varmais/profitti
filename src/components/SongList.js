@@ -1,19 +1,15 @@
-'use strict';
-
-var React = require('react-native');
-var Song = require('./Song');
-var styles = require('../modules/styles');
-var {
+import Song from './Song';
+import styles from '../modules/styles';
+import React, {
   StyleSheet,
   Component,
   View,
   Text,
   ListView,
   TouchableHighlight
-  } = React;
+} from 'react-native';
 
-class SongList extends Component {
-
+export default class SongList extends Component {
   constructor(props) {
     super(props);
     var dataSource = new ListView.DataSource({
@@ -64,5 +60,3 @@ class SongList extends Component {
     );
   }
 }
-
-module.exports = SongList;

@@ -1,15 +1,11 @@
-'use strict';
-
-var React = require('react-native');
-
-var {
+import React, {
   Component,
   TouchableHighlight,
   StyleSheet,
   Text
-  } = React;
+} from 'react-native';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   menuText: {
     fontSize: 18,
     color: 'white',
@@ -30,7 +26,7 @@ var styles = StyleSheet.create({
   }
 });
 
-class MenuViewButton extends Component {
+export default class MenuViewButton extends Component {
 
   constructor(props) {
     super(props);
@@ -66,5 +62,3 @@ class MenuViewButton extends Component {
     );
   }
 }
-
-module.exports = MenuViewButton;

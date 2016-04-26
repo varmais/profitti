@@ -1,16 +1,13 @@
-'use strict';
-
-var React = require('react-native');
-var styles = require('../modules/styles');
-var {
+import styles from '../modules/styles';
+import React, {
   StyleSheet,
   Component,
   View,
   Text,
   ScrollView
-  } = React;
+} from 'react-native';
 
-class TrolInfoPage extends Component {
+export default class TrolInfoPage extends Component {
   render() {
     return (
       <ScrollView style={styles.background}>
@@ -40,5 +37,3 @@ class TrolInfoPage extends Component {
     );
   }
 }
-
-module.exports = TrolInfoPage;

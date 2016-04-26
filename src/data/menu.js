@@ -1,9 +1,9 @@
-var CategoryList = require('../components/CategoryList');
-var Instructions = require('../components/Instructions');
-var About = require('../components/About');
-var TrolInfo = require('../components/TrolInfo');
+import CategoryList from '../components/CategoryList';
+import Instructions from '../components/Instructions';
+import About from '../components/About';
+import TrolInfo from '../components/TrolInfo';
 
-module.exports = [
+export default [
     {
         id: 'SearchView'
     },

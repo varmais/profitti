@@ -1,20 +1,16 @@
-'use strict';
-
-var React = require('react-native');
-var Swiper = require('react-native-swiper');
-var Dimensions = require('Dimensions');
-var styles = require('../modules/styles');
-var {
+import Swiper from 'react-native-swiper';
+import styles from '../modules/styles';
+import React, {
   StyleSheet,
   Component,
   View,
   Text,
   ScrollView,
-  PixelRatio
-  } = React;
+  PixelRatio,
+  Dimensions
+} from 'react-native';
 
 class Song extends Component {
-
   constructor(props) {
     super(props);
     var index = this.props.songs.findIndex(it => it.id === this.props.id);

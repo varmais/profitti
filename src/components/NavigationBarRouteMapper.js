@@ -1,16 +1,13 @@
-'use strict';
-
-var React = require('react-native');
-var styles = require('../modules/styles');
-var {
+import styles from '../modules/styles';
+import React, {
   PixelRatio,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  } = React;
+} from 'react-native';
 
-module.exports = {
+export default {
   LeftButton: function (route, navigator, index, navState) {
     if (index === 0) {
       return null;
