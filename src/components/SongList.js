@@ -6,7 +6,8 @@ import React, {
   View,
   Text,
   ListView,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform
 } from 'react-native';
 
 export default class SongList extends Component {
@@ -22,7 +23,7 @@ export default class SongList extends Component {
 
   rowPressed(id, title, lyrics) {
     var songs = this.props.songs;
-    if (this.props.device !== 'ios') {
+    if (Platform.OS !== 'ios') {
       songs = songs.filter(song => song.id === id);
     }
 
@@ -31,8 +32,7 @@ export default class SongList extends Component {
       component: Song,
       passProps: {
         songs: songs,
-        id: id,
-        device: this.props.device
+        id: id
       }
     });
   }

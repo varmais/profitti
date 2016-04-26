@@ -38,8 +38,7 @@ export default class MenuViewButton extends Component {
         title: item.title,
         component: item.component,
         passProps: {
-          categories: this.props.categories,
-          device: this.props.device
+          categories: this.props.categories
         }
       });
     } else {

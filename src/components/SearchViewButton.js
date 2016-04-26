@@ -36,8 +36,7 @@ export default class SearchViewButton extends Component {
       title: 'Haku: ' + this.state.searchString,
       component: SongList,
       passProps: {
-        songs: songs,
-        device: this.props.device
+        songs: songs
       }
     });
   }
