@@ -1,13 +1,9 @@
-'use strict';
-
-var React = require('react-native');
-
-var {
+import {
   StyleSheet,
   PixelRatio,
-  } = React;
+} from 'react-native';
 
-module.exports = StyleSheet.create({
+export default StyleSheet.create({
   background: {
     backgroundColor: '#000000',
     paddingTop: 70,
