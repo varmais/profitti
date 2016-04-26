@@ -599,18 +599,12 @@ module.exports = {
         },
         {
             "id":96,
-            "title":"Jan Hoffman",
-            "lyrics":":,: Jan Hoffman China sitseillä, ahaa, ahaa :,:\nJan Hoffman China sitseillä\nveti kossua suoraan pullosta, ahaa, ahaa, ahaa.\n\n:,: Jan Hoffman veti oikein vauhdilla, ahaa, ahaa :,:\nJan Hoffman veti oikein vauhdilla,\nsitä Atkinsin kossupulloa, ahaa, ahaa, ahaa\n\n:,: Jan Hoffman teki sitä seisaaltaan, ahaa, ahaa :,:\nJan Hoffman teki sitä seisaaltaan\neikä muut siitä olleet moksiskaan ahaa, ahaa, ahaa.\n\n:,: Ja nyt Jan Hoffmanista huomataan, ahaa, ahaa:,:\nJa nyt Jan Hoffmanista huomataan,\nettä kossupullon on vetänyt paljaaltaan, ahaa, ahaa, ahaa.\n\n:,: Jan Hoffman vessanpöntön vei, yök yök, yök yök :,:\nMutta yksi on ainoa murheenaan,\nettä laattaako taksimatkallaan yök yök, yök yök, yök yök.\n\n:,: Jan Hoffman -fanclub laajenee, jeejee, jeejee :,:\nJan Hoffman -fanclub laajenee,\nse laajenee ja laajenee, jeejee, jeejee, jeejee.",
-            "category":"tuhmat"
-        },
-        {
-            "id":97,
             "title":"Naidaan lampaita",
             "lyrics":":,: Naidaan lampaita, lampailla ei ole hampaita. :,:\n:,: Laita lammas rinteeseen, pistä sorkat saappaaseen,\ntyönnä sormi lampaan perseeseen. :,:\n\n:,: Naidaan lehmiä, lehmät eivät ehdi empiä. :,:\n:,: Laita kulli sieraimeen, niin sen kieli lipaisee,\nihanasti sinun kivekseen. :,:\n\n:,: Naidaan norsuja, norsut eivät käytä kortsuja. :,:\n:,: Ota pesti sirkukseen, liity ihmeperheeseen,\ntyönnä jalka norsun perseeseen. :,:\n\n:,: Naidaan poroja, porot ovat metsän horoja. :,:\n:,: Tartu kiinni sarvista, ota haju arvesta,\nvedä varvi koko tokasta. :,:\n\n:,: Naidaan majavaa, majavalta löytyy parrua. :,:\n:,: Ota kiinni hampaista, vedä parru padosta,\ntyönnä parru pikku majavaan. :,:\n\n:,: Naidaan lääkäärii, lääkäri tietää sinun tautisi. :,:\n:,: Ota pistos hauikseen, laita lääkäri kontilleen,\ntyönnä neula lääkärin perseeseen. :,:\n\n:,: Naidaan fukseja, fukseilla ei ole tauteja. :,:\n:,: Vie fuksi kotiisi, heitä sohvalle vattalleen,\ntyönnä kyrpä fuksin perseeseen. :,:\n\n:,: Naidaan mäyriä, mäyrien vehkeet ovat käyriä. :,:\n:,: Vedä mutka suoraksi, ota mäyrä huoraksi,\nsilloin saat sä kupan varmasti. :,:",
             "category":"tuhmat"
         },
         {
-            "id":98,
+            "id":97,
             "title":"Perseessä peukalo",
             "lyrics":"Perseessä peukalo,\ntoinen kerta tänään jo.\nPuulta maistuu jo tää,\ntieheni käyn\n\nPerseessä peukalo,\ntoinen kerta tänään jo.\nAinainen naiminen vituttaa,\ntieheni käyn.\n\nPystyssä pippeli,\ntoinen kerta tänään jo.\nAinainen lötkötys vituttaa,\nPystyhyn käy!\n\nPerseessä melooni,\ntoinen kerta tänään jo.\nAinainen paine vituttaa,\npaskalle käy!",
             "category":"tuhmat"
