@@ -1,0 +1,4 @@
+keystore.path=/full/path/to/key
+keystore.password=
+keystore.alias=
+keystore.alias.password=
