@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import HomeScreen from './containers/HomeScreen';
 import CategoryListScreen from './containers/CategoryListScreen';
@@ -10,14 +10,13 @@ import TrolInfoScreen from './containers/TrolInfoScreen';
 import SongListScreen from './containers/SongListScreen';
 import SongScreen from './containers/SongScreen';
 import SongSearchScreen from './containers/SongSearchScreen'
+import SettingsScreen from './containers/SettingsScreen';
 import store from './redux/createStore';
+import config from './config';
 
-const AppNavigator = StackNavigator({
+const SongNavigator = StackNavigator({
   Index: {screen: HomeScreen},
   CategoryList: {screen: CategoryListScreen},
-  Instructions: {screen: InstructionsScreen},
-  ProfittiInfo: {screen: ProfittiInfoScreen},
-  TrolInfo: {screen: TrolInfoScreen},
   SongList: {screen: SongListScreen},
   SongSearch: {screen: SongSearchScreen},
   Song: {screen: SongScreen}
@@ -25,6 +24,30 @@ const AppNavigator = StackNavigator({
   initialRouteName: 'Index',
   headerMode: Platform.OS === 'ios' ? 'float' : 'screen'
 });
+
+const SettingsNavigator = StackNavigator({
+  Index: {screen: SettingsScreen},
+  Instructions: {screen: InstructionsScreen},
+  ProfittiInfo: {screen: ProfittiInfoScreen},
+  TrolInfo: {screen: TrolInfoScreen}
+}, {
+  initialRouteName: 'Index',
+  headerMode: Platform.OS === 'ios' ? 'float' : 'screen'
+});
+
+const AppNavigator = TabNavigator({
+  Songs: {
+    screen: SongNavigator,
+  },
+  Settings: {
+    screen: SettingsNavigator,
+  },
+}, {
+  tabBarOptions: {
+    activeTintColor: config.colors.green,
+  }
+});
+
 
 export default () => (
   <Provider store={store}>
