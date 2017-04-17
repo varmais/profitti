@@ -1,14 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import {
-  ListView,
-  Text,
-  View
-} from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import config from '../config';
 import AppStyles from '../helpers/Styles';
 import SongButton from '../components/songs/SongButton';
-import Separator from '../components/common/Separator';
+import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
 
 @connect(state => ({
   songs: state.songs.songs
@@ -32,27 +28,17 @@ export default class SongListScreen extends Component {
     }).isRequired
   };
 
-  dataSource = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1.guid !== r2.guid
-  });
-
   render() {
     const { navigation } = this.props;
     const songs = this.filterSongs();
     return (
       <View style={AppStyles.background}>
-        <View style={AppStyles.container}>
-          <View style={AppStyles.titleContainer}>
-            <Text style={AppStyles.title}>
-              {navigation.state.params.category.name}
-            </Text>
-          </View>
-          <ListView
-            dataSource={this.dataSource.cloneWithRows(songs)}
-            renderRow={rowData => <SongButton song={rowData} navigation={navigation} />}
-            renderSeparator={() => <Separator />}
-          />
-        </View>
+        <NavigationButtonListView
+          title={navigation.state.params.category.name}
+          navigation={navigation}
+          items={songs}
+          renderRow={rowData => <SongButton song={rowData} navigation={navigation} />}
+        />
       </View>
     );
   }

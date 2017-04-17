@@ -1,17 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import {
-  ListView,
-  ScrollView,
-  Text,
-  View
-} from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import SearchTextInput from '../components/home/SearchTextInput';
 import CategoryButton from '../components/songs/CategoryButton';
-import Separator from '../components/common/Separator';
 import HeaderLogo from '../components/common/HeaderLogo';
 import AppStyles from '../helpers/Styles';
 import { fetchSongs } from '../redux/songs';
+import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
 
 @connect((state) => ({
   categories: state.songs.categories
@@ -37,10 +32,6 @@ export default class HomeScreen extends Component {
     })).isRequired
   };
 
-  dataSource = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1.guid !== r2.guid
-  });
-
   componentDidMount () {
     this.props.fetchSongs();
   }
@@ -56,17 +47,13 @@ export default class HomeScreen extends Component {
             </View>
             <SearchTextInput navigation={navigation}/>
           </View>
-          <View style={AppStyles.container}>
-            <View style={AppStyles.titleContainer}>
-              <Text style={AppStyles.title}>Kategoriat</Text>
-            </View>
-            <ListView
-              enableEmptySections
-              dataSource={this.dataSource.cloneWithRows(categories)}
-              renderRow={rowData => <CategoryButton category={rowData} navigation={navigation} />}
-              renderSeparator={() => <Separator />}
-            />
-          </View>
+          <NavigationButtonListView
+            title="Kategoriat"
+            enableEmptySections
+            navigation={navigation}
+            items={categories}
+            renderRow={rowData => <CategoryButton category={rowData} navigation={navigation} />}
+          />
         </View>
       </ScrollView>
     );
