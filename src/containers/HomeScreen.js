@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import SearchTextInput from '../components/home/SearchTextInput';
+import SearchTextInput from '../components/songs/SearchTextInput';
 import CategoryButton from '../components/songs/CategoryButton';
 import HeaderLogo from '../components/common/HeaderLogo';
 import AppStyles from '../helpers/Styles';
