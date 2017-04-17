@@ -20,10 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-@connect(null, {
-  searchSongs
-})
-export default class SearchTextInput extends Component {
+export class SearchTextInput extends Component {
   static propTypes = {
     searchSongs: PropTypes.func.isRequired,
     navigation: PropTypes.shape({
@@ -49,3 +46,7 @@ export default class SearchTextInput extends Component {
     this.props.navigation.navigate('SongSearch', {searchString: nativeEvent.text});
   };
 }
+
+export default connect(null, {
+  searchSongs
+})(SearchTextInput);

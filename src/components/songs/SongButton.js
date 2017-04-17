@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import NavigationButton from '../navigation/NavigationButton';
 
-export default class CategoryButton extends Component {
+export default class SongButton extends Component {
   static propTypes = {
     song: PropTypes.shape({
       id: PropTypes.number.isRequired,
