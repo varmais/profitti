@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components:navigation:NavigationButtonListView renders NavigationButtonListView 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "borderColor": "#caccce",
+      "borderRadius": 4,
+      "borderWidth": 1,
+      "marginBottom": 8,
+      "paddingHorizontal": 16,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "borderBottomColor": "#e6e6e6",
+        "borderBottomWidth": 0.5,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "alignSelf": "flex-start",
+          "color": "#222",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "marginVertical": 16,
+        }
+      }
+    >
+      title
+    </Text>
+  </View>
+  <RCTScrollView
+    dataSource={
+      ListViewDataSource {
+        "items": 2,
+      }
+    }
+    items={
+      Array [
+        Object {
+          "item": 1,
+        },
+        Object {
+          "item": 4,
+        },
+      ]
+    }
+    navigation={
+      Object {
+        "navigate": [Function],
+        "state": Object {
+          "params": Object {},
+        },
+      }
+    }
+    removeClippedSubviews={false}
+    renderRow={[Function]}
+    renderScrollComponent={[Function]}
+    renderSeparator={[Function]}
+    title="title"
+  >
+    <View>
+      <View />
+      <View />
+    </View>
+  </RCTScrollView>
+</View>
+`;
