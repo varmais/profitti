@@ -1,21 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import {
   ListView,
-  StyleSheet,
+  Text,
   View
 } from 'react-native';
 import { connect } from 'react-redux';
 import config from '../config';
-import Styles from '../helpers/Styles';
+import AppStyles from '../helpers/Styles';
 import SongButton from '../components/songs/SongButton';
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: config.colors.black,
-    padding: 16,
-    flex: 1
-  }
-});
+import Separator from '../components/common/Separator';
 
 @connect(state => ({
   songs: state.songs.songs
@@ -23,8 +16,8 @@ const styles = StyleSheet.create({
 export default class SongListScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
-      style: Styles.header,
-      tintColor: config.colors.green,
+      style: AppStyles.header,
+      tintColor: config.colors.white,
       title: state.params.category.name
     })
   };
@@ -39,27 +32,33 @@ export default class SongListScreen extends Component {
     }).isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1.guid !== r2.guid
-    });
-    const { navigation } = this.props;
-    const songs = props.songs.filter(s => s.category_id === navigation.state.params.category.id);
-    this.state = {
-      dataSource: dataSource.cloneWithRows(songs)
-    };
-  }
+  dataSource = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1.guid !== r2.guid
+  });
 
   render() {
     const { navigation } = this.props;
+    const songs = this.filterSongs();
     return (
-      <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={rowData => <SongButton song={rowData} navigation={navigation} />}
-        />
+      <View style={AppStyles.background}>
+        <View style={AppStyles.container}>
+          <View style={AppStyles.titleContainer}>
+            <Text style={AppStyles.title}>
+              {navigation.state.params.category.name}
+            </Text>
+          </View>
+          <ListView
+            dataSource={this.dataSource.cloneWithRows(songs)}
+            renderRow={rowData => <SongButton song={rowData} navigation={navigation} />}
+            renderSeparator={() => <Separator />}
+          />
+        </View>
       </View>
     );
+  }
+
+  filterSongs () {
+    const { navigation, songs } = this.props;
+    return songs.filter(s => s.category_id === navigation.state.params.category.id);
   }
 }

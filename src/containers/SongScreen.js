@@ -5,29 +5,25 @@ import {
   View
 } from 'react-native';
 import styles from '../helpers/Styles';
+import { navigatorPropTypes } from '../helpers/PropTypes';
 import config from '../config';
 
 export default class SongScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
       style: styles.header,
-      tintColor: config.colors.green,
+      tintColor: config.colors.white,
       title: state.params.song.title
     })
   };
 
-  // TODO: this is nuts..
   static propTypes = {
-    navigation: PropTypes.shape({
-      state: PropTypes.shape({
-        params: PropTypes.shape({
-          song: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            lyrics: PropTypes.string.isRequired
-          }).isRequired
-        }).isRequired
-      }).isRequired
-    }).isRequired
+    navigation: navigatorPropTypes({
+      song: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        lyrics: PropTypes.string.isRequired
+      })
+    })
   };
 
   render () {

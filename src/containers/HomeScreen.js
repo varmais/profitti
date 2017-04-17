@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  PixelRatio,
   ListView,
   ScrollView,
-  StyleSheet,
   Text,
   View
 } from 'react-native';
@@ -12,40 +10,8 @@ import SearchTextInput from '../components/home/SearchTextInput';
 import CategoryButton from '../components/songs/CategoryButton';
 import Separator from '../components/common/Separator';
 import HeaderLogo from '../components/common/HeaderLogo';
-import config from '../config';
+import AppStyles from '../helpers/Styles';
 import { fetchSongs } from '../redux/songs';
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: config.colors.black
-  },
-  background: {
-    padding: 8,
-    backgroundColor: config.colors.grayLight
-  },
-  titleContainer: {
-    borderBottomWidth: 1 / PixelRatio.get(),
-    borderBottomColor: config.colors.graySubtle
-  },
-  title: {
-    color: config.colors.blackLight,
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginVertical: 16,
-    alignSelf: 'flex-start'
-  },
-  subtitle: {
-    fontSize: 16
-  },
-  container: {
-    marginBottom: 8,
-    paddingHorizontal: 16,
-    backgroundColor: config.colors.white,
-    borderColor: config.colors.grayMid,
-    borderWidth: 1,
-    borderRadius: 4
-  }
-});
 
 @connect((state) => ({
   categories: state.songs.categories
@@ -55,7 +21,7 @@ const styles = StyleSheet.create({
 export default class HomeScreen extends Component {
   static navigationOptions = {
     header: () => ({
-      style: styles.header,
+      style: AppStyles.header,
       title: <HeaderLogo />
     })
   };
@@ -82,17 +48,17 @@ export default class HomeScreen extends Component {
   render () {
     const { navigation, categories } = this.props;
     return (
-      <ScrollView style={styles.background}>
+      <ScrollView style={AppStyles.background}>
         <View>
-          <View style={styles.container}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Haku</Text>
+          <View style={AppStyles.container}>
+            <View style={AppStyles.titleContainer}>
+              <Text style={AppStyles.title}>Haku</Text>
             </View>
             <SearchTextInput navigation={navigation}/>
           </View>
-          <View style={styles.container}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Kategoriat</Text>
+          <View style={AppStyles.container}>
+            <View style={AppStyles.titleContainer}>
+              <Text style={AppStyles.title}>Kategoriat</Text>
             </View>
             <ListView
               enableEmptySections

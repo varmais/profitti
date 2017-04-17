@@ -3,36 +3,37 @@ import config from '../config';
 
 export default StyleSheet.create({
   header: {
-    backgroundColor: '#000',
-    borderBottomWidth: 1 / PixelRatio.get(),
-    borderBottomColor: '#fff'
+    backgroundColor: config.colors.black
   },
   background: {
-    backgroundColor: '#000',
-    paddingHorizontal: 16,
+    padding: 8,
+    backgroundColor: config.colors.grayLight
   },
   container: {
-    paddingTop: 16,
+    marginBottom: 8,
     paddingHorizontal: 16,
     backgroundColor: config.colors.white,
     borderColor: config.colors.grayMid,
     borderWidth: 1,
     borderRadius: 4
   },
+  titleContainer: {
+    borderBottomWidth: 1 / PixelRatio.get(),
+    borderBottomColor: config.colors.graySubtle
+  },
   title: {
-    fontSize: 20
+    color: config.colors.blackLight,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 16,
+    alignSelf: 'flex-start'
   },
   text: {
     fontSize: 16,
-    color: '#fff',
+    color: config.colors.blackLight,
     marginBottom: 16
   },
   textTight: {
     marginBottom: 0
-  },
-  separator: {
-    height: 1 / PixelRatio.get(),
-    backgroundColor: '#fff',
-    marginBottom: 16
   }
 });

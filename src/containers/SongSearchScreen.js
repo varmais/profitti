@@ -1,22 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import {
   ListView,
-  StyleSheet,
+  Text,
   View
 } from 'react-native';
 import { connect } from 'react-redux';
 import config from '../config';
-import Styles from '../helpers/Styles';
+import AppStyles from '../helpers/Styles';
 import SongButton from '../components/songs/SongButton';
+import Separator from '../components/common/Separator';
 import { resetSearchSongs } from '../redux/songs';
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: config.colors.black,
-    padding: 16,
-    flex: 1
-  }
-});
 
 @connect(state => ({
   songs: state.songs.searchResult
@@ -26,8 +19,8 @@ const styles = StyleSheet.create({
 export default class SongSearchScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
-      style: Styles.header,
-      tintColor: config.colors.green,
+      style: AppStyles.header,
+      tintColor: config.colors.white,
       title: `Haku: ${state.params.searchString}`
     })
   };
@@ -43,28 +36,30 @@ export default class SongSearchScreen extends Component {
     resetSearchSongs: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1.guid !== r2.guid
-    });
-    this.state = {
-      dataSource: dataSource.cloneWithRows(props.songs)
-    };
-  }
+  dataSource = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1.guid !== r2.guid
+  });
 
   componentWillUnmount () {
     this.props.resetSearchSongs();
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, songs } = this.props;
     return (
-      <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={rowData => <SongButton song={rowData} navigation={navigation} />}
-        />
+      <View style={AppStyles.background}>
+        <View style={AppStyles.container}>
+          <View style={AppStyles.titleContainer}>
+            <Text style={AppStyles.title}>
+              Haku: {navigation.state.params.searchString}
+            </Text>
+          </View>
+          <ListView
+            dataSource={this.dataSource.cloneWithRows(songs)}
+            renderRow={rowData => <SongButton song={rowData} navigation={navigation} />}
+            renderSeparator={() => <Separator />}
+          />
+        </View>
       </View>
     );
   }
