@@ -5,6 +5,13 @@ const FETCH_SONGS_FAIL = 'profitti/songs/FETCH_SONGS_FAIL';
 const SEARCH_SONGS = 'profitti/songs/SEARCH_SONGS';
 const SEARCH_SONGS_RESET = 'profitti/songs/SEARCH_SONGS_RESET';
 
+export {
+  FETCH_SONGS_SUCCESS,
+  FETCH_SONGS_FAIL,
+  SEARCH_SONGS,
+  SEARCH_SONGS_RESET
+};
+
 const initialState = {
   songs: [],
   categories: [],
@@ -25,8 +32,9 @@ function getCategories (songs) {
   }, []);
 }
 
-function selectSongs (songs, string) {
-  return songs.filter(s => (s.title.includes(string) || s.lyrics.includes(string)));
+function selectSongs (songs, searchString) {
+  const string = searchString.toLowerCase();
+  return songs.filter(s => (s.title.toLowerCase().includes(string) || s.lyrics.toLowerCase().includes(string)));
 }
 
 export default function reducer (state = initialState, action = {}) {
