@@ -11,13 +11,11 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     paddingVertical: 4,
-    paddingHorizontal: 6,
-    marginTop: 16,
-    marginBottom: 16,
+    paddingHorizontal: 8,
+    marginVertical: 16,
     borderWidth: 1,
-    borderColor: config.colors.green,
-    borderRadius: 8,
-    color: config.colors.white,
+    borderColor: config.colors.grayMid,
+    color: config.colors.blackLight,
     fontSize: 18
   }
 });
@@ -38,7 +36,7 @@ export default class SearchTextInput extends Component {
       <TextInput
         style={styles.input}
         placeholder='Hae lauluja..'
-        placeholderTextColor={config.colors.white}
+        placeholderTextColor={config.colors.grayDark}
         autoCorrect={false}
         returnKeyType='search'
         onSubmitEditing={this.handleSubmit}

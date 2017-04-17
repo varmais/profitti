@@ -3,7 +3,6 @@ import { Platform } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import HomeScreen from './containers/HomeScreen';
-import CategoryListScreen from './containers/CategoryListScreen';
 import InstructionsScreen from './containers/InstructionsScreen';
 import ProfittiInfoScreen from './containers/ProfittiInfoScreen';
 import TrolInfoScreen from './containers/TrolInfoScreen';
@@ -16,7 +15,6 @@ import config from './config';
 
 const SongNavigator = StackNavigator({
   Index: {screen: HomeScreen},
-  CategoryList: {screen: CategoryListScreen},
   SongList: {screen: SongListScreen},
   SongSearch: {screen: SongSearchScreen},
   Song: {screen: SongScreen}

@@ -1,4 +1,5 @@
 import { PixelRatio, StyleSheet } from 'react-native';
+import config from '../config';
 
 export default StyleSheet.create({
   header: {
@@ -11,8 +12,12 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
   },
   container: {
-    marginTop: 16,
-    marginBottom: 32
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    backgroundColor: config.colors.white,
+    borderColor: config.colors.grayMid,
+    borderWidth: 1,
+    borderRadius: 4
   },
   title: {
     fontSize: 20

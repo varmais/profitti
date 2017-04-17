@@ -7,6 +7,11 @@ export default {
     white: '#fff',
     green: '#9EB741',
     greenlight: '#B7C83B',
-    gray: '#718586'
+    gray: '#718586',
+    grayDark: '#414e51',
+    grayMid: '#caccce',
+    graySubtle: '#e6e6e6',
+    grayLight: '#dddfe2',
+    blackLight: '#222'
   }
 }
