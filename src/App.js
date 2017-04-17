@@ -2,15 +2,15 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
-import HomeScreen from './HomeScreen';
-import CategoryListScreen from './CategoryListScreen';
-import InstructionsScreen from './InstructionsScreen';
-import ProfittiInfoScreen from './ProfittiInfoScreen';
-import TrolInfoScreen from './TrolInfoScreen';
-import SongListScreen from './SongListScreen';
-import SongScreen from './SongScreen';
-import SongSearchScreen from './SongSearchScreen'
-import store from '../redux/createStore';
+import HomeScreen from './containers/HomeScreen';
+import CategoryListScreen from './containers/CategoryListScreen';
+import InstructionsScreen from './containers/InstructionsScreen';
+import ProfittiInfoScreen from './containers/ProfittiInfoScreen';
+import TrolInfoScreen from './containers/TrolInfoScreen';
+import SongListScreen from './containers/SongListScreen';
+import SongScreen from './containers/SongScreen';
+import SongSearchScreen from './containers/SongSearchScreen'
+import store from './redux/createStore';
 
 const AppNavigator = StackNavigator({
   Index: {screen: HomeScreen},

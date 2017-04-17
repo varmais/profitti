@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux';
 import config from '../config';
 import Styles from '../helpers/Styles';
-import CategoryButton from './songs/CategoryButton';
+import CategoryButton from '../components/songs/CategoryButton';
 
 const styles = StyleSheet.create({
   container: {

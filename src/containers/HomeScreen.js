@@ -6,8 +6,8 @@ import {
   View
 } from 'react-native';
 import { connect } from 'react-redux';
-import SearchTextInput from './home/SearchTextInput';
-import NavigationButton from './home/NavigationButton';
+import SearchTextInput from '../components/home/SearchTextInput';
+import NavigationButton from '../components/home/NavigationButton';
 import config from '../config';
 import { fetchSongs } from '../redux/songs';
 
