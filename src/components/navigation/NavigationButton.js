@@ -5,7 +5,8 @@ import {
   Text,
   View
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Touchable from '../common/Touchable';
 import config from '../../config';
 
@@ -16,13 +17,17 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     justifyContent: 'center'
   },
+  icon: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0
+  },
   text: {
-    alignSelf: 'flex-start',
     color: config.colors.blackLight,
     fontSize: 18
   },
   textWithIcon: {
-
+    paddingLeft: 32
   },
   arrow: {
     position: 'absolute',
@@ -43,9 +48,9 @@ export default class NavigationButton extends Component {
     return (
       <Touchable style={styles.button} onPress={onPress} underlayColor={config.colors.gray}>
         <View>
-          {this.renderIcon()}
           {this.renderText()}
-          <Icon name="ios-arrow-forward" size={24} style={styles.arrow} />
+          {this.renderIcon()}
+          <IonIcon name="ios-arrow-forward" size={24} style={styles.arrow} />
         </View>
       </Touchable>
     );
@@ -54,7 +59,7 @@ export default class NavigationButton extends Component {
   renderIcon () {
     const { icon } = this.props;
     if (icon) {
-      return <View/>
+      return <FAIcon name={icon} size={18} style={styles.icon} />;
     }
   }
 
@@ -62,7 +67,7 @@ export default class NavigationButton extends Component {
     const { icon, text } = this.props;
     const textStyles = [styles.text];
     if (icon) {
-      textStyles.push(textStyles.textWithIcon);
+      textStyles.push(styles.textWithIcon);
     }
     return (
       <Text style={textStyles}>

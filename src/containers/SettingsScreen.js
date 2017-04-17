@@ -1,17 +1,46 @@
 import React, {
-  Component
+  Component,
+  PropTypes
 } from 'react';
 import {
-  Text,
+  ScrollView,
   View
 } from 'react-native';
+import HeaderLogo from '../components/common/HeaderLogo';
+import AppStyles from '../helpers/Styles';
+import NavigationButton from '../components/navigation/NavigationButton';
+import Separator from '../components/common/Separator';
+import { navigatorPropTypes } from '../helpers/PropTypes';
 
 export default class SettingsScreen extends Component {
+  static navigationOptions = {
+    header: () => ({
+      style: AppStyles.header,
+      title: <HeaderLogo />
+    })
+  };
+
+  static propTypes = {
+    navigation: navigatorPropTypes()
+  };
+
   render () {
     return (
-      <View>
-        <Text>Jooh</Text>
-      </View>
+      <ScrollView style={AppStyles.background}>
+        <View style={AppStyles.container}>
+          <NavigationButton text="Ohjeita" onPress={this.navigate('Instructions')} icon="cutlery" />
+          <Separator/>
+          <NavigationButton text="Laulukirja Profitti" onPress={this.navigate('ProfittiInfo')} icon="book" />
+          <Separator/>
+          <NavigationButton text="Tradenomiliitto TROL ry" onPress={this.navigate('TrolInfo')} icon="info-circle" />
+        </View>
+      </ScrollView>
     );
   }
+
+  navigate = (screen) => {
+    return () => {
+      this.props.navigation.navigate(screen);
+    };
+  };
 }

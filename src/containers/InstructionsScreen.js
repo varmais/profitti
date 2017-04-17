@@ -7,7 +7,7 @@ export default class InstructionsScreen extends Component {
   static navigationOptions = {
     header: {
       style: styles.header,
-      tintColor: config.colors.green,
+      tintColor: config.colors.white,
       title: 'Ohjeita'
     }
   };

@@ -7,7 +7,7 @@ export default class ProfittiInfoScreen extends Component {
   static navigationOptions = {
     header: {
       style: styles.header,
-      tintColor: config.colors.green,
+      tintColor: config.colors.white,
       title: 'Profitti'
     }
   };
@@ -31,10 +31,8 @@ export default class ProfittiInfoScreen extends Component {
             laulakaa!</Text>
           <Text style={[styles.text, styles.textTight]}>Anssi Ketopaikka</Text>
           <Text style={[styles.text, styles.textTight]}>puheenjohtaja</Text>
-          <Text style={[styles.text, styles.textTight]}>Tradenomiopiskelijaliitto TROL ry</Text>
+          <Text style={[styles.text]}>Tradenomiopiskelijaliitto TROL ry</Text>
         </View>
-
-        <View style={styles.separator}/>
 
         <View style={styles.container}>
           <Text style={[styles.text, styles.title]}>Laulukirjatyöryhmän terveiset</Text>
@@ -57,7 +55,7 @@ export default class ProfittiInfoScreen extends Component {
           <Text style={[styles.text, styles.textTight]}>Laulukirjatyöryhmä</Text>
           <Text style={[styles.text, styles.textTight]}>Osmo Ahonen</Text>
           <Text style={[styles.text, styles.textTight]}>Hannes Leppäkangas</Text>
-          <Text style={[styles.text, styles.textTight]}>Teemu Tiilikainen</Text>
+          <Text style={[styles.text]}>Teemu Tiilikainen</Text>
         </View>
       </ScrollView>
     );
