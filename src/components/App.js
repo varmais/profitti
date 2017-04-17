@@ -9,6 +9,7 @@ import ProfittiInfoScreen from './ProfittiInfoScreen';
 import TrolInfoScreen from './TrolInfoScreen';
 import SongListScreen from './SongListScreen';
 import SongScreen from './SongScreen';
+import SongSearchScreen from './SongSearchScreen'
 import store from '../redux/createStore';
 
 const AppNavigator = StackNavigator({
@@ -18,6 +19,7 @@ const AppNavigator = StackNavigator({
   ProfittiInfo: {screen: ProfittiInfoScreen},
   TrolInfo: {screen: TrolInfoScreen},
   SongList: {screen: SongListScreen},
+  SongSearch: {screen: SongSearchScreen},
   Song: {screen: SongScreen}
 }, {
   initialRouteName: 'Index',

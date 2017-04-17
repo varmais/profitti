@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import config from '../config';
 import Styles from '../helpers/Styles';
 import SongButton from './songs/SongButton';
+import { resetSearchSongs } from '../redux/songs';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,14 +19,16 @@ const styles = StyleSheet.create({
 });
 
 @connect(state => ({
-  songs: state.songs.songs
-}))
-export default class SongListScreen extends Component {
+  songs: state.songs.searchResult
+}), {
+  resetSearchSongs
+})
+export default class SongSearchScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
       style: Styles.header,
       tintColor: config.colors.green,
-      title: state.params.category.name
+      title: `Haku: ${state.params.searchString}`
     })
   };
 
@@ -36,7 +39,8 @@ export default class SongListScreen extends Component {
     })).isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired
-    }).isRequired
+    }).isRequired,
+    resetSearchSongs: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -44,11 +48,13 @@ export default class SongListScreen extends Component {
     const dataSource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.guid !== r2.guid
     });
-    const { navigation } = this.props;
-    const songs = props.songs.filter(s => s.category_id === navigation.state.params.category.id);
     this.state = {
-      dataSource: dataSource.cloneWithRows(songs)
+      dataSource: dataSource.cloneWithRows(props.songs)
     };
+  }
+
+  componentWillUnmount () {
+    this.props.resetSearchSongs();
   }
 
   render() {

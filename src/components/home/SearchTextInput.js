@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   TextInput
 } from 'react-native';
+import { connect } from 'react-redux';
 import config from '../../config';
+import { searchSongs } from '../../redux/songs';
 
 const styles = StyleSheet.create({
   input: {
@@ -20,7 +22,17 @@ const styles = StyleSheet.create({
   }
 });
 
+@connect(null, {
+  searchSongs
+})
 export default class SearchTextInput extends Component {
+  static propTypes = {
+    searchSongs: PropTypes.func.isRequired,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired
+    }).isRequired
+  };
+
   render() {
     return (
       <TextInput
@@ -35,6 +47,7 @@ export default class SearchTextInput extends Component {
   }
 
   handleSubmit = ({nativeEvent}) => {
-    console.log(nativeEvent);
+    this.props.searchSongs(nativeEvent.text);
+    this.props.navigation.navigate('SongSearch', {searchString: nativeEvent.text});
   };
 }

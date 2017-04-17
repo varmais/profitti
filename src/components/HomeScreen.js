@@ -64,7 +64,7 @@ export default class HomeScreen extends Component {
           <Text style={[styles.title, styles.subtitle]}>Tradenomiopiskelijaliitto TROL ry</Text>
         </View>
         <View style={styles.container}>
-          <SearchTextInput/>
+          <SearchTextInput navigation={this.props.navigation}/>
           {this.renderNavigationButton('Laulut', 'CategoryList')}
           {this.renderNavigationButton('Ohjeita', 'Instructions')}
           {this.renderNavigationButton('Profitti', 'ProfittiInfo')}
