@@ -28,15 +28,10 @@ const styles = StyleSheet.create({
   }
 });
 
-@connect((state) => ({
-  k18Enabled: state.settings.k18Enabled
-}), {
-  setK18SettingValue
-})
-export default class K18SongSwitch extends Component {
+export class K18SongSwitch extends Component {
   static propTypes = {
     k18Enabled: PropTypes.bool.isRequired,
-    setK18SettingValue: PropTypes.func.isRequired
+    handleValueChange: PropTypes.func.isRequired
   };
 
   render () {
@@ -46,7 +41,7 @@ export default class K18SongSwitch extends Component {
         <Switch
           onTintColor={config.colors.green}
           tintColor={config.colors.greenlight}
-          onValueChange={this.props.setK18SettingValue}
+          onValueChange={this.props.handleValueChange}
           value={this.props.k18Enabled}
           style={styles.switch}
         />
@@ -54,3 +49,9 @@ export default class K18SongSwitch extends Component {
     )
   }
 }
+
+export default connect((state) => ({
+  k18Enabled: state.settings.k18Enabled
+}), {
+  handleValueChange: setK18SettingValue
+})(K18SongSwitch);

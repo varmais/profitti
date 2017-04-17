@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components:settings:K18SongSwitch when k18 is disabled renders K18SongSwitch 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "borderWidth": 0,
+      "height": 60,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#222",
+        "fontSize": 18,
+      }
+    }
+  >
+    K18-laulut
+  </Text>
+  <RCTSwitch
+    disabled={false}
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onTintColor="#9EB741"
+    onValueChange={[Function]}
+    style={
+      Array [
+        Object {
+          "height": 31,
+          "width": 51,
+        },
+        Object {
+          "bottom": 13.5,
+          "position": "absolute",
+          "right": 0,
+        },
+      ]
+    }
+    tintColor="#B7C83B"
+    value={false}
+  />
+</View>
+`;
+
+exports[`components:settings:K18SongSwitch when k18 is enabled renders K18SongSwitch 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "borderWidth": 0,
+      "height": 60,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#222",
+        "fontSize": 18,
+      }
+    }
+  >
+    K18-laulut
+  </Text>
+  <RCTSwitch
+    disabled={false}
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onTintColor="#9EB741"
+    onValueChange={[Function]}
+    style={
+      Array [
+        Object {
+          "height": 31,
+          "width": 51,
+        },
+        Object {
+          "bottom": 13.5,
+          "position": "absolute",
+          "right": 0,
+        },
+      ]
+    }
+    tintColor="#B7C83B"
+    value={true}
+  />
+</View>
+`;
