@@ -59,9 +59,12 @@ export default function reducer (state = initialState, action = {}) {
 }
 
 export function fetchSongs () {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const { k18Enabled } = state.settings;
+    const url = k18Enabled ? `${config.api.songs}?dirty=true` : config.api.songs;
     try {
-      const response = await fetch(config.api.songs);
+      const response = await fetch(url);
       const songs = await response.json();
       dispatch({
         type: FETCH_SONGS_SUCCESS,

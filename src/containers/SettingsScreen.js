@@ -11,6 +11,7 @@ import AppStyles from '../helpers/Styles';
 import NavigationButton from '../components/navigation/NavigationButton';
 import Separator from '../components/common/Separator';
 import { navigatorPropTypes } from '../helpers/PropTypes';
+import K18SongSwitch from '../components/settings/K18SongSwitch'
 
 export default class SettingsScreen extends Component {
   static navigationOptions = {
@@ -27,6 +28,9 @@ export default class SettingsScreen extends Component {
   render () {
     return (
       <ScrollView style={AppStyles.background}>
+        <View style={AppStyles.container}>
+          <K18SongSwitch />
+        </View>
         <View style={AppStyles.container}>
           <NavigationButton text="Ohjeita" onPress={this.navigate('Instructions')} icon="cutlery" />
           <Separator/>
