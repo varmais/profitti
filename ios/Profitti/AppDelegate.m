@@ -7,8 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+
 #import "AppDelegate.h"
 
+#import <HockeySDK/HockeySDK.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
@@ -20,6 +22,10 @@
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
+  [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"727f6e70877047e8a93c92470fd649e9"];
+  [[BITHockeyManager sharedHockeyManager] startManager];
+  [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+  
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Profitti"
                                                initialProperties:nil

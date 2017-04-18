@@ -92,6 +92,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "2.0.0"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "bbfb910dd0e14c718ba8434de6ee11f4"]
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -140,6 +141,7 @@ android {
 dependencies {
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
+    compile 'net.hockeyapp.android:HockeySDK:4.1.3'
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
 }

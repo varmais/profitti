@@ -45,6 +45,8 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		86F0E12F367D4045960D4320 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1856035C4984E8AAD855C1A /* EvilIcons.ttf */; };
 		8AE26EC51C5A467A9B96D7E3 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C62991859754B5CB744780D /* MaterialIcons.ttf */; };
+		A1D5F7441EA67E6400B9ECD6 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D5F7421EA67E6400B9ECD6 /* HockeySDK.framework */; };
+		A1D5F7451EA67E6400B9ECD6 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A1D5F7431EA67E6400B9ECD6 /* HockeySDKResources.bundle */; };
 		AA912EC7A97C429987DE5BF8 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15C0D83248074D219AE4A69A /* MaterialCommunityIcons.ttf */; };
 		ECC14342B9654177B90DE6DC /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A706FE918BE4A91947E8CED /* FontAwesome.ttf */; };
 /* End PBXBuildFile section */
@@ -283,6 +285,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8C0B8707371441699A9C34D8 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		9EEC40E8B2304AEE9F88B985 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		A1D5F7421EA67E6400B9ECD6 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		A1D5F7431EA67E6400B9ECD6 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		C06BB13531FA4BA989D307FD /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		E1856035C4984E8AAD855C1A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -312,6 +316,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				35AA285B1D504BC29295DC4D /* libRNVectorIcons.a in Frameworks */,
+				A1D5F7441EA67E6400B9ECD6 /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +500,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A1D5F7261EA67E5600B9ECD6 /* Frameworks */,
 				13B07FAE1A68108700A75B9A /* Profitti */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ProfittiTests */,
@@ -522,6 +528,24 @@
 				A1939B831EA4FCF200E9F7BA /* libRNVectorIcons.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A1D5F7261EA67E5600B9ECD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1D5F7411EA67E6400B9ECD6 /* HockeySDK.embeddedframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1D5F7411EA67E6400B9ECD6 /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				A1D5F7421EA67E6400B9ECD6 /* HockeySDK.framework */,
+				A1D5F7431EA67E6400B9ECD6 /* HockeySDKResources.bundle */,
+			);
+			name = HockeySDK.embeddedframework;
+			path = "HockeySDK-iOS/HockeySDK.embeddedframework";
 			sourceTree = "<group>";
 		};
 		E99361CE9AD546E49CC4EC41 /* Resources */ = {
@@ -570,6 +594,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				A1D5F7541EA6859600B9ECD6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -918,6 +943,7 @@
 				ECC14342B9654177B90DE6DC /* FontAwesome.ttf in Resources */,
 				04C970D20ED74B1CA136C5B9 /* Foundation.ttf in Resources */,
 				32C2E34F4EEE4FD498E6369E /* Ionicons.ttf in Resources */,
+				A1D5F7451EA67E6400B9ECD6 /* HockeySDKResources.bundle in Resources */,
 				AA912EC7A97C429987DE5BF8 /* MaterialCommunityIcons.ttf in Resources */,
 				8AE26EC51C5A467A9B96D7E3 /* MaterialIcons.ttf in Resources */,
 				5D28FAEBF43642D69798D000 /* Octicons.ttf in Resources */,
@@ -956,7 +982,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=/usr/local/opt/nvm/versions/node/v7.8.0/bin/node\n../node_modules/react-native/packager/react-native-xcode.sh";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -971,6 +997,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+		};
+		A1D5F7541EA6859600B9ECD6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=\"${SRCROOT}/HockeySDK-iOS/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1099,6 +1138,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 2GAVP2S983;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HockeySDK-iOS/HockeySDK.embeddedframework",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1123,6 +1166,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2GAVP2S983;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HockeySDK-iOS/HockeySDK.embeddedframework",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
