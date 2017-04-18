@@ -1,4 +1,4 @@
-package fi.trol.profitti;
+package com.profitti;
 
 import android.app.Application;
 
