@@ -33,7 +33,9 @@ export default class HomeScreen extends Component {
   };
 
   componentDidMount () {
-    this.props.fetchSongs();
+    if (this.props.categories.length) {
+      this.props.fetchSongs();
+    }
   }
 
   render () {
