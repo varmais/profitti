@@ -1,11 +1,13 @@
 import config from '../config';
 
+const FETCH_SONGS = 'profitti/songs/FETCH_SONGS';
 const FETCH_SONGS_SUCCESS = 'profitti/songs/FETCH_SONGS_SUCCESS';
 const FETCH_SONGS_FAIL = 'profitti/songs/FETCH_SONGS_FAIL';
 const SEARCH_SONGS = 'profitti/songs/SEARCH_SONGS';
 const SEARCH_SONGS_RESET = 'profitti/songs/SEARCH_SONGS_RESET';
 
 export {
+  FETCH_SONGS,
   FETCH_SONGS_SUCCESS,
   FETCH_SONGS_FAIL,
   SEARCH_SONGS,
@@ -13,6 +15,7 @@ export {
 };
 
 const initialState = {
+  loading: false,
   songs: [],
   categories: [],
   searchResult: [],
@@ -39,9 +42,15 @@ function selectSongs (songs, searchString) {
 
 export default function reducer (state = initialState, action = {}) {
   switch (action.type) {
+    case FETCH_SONGS:
+      return {
+        ...state,
+        loading: true
+      };
     case FETCH_SONGS_SUCCESS:
       return {
         ...state,
+        loading: false,
         error: null,
         songs: action.payload,
         categories: getCategories(action.payload)
@@ -49,6 +58,7 @@ export default function reducer (state = initialState, action = {}) {
     case FETCH_SONGS_FAIL:
       return {
         ...state,
+        loading: false,
         error: action.error
       };
     case SEARCH_SONGS:
@@ -71,6 +81,7 @@ export function fetchSongs () {
     const state = getState();
     const { k18Enabled } = state.settings;
     const url = k18Enabled ? `${config.api.songs}?dirty=true` : config.api.songs;
+    dispatch({type: FETCH_SONGS});
     try {
       const response = await fetch(url);
       const songs = await response.json();

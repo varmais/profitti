@@ -2,6 +2,7 @@ import reducer, {
   fetchSongs,
   searchSongs,
   resetSearchSongs,
+  FETCH_SONGS,
   FETCH_SONGS_SUCCESS,
   FETCH_SONGS_FAIL,
   SEARCH_SONGS,
@@ -12,6 +13,7 @@ import config from '../config';
 describe('redux:songs', () => {
   describe('reducer', () => {
     const initialState = {
+      loading: false,
       songs: [],
       categories: [],
       searchResult: [],
@@ -22,8 +24,15 @@ describe('redux:songs', () => {
       expect(reducer()).toEqual(initialState);
     });
 
+    test('on FETCH_SONGS', () => {
+      const state = initialState;
+      const action = {type: FETCH_SONGS};
+      const expectedState = {...state, loading: true};
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
     test('on FETCH_SONGS_SUCCESS', () => {
-      const state = {...initialState, error: new Error('error')};
+      const state = {...initialState, error: new Error('error'), loading: true};
       const songs = [
         {id: 1, category_id: 1, category_name: 'one'},
         {id: 2, category_id: 2, category_name: 'two'},
@@ -31,15 +40,15 @@ describe('redux:songs', () => {
       ];
       const action = {type: FETCH_SONGS_SUCCESS, payload: songs};
       const expectedCategories = [{id: 1, name: 'one'}, {id: 2, name: 'two'}];
-      const expectState = {...state, error: null, songs, categories: expectedCategories};
+      const expectState = {...state, error: null, songs, categories: expectedCategories, loading: false};
       expect(reducer(state, action)).toEqual(expectState);
     });
 
     test('on FETCH_SONGS_FAIL', () => {
-      const state = initialState;
+      const state = {...initialState, loading: true};
       const error = new Error('error');
       const action = {type: FETCH_SONGS_FAIL, error};
-      const expectedState = {...state, error};
+      const expectedState = {...state, error, loading: false};
       expect(reducer(state, action)).toEqual(expectedState);
     });
     
@@ -89,6 +98,12 @@ describe('redux:songs', () => {
             getStateStub = jest.fn().mockImplementation(() => ({settings: {k18Enabled: false}}));
             const action = fetchSongs();
             await action(dispatchStub, getStateStub);
+          });
+
+          test('dispatches songs loading start', () => {
+            expect(dispatchStub).toHaveBeenCalledWith({
+              type: FETCH_SONGS
+            });
           });
 
           test('fetches with correct url', () => {
