@@ -11,6 +11,8 @@ const AppNavigator = TabNavigator({
   Settings: {screen: SettingsNavigator}
 }, {
   tabBarComponent: TabView.TabBarBottom,
+  tabBarPosition: 'bottom',
+  backBehavior: 'none',
   tabBarOptions: {
     activeTintColor: config.colors.black,
     inactiveTintColor: config.colors.gray,

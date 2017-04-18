@@ -15,7 +15,7 @@ export default class TrolInfoScreen extends Component {
   render () {
     return (
       <ScrollView style={styles.background}>
-        <View style={styles.container}>
+        <View style={[styles.container, styles.containerLast]}>
           <Text style={[styles.text, styles.title]}>Tradenomiopiskelijaliitto TROL ry</Text>
           <Text style={styles.text}>Tradenomiopiskelijaliitto TROL ry on valtakunnallinen tradenomiopiskelijoiden
             edunvalvontajärjestö, jonka jäseneksi voivat liittyä kaikki tradenomi- ja BBA- opiskelijat. TROL on

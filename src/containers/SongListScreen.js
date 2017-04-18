@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import config from '../config';
 import AppStyles from '../helpers/Styles';
@@ -32,14 +32,14 @@ export default class SongListScreen extends Component {
     const { navigation } = this.props;
     const songs = this.filterSongs();
     return (
-      <View style={AppStyles.background}>
+      <ScrollView style={AppStyles.background}>
         <NavigationButtonListView
           title={navigation.state.params.category.name}
           navigation={navigation}
           items={songs}
           renderRow={rowData => <SongButton song={rowData} navigation={navigation} />}
         />
-      </View>
+      </ScrollView>
     );
   }
 

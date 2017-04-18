@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  Platform,
   StyleSheet,
   TextInput
 } from 'react-native';
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 8,
     marginVertical: 16,
-    borderWidth: 1,
+    borderWidth: Platform.OS === 'ios' ? 1 : 0,
     borderColor: config.colors.grayMid,
     color: config.colors.blackLight,
     fontSize: 18

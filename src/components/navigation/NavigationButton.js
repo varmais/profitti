@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   PixelRatio,
+  Platform,
   StyleSheet,
   Text,
   View
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     left: 0,
-    bottom: 0
+    bottom: Platform.OS === 'ios' ? 40 / PixelRatio.get() : 70 / PixelRatio.get()
   },
   text: {
     color: config.colors.blackLight,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   arrow: {
     position: 'absolute',
     right: 0,
-    bottom: -4 / PixelRatio.get()
+    bottom: Platform.OS === 'ios' ? 30 / PixelRatio.get() : 50 / PixelRatio.get()
   }
 });
 
@@ -46,8 +47,8 @@ export default class NavigationButton extends Component {
   render () {
     const { onPress } = this.props;
     return (
-      <Touchable style={styles.button} onPress={onPress} underlayColor={config.colors.gray}>
-        <View>
+      <Touchable onPress={onPress} underlayColor={config.colors.gray}>
+        <View style={styles.button}>
           {this.renderText()}
           {this.renderIcon()}
           <IonIcon name="ios-arrow-forward" size={24} style={styles.arrow} />

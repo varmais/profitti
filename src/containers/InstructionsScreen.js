@@ -113,7 +113,7 @@ export default class InstructionsScreen extends Component {
             soveltaa.</Text>
         </View>
 
-        <View style={styles.container}>
+        <View style={[styles.container, styles.containerLast]}>
           <Text style={[styles.text, styles.title]}>Seremoniamestarille</Text>
           <Text style={styles.text}>• Rangaistuksia jaettakoon sääntöjen rikkomisesta, myöhästymisestä, häiritsevästä
             käyttäytymisestä ym. rikkomuksista.</Text>

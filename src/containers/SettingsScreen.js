@@ -33,7 +33,7 @@ export default class SettingsScreen extends Component {
           <UpdateSongsButton />
           <K18SongSwitch />
         </View>
-        <View style={AppStyles.container}>
+        <View style={[AppStyles.container, AppStyles.containerLast]}>
           <NavigationButton text="Ohjeita" onPress={this.navigate('Instructions')} icon="cutlery" />
           <Separator/>
           <NavigationButton text="Laulukirja Profitti" onPress={this.navigate('ProfittiInfo')} icon="book" />

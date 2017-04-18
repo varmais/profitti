@@ -30,7 +30,7 @@ export default class SongScreen extends Component {
     const { song } = this.props.navigation.state.params;
     return (
       <ScrollView style={styles.background}>
-        <View style={styles.container}>
+        <View style={[styles.container, styles.containerLast]}>
           <Text style={[styles.text, styles.title]}>
             {song.title}
           </Text>

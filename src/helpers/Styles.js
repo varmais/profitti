@@ -6,16 +6,19 @@ export default StyleSheet.create({
     backgroundColor: config.colors.black
   },
   background: {
-    padding: 8,
+    paddingHorizontal: 8,
     backgroundColor: config.colors.grayLight
   },
   container: {
-    marginBottom: 8,
+    marginTop: 8,
     paddingHorizontal: 16,
     backgroundColor: config.colors.white,
     borderColor: config.colors.grayMid,
     borderWidth: 1,
     borderRadius: 4
+  },
+  containerLast: {
+    marginBottom: 8
   },
   titleContainer: {
     borderBottomWidth: 1 / PixelRatio.get(),

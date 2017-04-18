@@ -34,7 +34,7 @@ export default class ProfittiInfoScreen extends Component {
           <Text style={[styles.text]}>Tradenomiopiskelijaliitto TROL ry</Text>
         </View>
 
-        <View style={styles.container}>
+        <View style={[styles.container, styles.containerLast]}>
           <Text style={[styles.text, styles.title]}>Laulukirjatyöryhmän terveiset</Text>
           <Text style={styles.text}>Ave, tradenomi!</Text>
           <Text style={styles.text}>Käsissäsi on pala historiaa: Tradenomiopiskelijaliitto TROL

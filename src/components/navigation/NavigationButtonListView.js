@@ -19,7 +19,7 @@ export default class NavigationButtonListView extends Component {
   render () {
     const { items, title, renderRow } = this.props;
     return (
-      <View style={AppStyles.container}>
+      <View style={[AppStyles.container, AppStyles.containerLast]}>
         <View style={AppStyles.titleContainer}>
           <Text style={AppStyles.title}>
             {title}
