@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import {
-  ScrollView,
-  Text,
-  View
-} from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import styles from '../helpers/Styles';
 import { navigatorPropTypes, songPropTypes } from '../helpers/PropTypes';
-import config from '../config';
+import { createHeader } from '../helpers/NavigationOptions';
 
 export default class SongScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
-      style: styles.header,
-      tintColor: config.colors.white,
-      title: state.params.song.title
+      ...createHeader(state.params.song.title)
     })
   };
 

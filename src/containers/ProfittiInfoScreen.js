@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import styles from '../helpers/Styles';
-import config from '../config';
+import { createHeader } from '../helpers/NavigationOptions';
 
 export default class ProfittiInfoScreen extends Component {
   static navigationOptions = {
-    header: {
-      style: styles.header,
-      tintColor: config.colors.white,
-      title: 'Profitti'
-    }
+    header: createHeader('Profitti')
   };
   
   render() {

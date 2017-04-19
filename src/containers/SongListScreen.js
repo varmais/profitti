@@ -1,18 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import config from '../config';
 import AppStyles from '../helpers/Styles';
 import SongButton from '../components/songs/SongButton';
 import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
 import { navigatorPropTypes, categoryPropTypes, songPropTypes } from '../helpers/PropTypes';
+import { createHeader } from '../helpers/NavigationOptions';
 
 export class SongListScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
-      style: AppStyles.header,
-      tintColor: config.colors.white,
-      title: state.params.category.name
+      ...createHeader(state.params.category.name)
     })
   };
 

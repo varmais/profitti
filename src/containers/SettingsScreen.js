@@ -1,11 +1,5 @@
-import React, {
-  Component,
-  PropTypes
-} from 'react';
-import {
-  ScrollView,
-  View
-} from 'react-native';
+import React, { Component } from 'react';
+import { ScrollView, View } from 'react-native';
 import HeaderLogo from '../components/common/HeaderLogo';
 import AppStyles from '../helpers/Styles';
 import NavigationButton from '../components/navigation/NavigationButton';

@@ -1,19 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import config from '../config';
 import AppStyles from '../helpers/Styles';
 import SongButton from '../components/songs/SongButton';
 import { resetSearchSongs } from '../redux/songs';
 import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
 import { navigatorPropTypes, songPropTypes } from '../helpers/PropTypes';
+import { createHeader } from '../helpers/NavigationOptions';
 
 export class SongSearchScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
-      style: AppStyles.header,
-      tintColor: config.colors.white,
-      title: `Haku: ${state.params.searchString}`
+      ...createHeader(`Haku: ${state.params.searchString}`)
     })
   };
 
