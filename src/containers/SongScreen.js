@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   ScrollView,
   Text,
   View
 } from 'react-native';
 import styles from '../helpers/Styles';
-import { navigatorPropTypes } from '../helpers/PropTypes';
+import { navigatorPropTypes, songPropTypes } from '../helpers/PropTypes';
 import config from '../config';
 
 export default class SongScreen extends Component {
@@ -19,10 +19,7 @@ export default class SongScreen extends Component {
 
   static propTypes = {
     navigation: navigatorPropTypes({
-      song: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        lyrics: PropTypes.string.isRequired
-      })
+      song: songPropTypes()
     })
   };
 
@@ -34,7 +31,6 @@ export default class SongScreen extends Component {
           <Text style={[styles.text, styles.title]}>
             {song.title}
           </Text>
-          <View style={styles.separator}/>
           <Text style={styles.text}>
             {song.lyrics}
           </Text>
