@@ -38,7 +38,7 @@ export default class SettingsScreen extends Component {
           <Separator/>
           <NavigationButton text="Laulukirja Profitti" onPress={this.navigate('ProfittiInfo')} icon="book" />
           <Separator/>
-          <NavigationButton text="Tradenomiliitto TROL ry" onPress={this.navigate('TrolInfo')} icon="info-circle" />
+          <NavigationButton text="Tradenomiopiskelijaliitto TROL ry" onPress={this.navigate('TrolInfo')} icon="info-circle" />
         </View>
       </ScrollView>
     );
