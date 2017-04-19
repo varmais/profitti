@@ -2,20 +2,31 @@ import { createNavigationProp } from '../../testutils';
 import CategoryButton from './CategoryButton';
 
 describe('components:songs:CategoryButton', () => {
-  const category = {
-    id: 123,
-    name: 'category name'
-  };
+  let navigateStub;
+  let component;
+  const category = {name: 'category', id: 12};
 
-  test('renders CategoryButton', () => {
-    const snapshot = renderer.create(<CategoryButton
-      category={category}
-      navigation={createNavigationProp()}
-    />).toJSON();
-    expect(snapshot).toMatchSnapshot();
+  beforeEach(() => {
+    navigateStub = sinon.stub();
+    const props = {
+      navigation: {...createNavigationProp(), navigate: navigateStub},
+      category
+    };
+    component = shallow(<CategoryButton {...props} />);
+  });
+
+  it('renders NavigationButton', () => {
+    expect(component.name()).to.eql('NavigationButton');
+    expect(component.prop('text')).to.eql(category.name);
   });
 
   describe('when button is pressed', () => {
-    test('it navigates to song list screen');
+    beforeEach(() => {
+      component.simulate('press');
+    });
+
+    it('navigates to SongList with correct category', () => {
+      expect(navigateStub).to.have.been.calledWithExactly('SongList', {category});
+    });
   });
 });

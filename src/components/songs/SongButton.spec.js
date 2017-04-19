@@ -2,20 +2,31 @@ import { createNavigationProp } from '../../testutils';
 import SongButton from './SongButton';
 
 describe('components:songs:SongButton', () => {
-  const song = {
-    id: 123,
-    title: 'song title'
-  };
+  let navigateStub;
+  let component;
+  const song = {title: 'song title', id: 12};
 
-  test('renders SongButton', () => {
-    const snapshot = renderer.create(<SongButton
-      song={song}
-      navigation={createNavigationProp()}
-    />).toJSON();
-    expect(snapshot).toMatchSnapshot();
+  beforeEach(() => {
+    navigateStub = sinon.stub();
+    const props = {
+      navigation: {...createNavigationProp(), navigate: navigateStub},
+      song
+    };
+    component = shallow(<SongButton {...props} />);
+  });
+
+  it('renders NavigationButton', () => {
+    expect(component.name()).to.eql('NavigationButton');
+    expect(component.prop('text')).to.eql(`${song.id} ${song.title}`);
   });
 
   describe('when button is pressed', () => {
-    test('it navigates to song screen');
+    beforeEach(() => {
+      component.simulate('press');
+    });
+
+    it('navigates to Song with correct category', () => {
+      expect(navigateStub).to.have.been.calledWithExactly('Song', {song});
+    });
   });
 });

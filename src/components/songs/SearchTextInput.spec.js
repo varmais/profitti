@@ -1,23 +1,44 @@
 import { createNavigationProp } from '../../testutils';
 import { SearchTextInput } from './SearchTextInput';
+import config from '../../config';
 
 describe('components:songs:SearchTextInput', () => {
   let searchSongsStub;
+  let navigateStub;
+  let component;
 
   beforeEach(() => {
-    searchSongsStub = jest.fn();
+    searchSongsStub = sinon.stub();
+    navigateStub = sinon.stub();
+    const props = {
+      navigation: {...createNavigationProp(), navigate: navigateStub},
+      searchSongs: searchSongsStub
+    };
+    component = shallow(<SearchTextInput {...props} />);
   });
 
-  test('renders SongButton', () => {
-    const snapshot = renderer.create(<SearchTextInput
-      searchSongs={searchSongsStub}
-      navigation={createNavigationProp()}
-    />).toJSON();
-    expect(snapshot).toMatchSnapshot();
+  it('renders TextInput', () => {
+    expect(component.name()).to.eql('TextInput');
+    const props = component.props();
+    expect(props.autoCorrect).to.be.false;
+    expect(props.placeholder).to.eql('Hae lauluja..');
+    expect(props.placeholderTextColor).to.eql(config.colors.grayDark);
+    expect(props.returnKeyType).to.eql('search');
   });
 
-  describe('when search is submitted', () => {
-    test('it searches songs');
-    test('it navigates to song list screen');
+  describe('when searh is submitted', () => {
+    const text = 'search string';
+
+    beforeEach(() => {
+      component.simulate('submitEditing', {nativeEvent: {text}});
+    });
+
+    it('submits search string', () => {
+      expect(searchSongsStub).to.have.been.calledWithExactly(text);
+    });
+
+    it('navigates to song list', () => {
+      expect(navigateStub).to.have.been.calledWithExactly('SongSearch', {searchString: text});
+    });
   });
 });
