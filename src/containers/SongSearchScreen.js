@@ -6,13 +6,9 @@ import AppStyles from '../helpers/Styles';
 import SongButton from '../components/songs/SongButton';
 import { resetSearchSongs } from '../redux/songs';
 import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
+import { navigatorPropTypes, songPropTypes } from '../helpers/PropTypes';
 
-@connect(state => ({
-  songs: state.songs.searchResult
-}), {
-  resetSearchSongs
-})
-export default class SongSearchScreen extends Component {
+export class SongSearchScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
       style: AppStyles.header,
@@ -22,13 +18,10 @@ export default class SongSearchScreen extends Component {
   };
 
   static propTypes = {
-    songs: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired
-    })).isRequired,
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired
-    }).isRequired,
+    songs: PropTypes.arrayOf(songPropTypes()).isRequired,
+    navigation: navigatorPropTypes({
+      searchString: PropTypes.string.isRequired
+    }),
     resetSearchSongs: PropTypes.func.isRequired
   };
 
@@ -50,3 +43,9 @@ export default class SongSearchScreen extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  songs: state.songs.searchResult
+}), {
+  resetSearchSongs
+})(SongSearchScreen);
