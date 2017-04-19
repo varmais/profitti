@@ -1,15 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import NavigationButton from '../navigation/NavigationButton';
+import { navigatorPropTypes, songPropTypes } from '../../helpers/PropTypes';
 
 export default class SongButton extends Component {
   static propTypes = {
-    song: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired
-    }).isRequired,
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired
-    }).isRequired
+    song: songPropTypes(),
+    navigation: navigatorPropTypes()
   };
 
   render () {

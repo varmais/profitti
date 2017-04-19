@@ -1,15 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import NavigationButton from '../navigation/NavigationButton';
+import { navigatorPropTypes, categoryPropTypes } from '../../helpers/PropTypes';
 
 export default class CategoryButton extends Component {
   static propTypes = {
-    category: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired
-    }).isRequired,
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired
-    }).isRequired
+    category: categoryPropTypes(),
+    navigation: navigatorPropTypes()
   };
 
   render () {

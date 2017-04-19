@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux';
 import config from '../../config';
 import { searchSongs } from '../../redux/songs';
+import { navigatorPropTypes } from '../../helpers/PropTypes';
 
 const styles = StyleSheet.create({
   input: {
@@ -24,9 +25,7 @@ const styles = StyleSheet.create({
 export class SearchTextInput extends Component {
   static propTypes = {
     searchSongs: PropTypes.func.isRequired,
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired
-    }).isRequired
+    navigation: navigatorPropTypes()
   };
 
   render() {
