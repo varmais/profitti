@@ -7,13 +7,9 @@ import HeaderLogo from '../components/common/HeaderLogo';
 import AppStyles from '../helpers/Styles';
 import { fetchSongs } from '../redux/songs';
 import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
+import { navigatorPropTypes, categoryPropTypes } from '../helpers/PropTypes';
 
-@connect((state) => ({
-  categories: state.songs.categories
-}), {
-  fetchSongs
-})
-export default class HomeScreen extends Component {
+export class HomeScreen extends Component {
   static navigationOptions = {
     header: () => ({
       style: AppStyles.header,
@@ -22,17 +18,12 @@ export default class HomeScreen extends Component {
   };
 
   static propTypes = {
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired
-    }).isRequired,
+    navigation: navigatorPropTypes(),
     fetchSongs: PropTypes.func.isRequired,
-    categories: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired
-    })).isRequired
+    categories: PropTypes.arrayOf(categoryPropTypes()).isRequired
   };
 
-  componentDidMount () {
+  componentWillMount () {
     if (!this.props.categories.length) {
       this.props.fetchSongs();
     }
@@ -61,3 +52,9 @@ export default class HomeScreen extends Component {
     );
   }
 }
+
+export default connect((state) => ({
+  categories: state.songs.categories
+}), {
+  fetchSongs
+})(HomeScreen);
