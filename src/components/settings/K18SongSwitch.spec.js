@@ -1,28 +1,51 @@
-import '../../testutils';
 import { K18SongSwitch } from './K18SongSwitch';
+import config from '../../config';
 
 describe('components:settings:K18SongSwitch', () => {
   let handleValueChangeStub;
+  let component;
 
   beforeEach(() => {
-    handleValueChangeStub = jest.fn();
+    handleValueChangeStub = sinon.stub();
+    component = shallow(<K18SongSwitch k18Enabled={false} handleValueChange={handleValueChangeStub} />);
   });
 
-  describe('when k18 is disabled', () => {
-    test('renders K18SongSwitch', () => {
-      const snapshot = renderer.create(<K18SongSwitch k18Enabled={false} handleValueChange={handleValueChangeStub} />).toJSON();
-      expect(snapshot).toMatchSnapshot();
+  it('renders title', () => {
+    expect(component.find('Text').children().text()).to.eql('K18-laulut');
+  });
+
+  it('renders disabled switch', () => {
+    expectSwitch(false);
+  });
+
+  describe('when switch has been clicked', () => {
+    beforeEach(() => {
+      component.find('Switch').simulate('valueChange');
     });
 
-    describe('when switch is pressed', () => {
-      test('it calls onValueChange callback');
+    it('calls handleValueChange callback', () => {
+      expect(handleValueChangeStub).to.have.been.calledOnce;
+    });
+
+    describe('when switch is on', () => {
+      it('renders enabled switch', () => {
+        component.setProps({k18Enabled: true});
+        expectSwitch(true);
+      });
     });
   });
 
-  describe('when k18 is enabled', () => {
-    test('renders K18SongSwitch', () => {
-      const snapshot = renderer.create(<K18SongSwitch k18Enabled={true} handleValueChange={handleValueChangeStub} />).toJSON();
-      expect(snapshot).toMatchSnapshot();
+  function expectSwitch (value) {
+    expect(component.find('Switch').props()).to.eql({
+      tintColor: config.colors.greenlight,
+      onTintColor: config.colors.green,
+      value,
+      onValueChange: handleValueChangeStub,
+      style: {
+        bottom: 13.5,
+        position: 'absolute',
+        right: 0
+      }
     });
-  });
+  }
 });

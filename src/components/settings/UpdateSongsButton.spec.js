@@ -1,28 +1,62 @@
-import '../../testutils';
 import { UpdateSongsButton } from './UpdateSongsButton';
+import config from '../../config';
 
 describe('components:settings:UpdateSongsButton', () => {
   let fetchSongsStub;
+  let component;
 
   beforeEach(() => {
-    fetchSongsStub = jest.fn();
+    fetchSongsStub = sinon.stub();
+    component = shallow(<UpdateSongsButton loading={false} fetchSongs={fetchSongsStub} />);
   });
 
-  describe('when songs are not loading', () => {
-    test('renders UpdateSongsButton', () => {
-      const snapshot = renderer.create(<UpdateSongsButton loading={false} fetchSongs={fetchSongsStub} />).toJSON();
-      expect(snapshot).toMatchSnapshot();
+  it('renders title', () => {
+    expect(component.find('Text').children().text()).to.eql('Päivitä laulut');
+  });
+
+  it('renders enabled button', () => {
+    expectButton(false);
+  });
+
+  it('renders disabled spinner', () => {
+    expectSpinner(false);
+  });
+
+  describe('when button has been clicked', () => {
+    beforeEach(() => {
+      component.find('Button').simulate('press');
     });
 
-    describe('when button is pressed', () => {
-      test('it calls fetchSongs callback');
+    it('calls fetchSongs callback', () => {
+      expect(fetchSongsStub).to.have.been.calledOnce;
+    });
+
+    describe('when switch is on', () => {
+      beforeEach(() => {
+        component.setProps({loading: true});
+      });
+
+      it('renders disabled button', () => {
+        expectButton(true);
+      });
+
+      it('renders enabled spinner', () => {
+        expectSpinner(true);
+      });
     });
   });
 
-  describe('when songs are loading', () => {
-    test('renders UpdateSongsButton', () => {
-      const snapshot = renderer.create(<UpdateSongsButton loading={true} fetchSongs={fetchSongsStub} />).toJSON();
-      expect(snapshot).toMatchSnapshot();
+  function expectButton (disabled) {
+    expect(component.find('Button').props()).to.eql({
+      color: config.colors.green,
+      disabled,
+      onPress: fetchSongsStub,
+      title: 'Päivitä',
+      accessibilityLabel: 'Päivitä laulut'
     });
-  });
+  }
+
+  function expectSpinner (visible) {
+    expect(component.find('Spinner').prop('visible')).to.eql(visible);
+  }
 });
