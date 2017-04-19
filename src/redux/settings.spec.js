@@ -1,13 +1,8 @@
 import reducer, {
   setK18SettingValue,
-  SET_K18_SONGS
+  SET_K18_SONGS,
+  __RewireAPI__ as settingsAPI
 } from './settings';
-
-const mockFetchSongs = 'fetch-songs';
-
-jest.mock('./songs', () => ({
-  fetchSongs: () => mockFetchSongs
-}));
 
 describe('redux:settings', () => {
   describe('reducer', () => {
@@ -15,23 +10,25 @@ describe('redux:settings', () => {
       k18Enabled: false
     };
 
-    test('has initial state', () => {
-      expect(reducer()).toEqual(initialState)
+    it('has initial state', () => {
+      expect(reducer()).to.eql(initialState)
     });
 
-    test('on SET_K18_SONGS', () => {
+    it('on SET_K18_SONGS', () => {
       const state = initialState;
       const action = {type: SET_K18_SONGS, payload: true};
       const expectedState = {...state, k18Enabled: action.payload};
-      expect(reducer(state, action)).toEqual(expectedState);
+      expect(reducer(state, action)).to.eql(expectedState);
     });
   });
 
   describe('actions', () => {
+    const fetchedSongs = 'fetchSongs return value';
     let dispatchStub;
 
     beforeEach(() => {
-      dispatchStub = jest.fn();
+      dispatchStub = sinon.stub();
+      settingsAPI.__Rewire__('fetchSongs', () => fetchedSongs);
     });
 
     describe('setK18SettingValue', () => {
@@ -40,15 +37,15 @@ describe('redux:settings', () => {
         action(dispatchStub);
       });
 
-      test('dispatches SET_K18_SONGS with value', () => {
-        expect(dispatchStub).toHaveBeenCalledWith({
+      it('dispatches SET_K18_SONGS with value', () => {
+        expect(dispatchStub).to.have.been.calledWithExactly({
           type: SET_K18_SONGS,
           payload: true
         });
       });
 
-      test('fetches songs', () => {
-        expect(dispatchStub).toHaveBeenCalledWith(mockFetchSongs);
+      it('fetches songs', () => {
+        expect(dispatchStub).to.have.been.calledWithExactly(fetchedSongs);
       });
     });
   });

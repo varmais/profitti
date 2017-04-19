@@ -20,18 +20,18 @@ describe('redux:songs', () => {
       error: null
     };
 
-    test('has initial state', () => {
-      expect(reducer()).toEqual(initialState);
+    it('has initial state', () => {
+      expect(reducer()).to.eql(initialState);
     });
 
-    test('on FETCH_SONGS', () => {
+    it('on FETCH_SONGS', () => {
       const state = initialState;
       const action = {type: FETCH_SONGS};
       const expectedState = {...state, loading: true};
-      expect(reducer(state, action)).toEqual(expectedState);
+      expect(reducer(state, action)).to.eql(expectedState);
     });
 
-    test('on FETCH_SONGS_SUCCESS', () => {
+    it('on FETCH_SONGS_SUCCESS', () => {
       const state = {...initialState, error: new Error('error'), loading: true};
       const songs = [
         {id: 1, category_id: 1, category_name: 'one'},
@@ -41,18 +41,18 @@ describe('redux:songs', () => {
       const action = {type: FETCH_SONGS_SUCCESS, payload: songs};
       const expectedCategories = [{id: 1, name: 'one'}, {id: 2, name: 'two'}];
       const expectState = {...state, error: null, songs, categories: expectedCategories, loading: false};
-      expect(reducer(state, action)).toEqual(expectState);
+      expect(reducer(state, action)).to.eql(expectState);
     });
 
-    test('on FETCH_SONGS_FAIL', () => {
+    it('on FETCH_SONGS_FAIL', () => {
       const state = {...initialState, loading: true};
       const error = new Error('error');
       const action = {type: FETCH_SONGS_FAIL, error};
       const expectedState = {...state, error, loading: false};
-      expect(reducer(state, action)).toEqual(expectedState);
+      expect(reducer(state, action)).to.eql(expectedState);
     });
     
-    test('on SEARCH_SONGS', () => {
+    it('on SEARCH_SONGS', () => {
       const searchString = 'song1';
       const songs = [
         {title: `${searchString} title`, lyrics: `${searchString} lyrics`},
@@ -68,50 +68,52 @@ describe('redux:songs', () => {
         {title: `song4 title`, lyrics: `${searchString} lyrics`}
       ];
       const expectedState = {...state, searchResult: expectedSongs};
-      expect(reducer(state, action)).toEqual(expectedState);
+      expect(reducer(state, action)).to.eql(expectedState);
     });
 
-    test('on SEARCH_SONGS_RESET', () => {
+    it('on SEARCH_SONGS_RESET', () => {
       const state = {...initialState, searchResult: ['not', 'empty']};
       const action = {type: SEARCH_SONGS_RESET};
       const expectedState = {...state, searchResult: []};
-      expect(reducer(state, action)).toEqual(expectedState);
+      expect(reducer(state, action)).to.eql(expectedState);
     });
   });
 
   describe('actions', () => {
     let dispatchStub;
     let getStateStub;
+    let fetchStub;
     const mockSongs = [{song: 1}];
 
     beforeEach(() => {
-      dispatchStub = jest.fn();
+      fetchStub = sinon.stub().returnsPromise();
+      dispatchStub = sinon.stub();
+      getStateStub = sinon.stub();
+      global.fetch = fetchStub;
     });
 
     describe('fetchSongs', () => {
       describe('when k18 is disabled', () => {
         describe('and fetch succeeds', () => {
           beforeEach(async () => {
-            global.fetch = jest.fn().mockImplementation(() => {
-              return new Promise((resolve) => resolve({json: () => new Promise((resolve) => resolve(mockSongs))}));
-            });
-            getStateStub = jest.fn().mockImplementation(() => ({settings: {k18Enabled: false}}));
+            fetchStub.resolves({json: () => new Promise((resolve) => resolve(mockSongs))});
+            getStateStub.returns({settings: {k18Enabled: false}});
             const action = fetchSongs();
             await action(dispatchStub, getStateStub);
           });
 
-          test('dispatches songs loading start', () => {
-            expect(dispatchStub).toHaveBeenCalledWith({
+          it('dispatches songs loading start', () => {
+            expect(dispatchStub).to.have.been.calledWithExactly({
               type: FETCH_SONGS
             });
           });
 
-          test('fetches with correct url', () => {
-            expect(global.fetch).toHaveBeenCalledWith(config.api.songs);
+          it('fetches with correct url', () => {
+            expect(global.fetch).to.have.been.calledWithExactly(config.api.songs);
           });
 
-          test('dispatches songs', () => {
-            expect(dispatchStub).toHaveBeenCalledWith({
+          it('dispatches songs', () => {
+            expect(dispatchStub).to.have.been.calledWithExactly({
               type: FETCH_SONGS_SUCCESS,
               payload: mockSongs
             });
@@ -122,20 +124,18 @@ describe('redux:songs', () => {
           const error = new Error('fetch fail');
 
           beforeEach(async () => {
-            global.fetch = jest.fn().mockImplementation(() => {
-              return new Promise((resolve, reject) => reject(error));
-            });
-            getStateStub = jest.fn().mockImplementation(() => ({settings: {k18Enabled: false}}));
+            fetchStub.rejects(error);
+            getStateStub.returns({settings: {k18Enabled: false}});
             const action = fetchSongs();
             await action(dispatchStub, getStateStub);
           });
 
-          test('fetches with correct url', () => {
-            expect(global.fetch).toHaveBeenCalledWith(config.api.songs);
+          it('fetches with correct url', () => {
+            expect(global.fetch).to.have.been.calledWithExactly(config.api.songs);
           });
 
-          test('dispatches error', () => {
-            expect(dispatchStub).toHaveBeenCalledWith({
+          it('dispatches error', () => {
+            expect(dispatchStub).to.have.been.calledWithExactly({
               type: FETCH_SONGS_FAIL,
               error
             });
@@ -144,20 +144,18 @@ describe('redux:songs', () => {
 
         describe('when k18 is enabled', () => {
           beforeEach(async () => {
-            global.fetch = jest.fn().mockImplementation(() => {
-              return new Promise((resolve) => resolve({json: () => new Promise((resolve) => resolve(mockSongs))}));
-            });
-            getStateStub = jest.fn().mockImplementation(() => ({settings: {k18Enabled: true}}));
+            fetchStub.resolves({json: () => new Promise((resolve) => resolve(mockSongs))});
+            getStateStub.returns({settings: {k18Enabled: true}});
             const action = fetchSongs();
             await action(dispatchStub, getStateStub);
           });
 
-          test('fetches with correct url', () => {
-            expect(global.fetch).toHaveBeenCalledWith(`${config.api.songs}?dirty=true`);
+          it('fetches with correct url', () => {
+            expect(global.fetch).to.have.been.calledWithExactly(`${config.api.songs}?dirty=true`);
           });
 
-          test('dispatches songs', () => {
-            expect(dispatchStub).toHaveBeenCalledWith({
+          it('dispatches songs', () => {
+            expect(dispatchStub).to.have.been.calledWithExactly({
               type: FETCH_SONGS_SUCCESS,
               payload: mockSongs
             });
@@ -168,14 +166,14 @@ describe('redux:songs', () => {
 
     describe('searchSongs', () => {
       const string = 'searchString';
-      expect(searchSongs(string)).toEqual({
+      expect(searchSongs(string)).to.eql({
         type: SEARCH_SONGS,
         payload: string
       });
     });
 
     describe('resetSearchSongs', () => {
-      expect(resetSearchSongs()).toEqual({
+      expect(resetSearchSongs()).to.eql({
         type: SEARCH_SONGS_RESET
       });
     });
