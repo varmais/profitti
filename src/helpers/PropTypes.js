@@ -8,3 +8,19 @@ export function navigatorPropTypes (params) {
     navigate: PropTypes.func.isRequired
   }).isRequired
 }
+
+export function categoryPropTypes () {
+  return PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  });
+}
+
+export function songPropTypes () {
+  return PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    lyrics: PropTypes.string.isRequired,
+    category_id: PropTypes.number.isRequired
+  });
+}
