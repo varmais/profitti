@@ -1,9 +1,12 @@
-import '../../testutils';
 import HeaderLogo from './HeaderLogo';
 
 describe('components:common:HeaderLogo', () => {
-  test('renders HeaderLogo', () => {
-    const snapshot = renderer.create(<HeaderLogo />).toJSON();
-    expect(snapshot).toMatchSnapshot();
+  it('renders HeaderLogo', () => {
+    const component = shallow(<HeaderLogo />);
+    expect(component.props()).to.eql({
+      resizeMode: 'contain',
+      source: {uri: '../../assets/images/trol-logo-full.png'},
+      style: {height: 35}
+    });
   });
 });
