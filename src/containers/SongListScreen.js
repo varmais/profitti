@@ -5,11 +5,9 @@ import config from '../config';
 import AppStyles from '../helpers/Styles';
 import SongButton from '../components/songs/SongButton';
 import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
+import { navigatorPropTypes, categoryPropTypes, songPropTypes } from '../helpers/PropTypes';
 
-@connect(state => ({
-  songs: state.songs.songs
-}))
-export default class SongListScreen extends Component {
+export class SongListScreen extends Component {
   static navigationOptions = {
     header: ({state}) => ({
       style: AppStyles.header,
@@ -19,13 +17,10 @@ export default class SongListScreen extends Component {
   };
 
   static propTypes = {
-    songs: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired
-    })).isRequired,
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired
-    }).isRequired
+    songs: PropTypes.arrayOf(songPropTypes()).isRequired,
+    navigation: navigatorPropTypes({
+      category: categoryPropTypes()
+    })
   };
 
   render() {
@@ -48,3 +43,7 @@ export default class SongListScreen extends Component {
     return songs.filter(s => s.category_id === navigation.state.params.category.id);
   }
 }
+
+export default connect(state => ({
+  songs: state.songs.songs
+}))(SongListScreen);
