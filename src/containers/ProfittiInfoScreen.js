@@ -26,7 +26,7 @@ export default class ProfittiInfoScreen extends Component {
             mukana laulamassa niitä. Lauluperinteemme ja kirjamme voima syntyy sen ahkerasta käytöstä, joten
             laulakaa!</Text>
           <Text style={[styles.text, styles.textTight]}>Anssi Ketopaikka</Text>
-          <Text style={[styles.text, styles.textTight]}>puheenjohtaja</Text>
+          <Text style={[styles.text, styles.textTight]}>Puheenjohtaja 2014</Text>
           <Text style={[styles.text]}>Tradenomiopiskelijaliitto TROL ry</Text>
         </View>
 
@@ -48,7 +48,7 @@ export default class ProfittiInfoScreen extends Component {
             otat Profitista ja opiskeluajastasi kaiken irti!</Text>
           <Text style={[styles.text, styles.textTight]}>“To you from failing hands we throw the torch,</Text>
           <Text style={styles.text}>be yours to hold it high.” - In Flanders Fields</Text>
-          <Text style={[styles.text, styles.textTight]}>Laulukirjatyöryhmä</Text>
+          <Text style={[styles.text, styles.textTight]}>Laulukirjatyöryhmä 2014</Text>
           <Text style={[styles.text, styles.textTight]}>Osmo Ahonen</Text>
           <Text style={[styles.text, styles.textTight]}>Hannes Leppäkangas</Text>
           <Text style={[styles.text]}>Teemu Tiilikainen</Text>
