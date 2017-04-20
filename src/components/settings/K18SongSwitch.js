@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   PixelRatio,
+  Platform,
   StyleSheet,
   Switch,
   Text,
@@ -40,7 +41,7 @@ export class K18SongSwitch extends Component {
         <Text style={styles.text}>K18-laulut</Text>
         <Switch
           onTintColor={config.colors.green}
-          tintColor={config.colors.greenlight}
+          tintColor={config.colors.gray}
           onValueChange={this.props.handleValueChange}
           value={this.props.k18Enabled}
           style={styles.switch}

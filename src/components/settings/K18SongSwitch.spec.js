@@ -37,7 +37,7 @@ describe('components:settings:K18SongSwitch', () => {
 
   function expectSwitch (value) {
     expect(component.find('Switch').props()).to.eql({
-      tintColor: config.colors.greenlight,
+      tintColor: config.colors.gray,
       onTintColor: config.colors.green,
       value,
       onValueChange: handleValueChangeStub,
