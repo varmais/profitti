@@ -90,7 +90,7 @@ android {
         applicationId "com.profitti"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 2
+        versionCode 5
         versionName "2.0.0"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "bbfb910dd0e14c718ba8434de6ee11f4"]
         ndk {
