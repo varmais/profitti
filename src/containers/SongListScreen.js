@@ -34,8 +34,11 @@ export class SongListScreen extends Component {
   }
 
   filterSongs () {
-    const { navigation, songs } = this.props;
-    return songs.filter(s => s.category_id === navigation.state.params.category.id);
+    const { navigation: {state: {params: {category}}}, songs } = this.props;
+    if (!category.id) {
+      return songs;
+    }
+    return songs.filter(s => s.category_id === category.id);
   }
 }
 

@@ -53,7 +53,7 @@ export default function reducer (state = initialState, action = {}) {
         loading: false,
         error: null,
         songs: action.payload,
-        categories: getCategories(action.payload)
+        categories: [...getCategories(action.payload), {id: 0, name: 'Kaikki laulut'}]
       };
     case FETCH_SONGS_FAIL:
       return {
