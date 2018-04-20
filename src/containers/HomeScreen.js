@@ -26,9 +26,7 @@ export class HomeScreen extends Component {
   };
 
   componentWillMount () {
-    if (!this.props.categories.length) {
-      this.props.fetchSongs();
-    }
+    this.props.fetchSongs();
   }
 
   render () {
