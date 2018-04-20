@@ -5,11 +5,7 @@ import { navigatorPropTypes, songPropTypes } from '../helpers/PropTypes';
 import { createHeader } from '../helpers/NavigationOptions';
 
 export default class SongScreen extends Component {
-  static navigationOptions = {
-    header: ({state}) => ({
-      ...createHeader(state.params.song.title)
-    })
-  };
+  static navigationOptions = ({navigation}) => createHeader(navigation.state.params.song.title);
 
   static propTypes = {
     navigation: navigatorPropTypes({

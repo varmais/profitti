@@ -20,11 +20,9 @@ const Navigator = StackNavigator({
 });
 
 export default class SongNavigator extends Component {
-  static navigationOptions = {
-    tabBar: () => ({
-      icon: ({tintColor}) => (<MAIcons name="queue-music" size={32} color={tintColor} />)
-    })
-  };
+  static navigationOptions = ({navigation}) => ({
+    tabBarIcon: ({tintColor}) => (<MAIcons name="queue-music" size={32} color={tintColor} />)
+  });
 
   render () {
     return <Navigator/>;

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import SearchTextInput from '../components/songs/SearchTextInput';
@@ -8,13 +9,14 @@ import AppStyles from '../helpers/Styles';
 import { fetchSongs } from '../redux/songs';
 import NavigationButtonListView from '../components/navigation/NavigationButtonListView';
 import { navigatorPropTypes, categoryPropTypes } from '../helpers/PropTypes';
+import config from "../config";
 
 export class HomeScreen extends Component {
   static navigationOptions = {
-    header: () => ({
-      style: AppStyles.header,
-      title: <HeaderLogo />
-    })
+    headerTitle: <HeaderLogo />,
+    headerStyle: {
+      backgroundColor: config.colors.black
+    }
   };
 
   static propTypes = {

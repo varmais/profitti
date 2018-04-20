@@ -4,9 +4,7 @@ import styles from '../helpers/Styles';
 import { createHeader } from '../helpers/NavigationOptions';
 
 export default class ProfittiInfoScreen extends Component {
-  static navigationOptions = {
-    header: createHeader('Profitti')
-  };
+  static navigationOptions = createHeader('Profitti');
   
   render() {
     return (

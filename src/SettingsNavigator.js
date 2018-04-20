@@ -20,11 +20,9 @@ const Navigator = StackNavigator({
 });
 
 export default class SettingsNavigator extends Component {
-  static navigationOptions = {
-    tabBar: () => ({
-      icon: ({tintColor}) => (<MAIcons name="settings" size={32} color={tintColor} />)
-    })
-  };
+  static navigationOptions = ({navigation}) => ({
+    tabBarIcon: ({tintColor}) => (<MAIcons name="settings" size={32} color={tintColor} />)
+  });
 
   render () {
     return <Navigator/>;

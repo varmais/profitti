@@ -10,10 +10,8 @@ import UpdateSongsButton from '../components/settings/UpdateSongsButton';
 
 export default class SettingsScreen extends Component {
   static navigationOptions = {
-    header: () => ({
-      style: AppStyles.header,
-      title: <HeaderLogo />
-    })
+    headerTitle: <HeaderLogo />,
+    headerStyle: AppStyles.header
   };
 
   static propTypes = {

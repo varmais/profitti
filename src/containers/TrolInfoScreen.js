@@ -5,7 +5,7 @@ import { createHeader } from '../helpers/NavigationOptions';
 
 export default class TrolInfoScreen extends Component {
   static navigationOptions = {
-    header: createHeader('TROL ry')
+    ...createHeader('TROL ry')
   };
 
   render () {

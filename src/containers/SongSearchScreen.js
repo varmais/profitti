@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import AppStyles from '../helpers/Styles';
@@ -9,11 +10,7 @@ import { navigatorPropTypes, songPropTypes } from '../helpers/PropTypes';
 import { createHeader } from '../helpers/NavigationOptions';
 
 export class SongSearchScreen extends Component {
-  static navigationOptions = {
-    header: ({state}) => ({
-      ...createHeader(`Haku: ${state.params.searchString}`)
-    })
-  };
+  static navigationOptions = ({navigation}) => createHeader(`Haku: ${navigation.state.params.searchString}`);
 
   static propTypes = {
     songs: PropTypes.arrayOf(songPropTypes()).isRequired,

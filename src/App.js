@@ -1,7 +1,8 @@
 import React from 'react';
-import { TabNavigator, TabView } from 'react-navigation';
+import { TabNavigator, TabBarBottom } from 'react-navigation';
 import { Provider } from 'react-redux';
-import store from './redux/createStore';
+import { store, persistor }from './redux/createStore';
+import { PersistGate } from 'redux-persist/integration/react'
 import config from './config';
 import SongNavigator from './SongNavigator';
 import SettingsNavigator from './SettingsNavigator';
@@ -10,9 +11,10 @@ const AppNavigator = TabNavigator({
   Songs: {screen: SongNavigator},
   Settings: {screen: SettingsNavigator}
 }, {
-  tabBarComponent: TabView.TabBarBottom,
+  tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
   backBehavior: 'none',
+  animationEnabled: true,
   tabBarOptions: {
     activeTintColor: config.colors.black,
     inactiveTintColor: config.colors.gray,
@@ -20,8 +22,14 @@ const AppNavigator = TabNavigator({
   }
 });
 
-export default () => (
-  <Provider store={store}>
-    <AppNavigator/>
-  </Provider>
-);
+export default class App extends React.Component {
+  render () {
+    return (
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AppNavigator />
+        </PersistGate>
+      </Provider>
+    );
+  }
+}

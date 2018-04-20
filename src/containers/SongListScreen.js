@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import AppStyles from '../helpers/Styles';
@@ -8,11 +9,7 @@ import { navigatorPropTypes, categoryPropTypes, songPropTypes } from '../helpers
 import { createHeader } from '../helpers/NavigationOptions';
 
 export class SongListScreen extends Component {
-  static navigationOptions = {
-    header: ({state}) => ({
-      ...createHeader(state.params.category.name)
-    })
-  };
+  static navigationOptions = ({navigation}) => createHeader(navigation.state.params.category.name);
 
   static propTypes = {
     songs: PropTypes.arrayOf(songPropTypes()).isRequired,
