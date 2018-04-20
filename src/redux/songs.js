@@ -37,7 +37,7 @@ function getCategories (songs) {
 
 function selectSongs (songs, searchString) {
   const string = searchString.toLowerCase();
-  return songs.filter(s => (s.title.toLowerCase().includes(string) || s.lyrics.toLowerCase().includes(string)));
+  return songs.filter(s => (s.title.toLowerCase().includes(string) || s.lyrics.toLowerCase().includes(string) || s.id.toString() === string));
 }
 
 export default function reducer (state = initialState, action = {}) {
