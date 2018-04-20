@@ -37,6 +37,10 @@ export class K18SongSwitch extends Component {
   };
 
   render () {
+    if (Platform.OS === 'android') {
+      return null;
+    }
+
     return (
       <View style={styles.container}>
         <Text style={styles.text}>K18-laulut</Text>

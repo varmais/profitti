@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { fetchSongs } from './songs';
 
 const SET_K18_SONGS = 'profitti/settings/SET_K18_SONGS';
@@ -7,7 +8,7 @@ export {
 };
 
 const initialState = {
-  k18Enabled: false
+  k18Enabled: Platform.OS === 'android'
 };
 
 export default function reducer (state = initialState, action = {}) {
